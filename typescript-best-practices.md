@@ -1,51 +1,23 @@
-# clean-code-typescript [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Clean%20Code%20Typescript&url=https://github.com/labs42io/clean-code-typescript)
-
-Typescript İçin Temiz Kod Yazım Konsepti.
-[clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript) 'den esinlenişmiştir.
-
 ## Table of Contents
 
-  1. [Giriş](#giri)
-  2. [Değişkenler](#degiskenler)
-  3. [Fonksiyonlar](#functions)
-  4. [Objeler ve Veri Tipleri](#objects-and-data-structures)
-  5. [Sınıflar](#classes)
-  6. [SOLID](#solid)
-  7. [Testing](#testing)
-  8. [Concurrency](#concurrency)
-  9. [Hata Yönetimi](#error-handling)
-  10. [Düzenleme](#formatting)
-  11. [Yorumlar](#comments)
-  12. [Çeviriler](#translations)
+  1. [Değişkenler](#deikenler)
+  2. [Fonksiyonlar](#functions)
+  3. [Objeler ve Veri Tipleri](#objects-and-data-structures)
+  4. [Sınıflar](#classes)
+  5. [SOLID](#solid)
+  6. [Testing](#testing)
+  7. [Concurrency](#concurrency)
+  8. [Hata Yönetimi](#error-handling)
+  9. [Düzenleme](#formatting)
 
-## Giriş
+## Değişkenler
 
-![Humorous image of software quality estimation as a count of how many expletives
-you shout when reading code](https://www.osnews.com/images/comics/wtfm.jpg)
+### Bir anlam ifade eden değişken isimleri kullanın
 
-Robert C. Martin tarafından yazılan [*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
-adlı kitabında yazılım mühendisliğine ait yazılan prensipler burada Typescript için uyarlanmıştır. Burada yer alan bilgiler [okunabilir, tekrar tekrar kullanılabilir ve düzenlenebilir](https://github.com/ryanmcdermott/3rs-of-software-architecture) kod yazmak için 
-rehber almanız gereken bir takım kural ve tavsiyelerden oluşmaktadır.
+Değişkenlerinizi ve parametrelerinizi isimlendirirken hem sizin hem de yazdığınız kodu okuyacak kimselerin anlayabilecekleri şekilde,
+yazdığınız kodun içeriği ile ilgili olarak değişkenlerinizi anlamlı bir şekilde isimlendirin.
 
-Burada yer alan tavsiyeler, bir kısmı sonradan evrensel olarak kabul edilse dahi,
-sıkı sıkıya takip edilmek, uygulanmak zorunda değildir. Burada yer alan ifadeler *Clean Code* adlı 
-kitabın yazarının hayat boyu edindiği tecrübelerden yola çıkarak oluşturduğu tavsiyelerden öte değildir.
-
-Yazılım mühendisliğine ilişkin tecrübemiz 50 yıldan biraz fazlasına dayanmaktadır ve halen dahi
-bir çok şeyi yeni yeni öğrenmekteyiz. Yazılım mimarisi bir gün mimarinin kendisi kadar eski
-bir meslek haline geldiğinde elbette uyulması zorunlu bir takım kuralların olacağı muhakkaktır. 
-Ancak şimdilik burada yapacağımız bizler için bir tavsiye niteliği taşıyan ve daha üst kalitede kod yazmamızı 
-amaçlayan bu kuralları tanımak ve tanıtmaktan ibaret.
-
-**[⬆ back to top](#table-of-contents)**
-
-## Değişkener
-
-### Use meaningful variable names
-
-Distinguish names in such a way that the reader knows what the differences offer.
-
-**Bad:**
+**Kötü:**
 
 ```ts
 function between<T>(a1: T, a2: T, a3: T): boolean {
@@ -54,7 +26,7 @@ function between<T>(a1: T, a2: T, a3: T): boolean {
 
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 function between<T>(value: T, left: T, right: T): boolean {
@@ -64,11 +36,16 @@ function between<T>(value: T, left: T, right: T): boolean {
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use pronounceable variable names
+### Teleffauz edilebilir değişken isimleri kullanım
 
-If you can’t pronounce it, you can’t discuss it without sounding like an idiot.
+Telaffuz edilemeyen veya bir anlam ifade etmeyen isimler, kısaltmalardan oluşan üstü kapalı ifadeler hem akılda kalıcı
+olmayacağı gibi hem kodunuzu sonradan inceleyen kimselerce anlaşılmayacaktır. Yazdığınız kodlara ilişkin ekip arkadaşlarınız ile
+yaptığınız değerlendirmelerde yazılan kodları tartışmak, değişkenleri telaffuz etmek karmaşık bir hal alacaktır. 
 
-**Bad:**
+Ayrıca kısaltmalardan oluşan, telaffuzu ve hatırlaması zor değişkenleri kullanmak istediğiniz bir çok zaman
+geriye dönük olarak değişken ismini aramak zorunda kalacak ve zaman kaybedeceksiniz.
+
+**Kötü:**
 
 ```ts
 type DtaRcrd102 = {
@@ -78,7 +55,7 @@ type DtaRcrd102 = {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 type Customer = {
@@ -90,17 +67,22 @@ type Customer = {
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use the same vocabulary for the same type of variable
+### Belirlediğinize tipe `type` uygun olacak şekilde isimlendirme yapın.
 
-**Bad:**
+Eğer yazdığınız bir fonksiyon bir servisten spesifik bir tipe `type` ait bir verinin getirilmesini sağlıyor
+ve ya spesifik bir verinin düzenlenmesi işlevini getiriyorsa bu veri tipine `type` uygun isimlendirmeler yapmaya özen gösterin.
+
+**Kötü:**
 
 ```ts
+// Burada aldığımız User adlı bir model olduğuna göre
+// fonksiyona eklediğim ekstra ifadeler anlam kargaşasına yol açacaktır.
 function getUserInfo(): User;
 function getUserDetails(): User;
 function getUserData(): User;
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 function getUser(): User;
@@ -108,21 +90,23 @@ function getUser(): User;
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use searchable names
+### Aramaya uygun ifadeler kullanın.
 
-We will read more code than we will ever write. It's important that the code we do write is readable and searchable. By *not* naming variables that end up being meaningful for understanding our program, we hurt our readers. Make your names searchable. Tools like [TSLint](https://palantir.github.io/tslint/rules/no-magic-numbers/) can help identify unnamed constants.
+Bir kodu bir kez yazıyorsak defalarca kez okuruz. Bu yüzden okunabilir ve aranabilir kod yazmak önem arz ediyor.
+Salt sayısal ifadeler, bir anlam ifade etmeyen sabitler hem sizin için hem de kodunuzu inceleyen ekip arkadaşlarınız için
+hem anlaması hem de araştırması kısıtlı bir imkan sunacaktır. Bu nedenle yazdığınız sayısal ifadeler için anlamlı sabitler kullanın.
 
-**Bad:**
+**İyi:**
 
 ```ts
-// What the heck is 86400000 for?
+// 86400000 değeri neyi ifade ediyor?
 setTimeout(restart, 86400000);
 ```
 
-**Good:**
+**Kötü:**
 
 ```ts
-// Declare them as capitalized named constants.
+// Sabitler tanımlarken büyük harf kullanın
 const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
 
 setTimeout(restart, MILLISECONDS_IN_A_DAY);
@@ -130,36 +114,39 @@ setTimeout(restart, MILLISECONDS_IN_A_DAY);
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use explanatory variables
+### Açıklayıcı ifadeler kullanın
 
-**Bad:**
+Bir değişken, parametre, fonksiyon veya sabit tanımlarken olabildiğince açıklayıcı ifadeler kullanın.
+
+**Kötü:**
 
 ```ts
 declare const users: Map<string, User>;
 
 for (const keyValue of users) {
-  // iterate through users map
+  // ...
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 declare const users: Map<string, User>;
 
 for (const [id, user] of users) {
-  // iterate through users map
+  // ...
 }
 ```
 
 **[⬆ back to top](#table-of-contents)**
 
-### Avoid Mental Mapping
+### Sadece sizin değil, kodunuzu okuyan herkesin anlayacağı ifadeler kullanın
 
-Explicit is better than implicit.  
-*Clarity is king.*
+Daha hızlı kod yazmak, daha az yer kaplayan kod yazmak ve sair maksatlarla kısa ifadelerden ve kısaltmalardan kaçının. 
+Hem yazdığınız kodu sonradan okuyan sizin hem de ekip arkadaşlarınızın yazdığı kodu anlayabilmesi için açıklayıcı ifadeler
+kullanın  
 
-**Bad:**
+**Kötü:**
 
 ```ts
 const u = getUser();
@@ -167,7 +154,7 @@ const s = getSubscription();
 const t = charge(u, s);
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 const user = getUser();
@@ -177,11 +164,12 @@ const transaction = charge(user, subscription);
 
 **[⬆ back to top](#table-of-contents)**
 
-### Don't add unneeded context
+### Gereksiz ifadelerden kaçının
 
-If your class/type/object name tells you something, don't repeat that in your variable name.
+Eğer değişkeniniz üst bir yapıya bağlı ise (sınıf `(class)`, type `(type)`) halihazırda bu üst yapı ile ilişki içerisinde bulunduğundan
+bubu yapılara bağlı isimlendirme yaparken, bağlı olduğu üst yapıya ilişkin ifadeleri kullanmaktan kaçının. Daha yalın ifadeler kullanın
 
-**Bad:**
+**Kötü:**
 
 ```ts
 type Car = {
@@ -195,7 +183,7 @@ function print(car: Car): void {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 type Car = {
@@ -211,11 +199,12 @@ function print(car: Car): void {
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use default arguments instead of short circuiting or conditionals
+### Varsayılan değerleri kullanmaya özen gösterin.
 
-Default arguments are often cleaner than short circuiting.
+Bir fonksiyon veya metod içerisinde şarta bağlı yapılar veya devreler kullanmak yerine varsayılan `default` değerler kullanarak
+bu sorunu çözebilirsiniz.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 function loadPages(count?: number) {
@@ -224,7 +213,7 @@ function loadPages(count?: number) {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 function loadPages(count: number = 10) {
@@ -234,42 +223,35 @@ function loadPages(count: number = 10) {
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use enum to document the intent
+### İlişkisel bir gruba ait değerleri bir enum altında tanımlayın
 
 Enums can help you document the intent of the code. For example when we are concerned about values being
 different rather than the exact value of those.
 
-**Bad:**
+**Kötü:**
 
 ```ts
-const GENRE = {
-  ROMANTIC: 'romantic',
-  DRAMA: 'drama',
-  COMEDY: 'comedy',
-  DOCUMENTARY: 'documentary',
-}
-
 projector.configureFilm(GENRE.COMEDY);
 
 class Projector {
   // declaration of Projector
   configureFilm(genre) {
     switch (genre) {
-      case GENRE.ROMANTIC:
-        // some logic to be executed 
+      case "horror":
+        // ... 
+      case "sci-fi":    
+        // ...
     }
   }
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 enum GENRE {
-  ROMANTIC,
-  DRAMA,
-  COMEDY,
-  DOCUMENTARY,
+  HORROR,
+  SCIFI,
 }
 
 projector.configureFilm(GENRE.COMEDY);
@@ -278,8 +260,10 @@ class Projector {
   // declaration of Projector
   configureFilm(genre) {
     switch (genre) {
-      case GENRE.ROMANTIC:
-        // some logic to be executed 
+      case GENRE.HORROR:
+        //...
+      case GENRE.SCIFI:    
+      //...    
     }
   }
 }
@@ -287,31 +271,63 @@ class Projector {
 
 **[⬆ back to top](#table-of-contents)**
 
-## Functions
+## Fonksiyonlar
 
-### Function arguments (2 or fewer ideally)
+### Fonksiyon parametreleri (İdeal olarak 2 veya daha az parametre kullanın)
 
-Limiting the amount of function parameters is incredibly important because it makes testing your function easier.
-Having more than three leads to a combinatorial explosion where you have to test tons of different cases with each separate argument.  
+Fonksiyon kullanırken olabildiğince az sayıda parametre kullanmak hem yazdığınız fonksiyonları kullanırken hem de test 
+sırasında büyük kolaylık sağlar.
 
-One or two arguments is the ideal case, and three should be avoided if possible. Anything more than that should be consolidated.
-Usually, if you have more than two arguments then your function is trying to do too much.
-In cases where it's not, most of the time a higher-level object will suffice as an argument.  
+Bir veya iki parametre kullanmak ideal iken, zorunluluk arz eden bir durum söz konusu olmadıkça üçüncü bir parametre
+kullanılmaktan kaçınılmalıdır. Eğer fonksiyonunuz fazla sayıda parametreye ihtiyaç duyuyorsa, bu parametreleri, obje `{}`
+yardımı ile gruplayarak göndermeniz daha sağlıklıdır.
 
-Consider using object literals if you are finding yourself needing a lot of arguments.  
+Parametreleri obje yardımıyla gruplayarak göndermek bize bir takım faydalar sağlamaktadır. Bunlar;
 
-To make it obvious what properties the function expects, you can use the [destructuring](https://basarat.gitbook.io/typescript/future-javascript/destructuring) syntax.
-This has a few advantages:
 
-1. When someone looks at the function signature, it's immediately clear what properties are being used.
+1. Daha temiz bir syntax sunar. `function createUser(user: User)`
 
-2. It can be used to simulate named parameters.
+2. c# ve benzer dillerde olan isimlendirilmiş değişkenler `named parameters` benzeri bir kullanım kolaylığı sağlar.
 
-3. Destructuring also clones the specified primitive values of the argument object passed into the function. This can help prevent side effects. Note: objects and arrays that are destructured from the argument object are NOT cloned.
+3. Obje `{}` içerisinde yer alan parametreleri `destructing` yöntemiyle kolayca alabiliriz. Burada avantajlar olduğu gibi dezavantajlar da söz konusudur.
+İlkel veri tipleri `primitives` obje içerisine kopyalanırken, obje `object - {}` ve diziler `array - []` referans yoluyla geçeceği için
+obje içerisinden aldığınız obje ve diziler üzerinde yaptığınız bir düzenleme bir üst `scope`dan gönderilen objeyi de etkleyecektir.
 
-4. TypeScript warns you about unused properties, which would be impossible without destructuring.
+Örneğin;
 
-**Bad:**
+```ts
+interface User {
+  name: string;
+  profession: {
+    id: number;
+    name: string;
+  }
+}
+
+const name = "Teoman";
+const user = {name, profession: {id: 4, name: 'Frontend Developer'}};
+
+createUser(user);
+
+console.log(user.name) // "Teoman";
+
+console.log(user.profession) // {id: 4, name: 'Backend Developer'};
+
+function createUser(user: User){
+  let {name, profession} = user;
+  name = "Kemal";
+  profession.name = "Backend Developer"
+}
+```
+Objeler ve diziler referans ile birlikte geçtiği için fonksiyon içinde yer alan obje ile fonksiyon dışında yer alan obje aynıdır.
+Ram'de `memory` aynı noktayı işaret etmektedir. Bu nedenle fonksiyon içerisinde obje içerisinde yapılan bir değişiklik, 
+fonksiyonun dışında yer alan objeyi de değitirecektir.
+
+Ancak ilkel veri tipleri `primitives` fonksiyon içerisinde gönderilirken veya `destructing` yoluyla obje içerisinden dışarı çekilirken
+klonlanacağı için yeni bir referansa sahip olur ve ram'de `memory` yeni bir noktayı işaret eder. Bu veri tiplerinin düzenlenmesi fonksiyon 
+dışında bir sonuç doğurmaz.
+
+**Kötü:**
 
 ```ts
 function createMenu(title: string, body: string, buttonText: string, cancellable: boolean) {
@@ -321,7 +337,7 @@ function createMenu(title: string, body: string, buttonText: string, cancellable
 createMenu('Foo', 'Bar', 'Baz', true);
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 function createMenu(options: { title: string, body: string, buttonText: string, cancellable: boolean }) {
@@ -336,7 +352,8 @@ createMenu({
 });
 ```
 
-You can further improve readability by using [type aliases](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases):
+Daha okunabilir daha temiz bir syntax ile kod yazmak için [type aliases](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases) veya arayüz `Interface`
+kullanılabilir
 
 ```ts
 
@@ -356,11 +373,15 @@ createMenu({
 
 **[⬆ back to top](#table-of-contents)**
 
-### Functions should do one thing
+### Her fonksiyon tek bir işlemi yerine getirmelidir.
 
-This is by far the most important rule in software engineering. When functions do more than one thing, they are harder to compose, test, and reason about. When you can isolate a function to just one action, it can be refactored easily and your code will read much cleaner. If you take nothing else away from this guide other than this, you'll be ahead of many developers.
+Bu sadece typescript için değil, yazılım mühendisliğinin en önemli kurallarından biridir. Eğer bir fonksiyon birden fazla görev yapmaya 
+başladığı anda bu fonksiyonu farklı farklı yerlerde kullanmak veya testlerini gerçekleştirmek çok daha zor olacaktır.
 
-**Bad:**
+Ancak eğer sadece tek bir işlemin gerçekleştirilmesinden sorumlu izole bir fonksiyon yaratırsak, hem bu fonksiyonu gereken parametreleri
+kendisine sağlamak suretiyle istediğimiz yerde kullanabileceğimiz gibi hem de kolayca testlerini gerçekleştirebiliriz
+
+**Kötü:**
 
 ```ts
 function emailClients(clients: Client[]) {
@@ -373,7 +394,7 @@ function emailClients(clients: Client[]) {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 function emailClients(clients: Client[]) {
@@ -390,7 +411,7 @@ function isActiveClient(client: Client) {
 
 ### Function names should say what they do
 
-**Bad:**
+**Kötü:**
 
 ```ts
 function addToDate(date: Date, month: number): Date {
@@ -403,7 +424,7 @@ const date = new Date();
 addToDate(date, 1);
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 function addMonthToDate(date: Date, month: number): Date {
@@ -420,7 +441,7 @@ addMonthToDate(date, 1);
 
 When you have more than one level of abstraction your function is usually doing too much. Splitting up functions leads to reusability and easier testing.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 function parseCode(code: string) {
@@ -445,7 +466,7 @@ function parseCode(code: string) {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 const REGEXES = [ /* ... */ ];
@@ -497,7 +518,7 @@ Oftentimes you have duplicate code because you have two or more slightly differe
 
 Getting the abstraction right is critical, that's why you should follow the [SOLID](#solid) principles. Bad abstractions can be worse than duplicate code, so be careful! Having said this, if you can make a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself updating multiple places anytime you want to change one thing.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 function showDeveloperList(developers: Developer[]) {
@@ -533,7 +554,7 @@ function showManagerList(managers: Manager[]) {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 class Developer {
@@ -577,7 +598,7 @@ You should be critical about code duplication. Sometimes there is a tradeoff bet
 
 ### Set default objects with Object.assign or destructuring
 
-**Bad:**
+**Kötü:**
 
 ```ts
 type MenuConfig = { title?: string, body?: string, buttonText?: string, cancellable?: boolean };
@@ -594,7 +615,7 @@ function createMenu(config: MenuConfig) {
 createMenu({ body: 'Bar' });
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 type MenuConfig = { title?: string, body?: string, buttonText?: string, cancellable?: boolean };
@@ -635,7 +656,7 @@ See [`--strictNullChecks`](https://www.typescriptlang.org/docs/handbook/release-
 Flags tell your user that this function does more than one thing.
 Functions should do one thing. Split out your functions if they are following different code paths based on a boolean.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 function createFile(name: string, temp: boolean) {
@@ -647,7 +668,7 @@ function createFile(name: string, temp: boolean) {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 function createTempFile(name: string) {
@@ -672,7 +693,7 @@ Have one service that does it. One and only one.
 
 The main point is to avoid common pitfalls like sharing state between objects without any structure, using mutable data types that can be written to by anything, and not centralizing where your side effects occur. If you can do this, you will be happier than the vast majority of other programmers.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 // Global variable referenced by following function.
@@ -688,7 +709,7 @@ toBase64();
 console.log(name); // expected to print 'Robert C. Martin' but instead 'Um9iZXJ0IEMuIE1hcnRpbg=='
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 const name = 'Robert C. Martin';
@@ -717,7 +738,7 @@ Two caveats to mention to this approach:
 
 2. Cloning big objects can be very expensive in terms of performance. Luckily, this isn't a big issue in practice because there are great libraries that allow this kind of programming approach to be fast and not as memory intensive as it would be for you to manually clone objects and arrays.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 function addItemToCart(cart: CartItem[], item: Item): void {
@@ -725,7 +746,7 @@ function addItemToCart(cart: CartItem[], item: Item): void {
 };
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 function addItemToCart(cart: CartItem[], item: Item): CartItem[] {
@@ -739,7 +760,7 @@ function addItemToCart(cart: CartItem[], item: Item): CartItem[] {
 
 Polluting globals is a bad practice in JavaScript because you could clash with another library and the user of your API would be none-the-wiser until they get an exception in production. Let's think about an example: what if you wanted to extend JavaScript's native Array method to have a `diff` method that could show the difference between two arrays? You could write your new function to the `Array.prototype`, but it could clash with another library that tried to do the same thing. What if that other library was just using `diff` to find the difference between the first and last elements of an array? This is why it would be much better to just use classes and simply extend the `Array` global.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 declare global {
@@ -756,7 +777,7 @@ if (!Array.prototype.diff) {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 class MyArray<T> extends Array<T> {
@@ -773,7 +794,7 @@ class MyArray<T> extends Array<T> {
 
 Favor this style of programming when you can.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 const contributions = [
@@ -799,7 +820,7 @@ for (let i = 0; i < contributions.length; i++) {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 const contributions = [
@@ -826,7 +847,7 @@ const totalOutput = contributions
 
 ### Encapsulate conditionals
 
-**Bad:**
+**Kötü:**
 
 ```ts
 if (subscription.isTrial || account.balance > 0) {
@@ -834,7 +855,7 @@ if (subscription.isTrial || account.balance > 0) {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 function canActivateService(subscription: Subscription, account: Account) {
@@ -850,7 +871,7 @@ if (canActivateService(subscription, account)) {
 
 ### Avoid negative conditionals
 
-**Bad:**
+**Kötü:**
 
 ```ts
 function isEmailNotUsed(email: string): boolean {
@@ -862,7 +883,7 @@ if (isEmailNotUsed(email)) {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 function isEmailUsed(email: string): boolean {
@@ -880,7 +901,7 @@ if (!isEmailUsed(node)) {
 
 This seems like an impossible task. Upon first hearing this, most people say, "how am I supposed to do anything without an `if` statement?" The answer is that you can use polymorphism to achieve the same task in many cases. The second question is usually, "well that's great but why would I want to do that?" The answer is a previous clean code concept we learned: a function should only do one thing. When you have classes and functions that have `if` statements, you are telling your user that your function does more than one thing. Remember, just do one thing.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 class Airplane {
@@ -906,7 +927,7 @@ class Airplane {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 abstract class Airplane {
@@ -947,7 +968,7 @@ TypeScript is a strict syntactical superset of JavaScript and adds optional stat
 Always prefer to specify types of variables, parameters and return values to leverage the full power of TypeScript features.
 It makes refactoring more easier.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 function travelToTexas(vehicle: Bicycle | Car) {
@@ -959,7 +980,7 @@ function travelToTexas(vehicle: Bicycle | Car) {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 type Vehicle = Bicycle | Car;
@@ -975,7 +996,7 @@ function travelToTexas(vehicle: Vehicle) {
 
 Modern browsers do a lot of optimization under-the-hood at runtime. A lot of times, if you are optimizing then you are just wasting your time. There are good [resources](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers) for seeing where optimization is lacking. Target those in the meantime, until they are fixed if they can be.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 // On old browsers, each iteration with uncached `list.length` would be costly
@@ -985,7 +1006,7 @@ for (let i = 0, len = list.length; i < len; i++) {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 for (let i = 0; i < list.length; i++) {
@@ -1000,7 +1021,7 @@ for (let i = 0; i < list.length; i++) {
 Dead code is just as bad as duplicate code. There's no reason to keep it in your codebase.
 If it's not being called, get rid of it! It will still be safe in your version history if you still need it.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 function oldRequestModule(url: string) {
@@ -1015,7 +1036,7 @@ const req = requestModule;
 inventoryTracker('apples', req, 'www.inventory-awesome.io');
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 function requestModule(url: string) {
@@ -1039,7 +1060,7 @@ items to access
 - built-in support for iterating items using the `for-of` syntax
 - iterables allow to implement optimized iterator patterns
 
-**Bad:**
+**Kötü:**
 
 ```ts
 function fibonacci(n: number): number[] {
@@ -1062,7 +1083,7 @@ function print(n: number) {
 print(10);
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 // Generates an infinite stream of Fibonacci numbers.
@@ -1125,7 +1146,7 @@ Using getters and setters to access data from objects that encapsulate behavior 
 - Easy to add logging and error handling when getting and setting.
 - You can lazy load your object's properties, let's say getting it from a server.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 type BankAccount = {
@@ -1146,7 +1167,7 @@ if (value < 0) {
 account.balance = value;
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 class BankAccount {
@@ -1181,7 +1202,7 @@ account.balance = 100;
 
 TypeScript supports `public` *(default)*, `protected` and `private` accessors on class members.  
 
-**Bad:**
+**Kötü:**
 
 ```ts
 class Circle {
@@ -1201,7 +1222,7 @@ class Circle {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 class Circle {
@@ -1225,7 +1246,7 @@ class Circle {
 TypeScript's type system allows you to mark individual properties on an interface / class as *readonly*. This allows you to work in a functional way (unexpected mutation is bad).  
 For more advanced scenarios there is a built-in type `Readonly` that takes a type `T` and marks all of its properties as readonly using mapped types (see [mapped types](https://www.typescriptlang.org/docs/handbook/advanced-types.html#mapped-types)).
 
-**Bad:**
+**Kötü:**
 
 ```ts
 interface Config {
@@ -1235,7 +1256,7 @@ interface Config {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 interface Config {
@@ -1248,7 +1269,7 @@ interface Config {
 Case of Array, you can create a read-only array by using `ReadonlyArray<T>`.
 do not allow changes such as `push()` and `fill()`, but can use features such as `concat()` and `slice()` that do not change the value.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 const array: number[] = [ 1, 3, 5 ];
@@ -1256,7 +1277,7 @@ array = []; // error
 array.push(100); // array will updated
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 const array: ReadonlyArray<number> = [ 1, 3, 5 ];
@@ -1274,7 +1295,7 @@ function hoge(args: readonly string[]) {
 
 Prefer [const assertions](https://github.com/microsoft/TypeScript/wiki/What's-new-in-TypeScript#const-assertions) for literal values.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 const config = {
@@ -1294,7 +1315,7 @@ const result = readonlyData(100);
 result.value = 200; // value is changed
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 // read-only object
@@ -1323,7 +1344,7 @@ result.value = 200; // error
 Use type when you might need a union or intersection. Use interface when you want `extends` or `implements`. There is no strict rule however, use the one that works for you.  
 For a more detailed explanation refer to this [answer](https://stackoverflow.com/questions/37233735/typescript-interfaces-vs-types/54101543#54101543) about the differences between `type` and `interface` in TypeScript.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 interface EmailConfig {
@@ -1345,7 +1366,7 @@ type Shape = {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 
@@ -1382,7 +1403,7 @@ class Square implements Shape {
 
 The class' size is measured by its responsibility. Following the *Single Responsibility principle* a class should be small.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 class Dashboard {
@@ -1405,7 +1426,7 @@ class Dashboard {
 
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 class Dashboard {
@@ -1429,7 +1450,7 @@ Coupling refers to how related or dependent are two classes toward each other. C
   
 Good software design has **high cohesion** and **low coupling**.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 class UserManager {
@@ -1464,7 +1485,7 @@ class UserManager {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 class UserService {
@@ -1512,7 +1533,7 @@ You might be wondering then, "when should I use inheritance?" It depends on your
 
 3. You want to make global changes to derived classes by changing a base class. (Change the caloric expenditure of all animals when they move).
 
-**Bad:**
+**Kötü:**
 
 ```ts
 class Employee {
@@ -1538,7 +1559,7 @@ class EmployeeTaxData extends Employee {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 class Employee {
@@ -1573,7 +1594,7 @@ class EmployeeTaxData {
 
 This pattern is very useful and commonly used in many libraries. It allows your code to be expressive, and less verbose. For that reason, use method chaining and take a look at how clean your code will be.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 class QueryBuilder {
@@ -1610,7 +1631,7 @@ queryBuilder.orderBy('firstName', 'lastName');
 const query = queryBuilder.build();
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 class QueryBuilder {
@@ -1657,7 +1678,7 @@ const query = new QueryBuilder()
 
 As stated in Clean Code, "There should never be more than one reason for a class to change". It's tempting to jam-pack a class with a lot of functionality, like when you can only take one suitcase on your flight. The issue with this is that your class won't be conceptually cohesive and it will give it many reasons to change. Minimizing the amount of times you need to change a class is important. It's important because if too much functionality is in one class and you modify a piece of it, it can be difficult to understand how that will affect other dependent modules in your codebase.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 class UserSettings {
@@ -1676,7 +1697,7 @@ class UserSettings {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 class UserAuth {
@@ -1710,7 +1731,7 @@ class UserSettings {
 
 As stated by Bertrand Meyer, "software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification." What does that mean though? This principle basically states that you should allow users to add new functionalities without changing existing code.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 class AjaxAdapter extends Adapter {
@@ -1753,7 +1774,7 @@ function makeHttpCall<T>(url: string): Promise<T> {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 abstract class Adapter {
@@ -1805,7 +1826,7 @@ This is a scary term for a very simple concept. It's formally defined as "If S i
   
 The best explanation for this is if you have a parent class and a child class, then the parent class and child class can be used interchangeably without getting incorrect results. This might still be confusing, so let's take a look at the classic Square-Rectangle example. Mathematically, a square is a rectangle, but if you model it using the "is-a" relationship via inheritance, you quickly get into trouble.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 class Rectangle {
@@ -1866,7 +1887,7 @@ const rectangles = [new Rectangle(), new Rectangle(), new Square()];
 renderLargeRectangles(rectangles);
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 abstract class Shape {
@@ -1921,7 +1942,7 @@ renderLargeShapes(shapes);
 ISP states that "Clients should not be forced to depend upon interfaces that they do not use.". This principle is very much related to the Single Responsibility Principle.
 What it really means is that you should always design your abstractions in a way that the clients that are using the exposed methods do not get the whole pie instead. That also include imposing the clients with the burden of implementing methods that they don’t actually need.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 interface SmartPrinter {
@@ -1959,7 +1980,7 @@ class EconomicPrinter implements SmartPrinter {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 interface Printer {
@@ -2009,7 +2030,7 @@ This can be hard to understand at first, but if you've worked with Angular, you'
   
 DIP is usually achieved by a using an inversion of control (IoC) container. An example of a powerful IoC container for TypeScript is [InversifyJs](https://www.npmjs.com/package/inversify)
 
-**Bad:**
+**Kötü:**
 
 ```ts
 import { readFile as readFileCb } from 'fs';
@@ -2044,7 +2065,7 @@ const reader = new ReportReader();
 await report = await reader.read('report.xml');
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 import { readFile as readFileCb } from 'fs';
@@ -2132,7 +2153,7 @@ Clean tests should follow the rules:
 
 Tests should also follow the *Single Responsibility Principle*. Make only one assert per unit test.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 import { assert } from 'chai';
@@ -2153,7 +2174,7 @@ describe('AwesomeDate', () => {
 });
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 import { assert } from 'chai';
@@ -2182,7 +2203,7 @@ describe('AwesomeDate', () => {
 
 When a test fail, its name is the first indication of what may have gone wrong.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 describe('Calendar', () => {
@@ -2196,7 +2217,7 @@ describe('Calendar', () => {
 });
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 describe('Calendar', () => {
@@ -2220,7 +2241,7 @@ Callbacks aren't clean, and they cause excessive amounts of nesting *(the callba
 There are utilities that transform existing functions using the callback style to a version that returns promises
 (for Node.js see [`util.promisify`](https://nodejs.org/dist/latest-v8.x/docs/api/util.html#util_util_promisify_original), for general purpose see [pify](https://www.npmjs.com/package/pify), [es6-promisify](https://www.npmjs.com/package/es6-promisify))
 
-**Bad:**
+**Kötü:**
 
 ```ts
 import { get } from 'request';
@@ -2251,7 +2272,7 @@ downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html'
 });
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 import { get } from 'request';
@@ -2287,7 +2308,7 @@ Promises supports a few helper methods that help make code more concise:
 
 With `async`/`await` syntax you can write code that is far cleaner and more understandable than chained promises. Within a function prefixed with `async` keyword you have a way to tell the JavaScript runtime to pause the execution of code on the `await` keyword (when used on a promise).
 
-**Bad:**
+**Kötü:**
 
 ```ts
 import { get } from 'request';
@@ -2305,7 +2326,7 @@ downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html'
   .catch(error => console.error(error));  
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 import { get } from 'request';
@@ -2344,7 +2365,7 @@ It would be very confusing to catch a string message there and would make
 [debugging more painful](https://basarat.gitbook.io/typescript/type-system/exceptions#always-use-error).  
 For the same reason you should reject promises with `Error` types.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 function calculateTotal(items: Item[]): number {
@@ -2356,7 +2377,7 @@ function get(): Promise<Item[]> {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 function calculateTotal(items: Item[]): number {
@@ -2402,7 +2423,7 @@ For the detailed explanation of this idea refer to the [original post](https://m
 
 Doing nothing with a caught error doesn't give you the ability to ever fix or react to said error. Logging the error to the console (`console.log`) isn't much better as often times it can get lost in a sea of things printed to the console. If you wrap any bit of code in a `try/catch` it means you think an error may occur there and therefore you should have a plan, or create a code path, for when it occurs.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 try {
@@ -2420,7 +2441,7 @@ try {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 import { logger } from './logging'
@@ -2438,7 +2459,7 @@ try {
 
 For the same reason you shouldn't ignore caught errors from `try/catch`.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 getUser()
@@ -2450,7 +2471,7 @@ getUser()
   });
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 import { logger } from './logging'
@@ -2501,7 +2522,7 @@ Refer also to this great [TypeScript StyleGuide and Coding Conventions](https://
 
 Capitalization tells you a lot about your variables, functions, etc. These rules are subjective, so your team can choose whatever they want. The point is, no matter what you all choose, just *be consistent*.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 const DAYS_IN_WEEK = 7;
@@ -2517,7 +2538,7 @@ type animal = { /* ... */ }
 type Container = { /* ... */ }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 const DAYS_IN_WEEK = 7;
@@ -2543,7 +2564,7 @@ Prefer using `camelCase` for variables, functions and class members.
 If a function calls another, keep those functions vertically close in the source file. Ideally, keep the caller right above the callee.
 We tend to read code from top-to-bottom, like a newspaper. Because of this, make your code read that way.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 class PerformanceReview {
@@ -2584,7 +2605,7 @@ const review = new PerformanceReview(employee);
 review.review();
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 class PerformanceReview {
@@ -2644,7 +2665,7 @@ With clean and easy to read import statements you can quickly see the dependenci
   - modules from a parent directory (i.e. `import foo from '../foo'; import qux from '../../foo/qux';`)
   - modules from the same or a sibling's directory (i.e. `import bar from './bar'; import baz from './bar/baz';`)
 
-**Bad:**
+**Kötü:**
 
 ```ts
 import { TypeDefinition } from '../types/typeDefinition';
@@ -2656,7 +2677,7 @@ import { BindingScopeEnum, Container } from 'inversify';
 import 'reflect-metadata';
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 import 'reflect-metadata';
@@ -2679,13 +2700,13 @@ Create prettier imports by defining the paths and baseUrl properties in the comp
 
 This will avoid long relative paths when doing imports.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 import { UserService } from '../../../services/UserService';
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 import { UserService } from '@services/UserService';
@@ -2718,14 +2739,14 @@ The use of a comments is an indication of failure to express without them. Code 
 
 Comments are an apology, not a requirement. Good code *mostly* documents itself.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 // Check if subscription is active.
 if (subscription.endDate > Date.now) {  }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 const isSubscriptionActive = subscription.endDate > Date.now;
@@ -2738,7 +2759,7 @@ if (isSubscriptionActive) { /* ... */ }
 
 Version control exists for a reason. Leave old code in your history.
 
-**Bad:**
+**Kötü:**
 
 ```ts
 type User = {
@@ -2749,7 +2770,7 @@ type User = {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 type User = {
@@ -2764,7 +2785,7 @@ type User = {
 
 Remember, use version control! There's no need for dead code, commented code, and especially journal comments. Use `git log` to get history!
 
-**Bad:**
+**Kötü:**
 
 ```ts
 /**
@@ -2778,7 +2799,7 @@ function combine(a: number, b: number): number {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 function combine(a: number, b: number): number {
@@ -2793,7 +2814,7 @@ function combine(a: number, b: number): number {
 They usually just add noise. Let the functions and variable names along with the proper indentation and formatting give the visual structure to your code.  
 Most IDE support code folding feature that allows you to collapse/expand blocks of code (see Visual Studio Code [folding regions](https://code.visualstudio.com/updates/v1_17#_folding-regions)).
 
-**Bad:**
+**Kötü:**
 
 ```ts
 ////////////////////////////////////////////////////////////////////////////////
@@ -2825,7 +2846,7 @@ class Client {
 };
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 class Client {
@@ -2858,7 +2879,7 @@ you can quickly go over the entire list of todos.
 
 Keep in mind however that a *TODO* comment is not an excuse for bad code. 
 
-**Bad:**
+**Kötü:**
 
 ```ts
 function getActiveSubscriptions(): Promise<Subscription[]> {
@@ -2867,7 +2888,7 @@ function getActiveSubscriptions(): Promise<Subscription[]> {
 }
 ```
 
-**Good:**
+**İyi:**
 
 ```ts
 function getActiveSubscriptions(): Promise<Subscription[]> {
