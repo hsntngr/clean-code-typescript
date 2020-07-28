@@ -140,7 +140,7 @@ for (const [id, user] of users) {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Sadece sizin değil, kodunuzu okuyan herkesin anlayacağı ifadeler kullanın
+### Sadece sizin değil, yazdıklarınızı okuyan herkesin anlayacağı ifadeler kullanın
 
 Daha hızlı kod yazmak, daha az yer kaplayan kod yazmak ve sair maksatlarla kısa ifadelerden ve kısaltmalardan kaçının. 
 Hem yazdığınız kodu sonradan okuyan sizin hem de ekip arkadaşlarınızın yazdığı kodu anlayabilmesi için açıklayıcı ifadeler
@@ -441,8 +441,8 @@ addMonthToDate(date, 1);
 
 ### Kod tekrarından uzak durun
 
-Kod tekrarı yapmamak için olabildiğince özen gösterin. Peki neden? Uygulama içerisinde aynı işlevi getiren onlarca kod bloğunun olması
-demek en basit haliyle, değiştirmeniz gereken bir durum olduğunda, düzenlemeniz gereken onlarca kod bloğu olacaktır. 
+Kod tekrarı yapmamak için olabildiğince özen gösterin. Peki neden? Uygulama içerisinde aynı işlevi yerine getiren onlarca kod bloğunun olması
+demek en basit haliyle, değiştirmeniz gereken bir durum olduğunda, düzenlemeniz gereken onlarca kod bloğu olacak demektir. 
 
 Çoğu zaman benzer bir mantalite ile çalışan ancak farklı işlevleri yerine getiren durumlara ilişkin kod yazarken, kod tekrarına
 düştüğümüzün farkında olmayız. Benzer çalışan kod blokları farklı parametrelere faklı nesnelere bağlı çalışıyor olabilir. Bu nedenle
@@ -595,7 +595,7 @@ Detaylı bilgi için [`strictNullChecks`](https://www.typescriptlang.org/docs/ha
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Fonksiyon içerisinde şarta bağlı devreler oluşturmak için boolean parametreler `(namı-diğer flag)` göndermeyin
+### Fonksiyon içerisinde şarta bağlı devreler oluşturmak için boolean parametreler `(flag)` göndermeyin
 
 `Flag`leri kullanarak fonksiyon içerisinde şartı bağlı durumlar oluşturabilir ve farklı senaryoları tek bir fonksiyon
 içerisinde değerlendirebiliriz. Ancak yukarıda belirttiğimiz üzere biz bir fonksiyonun tek bir işlemi yerine getirmesini 
@@ -627,7 +627,7 @@ function createFile(name: string) {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### İstenmeyen durumlardan `(Avoid Side Effects)` kaçınmak (Birinci Bölüm)
+### İstenmeyen durumlardan `(Side Effects)` kaçınmak (Birinci Bölüm)
 
 İstenmeyen durum `(Side Effect)` ile belirtilmek istenen fonksiyonun kapsamını aşan, kendisinden beklemediğimiz işlemleri
 gerçekleştirmesidir. Her fonksiyonun kendisine özel tek bir işlevi olup, bu işlevin kapsamının aşılması durumunda İstemeyen Durum
@@ -671,7 +671,7 @@ console.log(name);
 
 **[⬆ başa dön](#table-of-contents)**
 
-### İstenmeyen durumlardan `(Avoid Side Effects)` kaçınmak (İkinci Bölüm)
+### İstenmeyen durumlardan `(Side Effects)` kaçınmak (İkinci Bölüm)
 
 Javascript dilinde ve doğal olarak Javascript için yazılmış bir süper set olan Typescript'te ilkel veri tipleri `primitives` değerleri
 ile geçerken, Objeler `(Object)` ve diziler `(Array)` referens yoluyla geçer. 
@@ -688,9 +688,9 @@ const a = 10;
 const b = a;
 ```
 
-2.Peki değer oluyla veya referans yoluyla geçme ne anlam ifade ediyor? Kod yazarken tanımladığımız her veri ram'de `(memory)` de belirli
+2.Peki değer yoluyla veya referans yoluyla geçme ne anlam ifade ediyor? Kod yazarken tanımladığımız her veri ram'de `(memory)` de belirli
 bir alanda saklanmaktadır. Ancak ilkel veriler `(primitives)` geçerken (kalıtım verirken) klonlanarak geçiş yapar. Yani kalıtım alan
-ilkel veri ile kalıtım veren ilkel veri ram'de `(memory)` aynı noktada saklanmak, kalıtım alan klonlandığı için yeni bir alanda saklanır.
+ilkel veri ile kalıtım veren ilkel veri ram'de `(memory)` aynı noktada saklanmaz, kalıtım alan klonlandığı için yeni bir alanda saklanır.
 
 ```ts
 let a = 47;
@@ -705,7 +705,7 @@ console.log(b) // 47
 ```
 
 Referans yoluyla geçişlerde ise klonlama yoktur, kalıtım verenin kendisi kalıtım alana geçer. Ram üzerinde yeni bir alan oluşturulmaz. 
-Hem kalıtım alan hem de kalıtım veren aynı noktada saklanır, her ikiside aynı veriye bağlıdır. Javascript dilinde objeler `object` ve diziler
+Hem kalıtım alan hem de kalıtım veren aynı noktada saklanır, her ikiside aynı veriye bağlıdır. Javascript dilinde objeler `(object)` ve diziler
 `(array)` referans yoluyla geçerler.
 
 ```ts
@@ -720,12 +720,12 @@ console.log(user) // {name: "Kemal Gözler"}
 console.log(person) // {name: "Kemal Gözler"}
 ```
 Objeler veya diziler `(Array)` referans yoluyla geçtiği için ve bu veriler üzerinde yapılan işlemler doğrudan objenin ve dizinin
-kendisini değiştirdiği için, uygulamada bir takım istenmeyen sonuçların `side effects` doğmasın sebebiyet vermektedir. Bu nedenle
-state yönetim sistemlerinde obje ve dizilerden oluşan state dondurularak `Object.freeze` state üzerinde kalıcı işlemlerin yapılması
+kendisini değiştirdiği için, uygulamada bir takım istenmeyen sonuçların `(side effects)` doğmasın sebebiyet vermektedir. Bu nedenle
+state yönetim sistemlerinde obje ve dizilerden oluşan state dondurularak `(Object.freeze)` state üzerinde kalıcı işlemlerin yapılması
 bir nebze engellenmeye çalışılmaktadır. Ancak state yönetimi kullanılmayan uygulamalarda ise bu işin sorumluluğu geliştiricilerin 
 ellerine kalmaktadır. 
 
-İstenmeyen bir sonucun oluşmasını engellemek amacıyla obje ve diziler `array` ile çalışırken doğrudan bu verileri düzenlemek yerine
+İstenmeyen bir sonucun oluşmasını engellemek amacıyla obje ve diziler `(array)` ile çalışırken doğrudan bu verileri düzenlemek yerine
 bu veriler içerisinde yer alan bilgileri `destructing` yöntemi ile elde edip kullanmak ve bu verileri doğrudan değiştirmemek son derece
 önem arz etmektedir. 
 
@@ -733,15 +733,15 @@ Konuyu daha iyi anlamak için örnek bir senaryo üzerinden gidelim. Bir e-ticar
 tıkladığında seçtiği ürünü `cart` dizisine eklediğimizi alış verişi tamamla dediğinde `cart` içerisinde yer alan bütün ürünleri ise ajax ile
 gönderdiğimizi düşünelim. 
 
-Uygulamamızda her isteğin bir hata durumunda 3 kez tekrarlandığı bir senaryoda, ilk isteğin sucunun boot zamanına denk geldiğini ve
+Uygulamamızda her isteğin bir hata durumunda 3 kez tekrarlandığı bir senaryoda, ilk isteğin sunucunun boot zamanına denk geldiğini ve
 ikinci isteğin 5 sn sonra yeniden gönderileceği bir durumda, kullanıcının yanlışlıkla sepete ürün eklediğini düşünelim. 
 
 Eğer doğrudan `cart` dizisine bu ürünleri ekliyorsak, her ürün eklediğimizde yeni bir dizi oluşturmuyorsak, kullanıcının son yaptığı
 gerek hatalı gerek kasıtlı bir işlem sonucu sonradan eklediği ürünü ikinci istek ile `(retry)` sunucuya gönderdiğimizi ve kullanıcının
-öncesinde tamamladığı ödemeye eklediğimizi düşünelim. Kullanıcı sonrasında faturaya baktığında boom!!, sepete sonradan eklediği ürünün
+öncesinde tamamladığı ödemeye eklediğimizi düşünelim. Kullanıcı sonrasında faturaya baktığında boom!! sepete sonradan eklediği ürünün
 de satın alındığını görecek. Bu hem kullanıcının hem de bizim istemediğimiz bir sonuç. 
 
-İşte bi gibi istenmeyen durumların `(Side Effect)` oluşmasını engellemek için, bilhassa obje ve diziler `(array)` üzerinde işlem 
+İşte bu gibi istenmeyen durumların (fonksiyonun uygulamanın `state`'ini değiştirmesi gibi) `(Side Effect)` oluşmasını engellemek için, bilhassa obje ve diziler `(array)` üzerinde işlem 
 yaparkendaha temkinli hareket etmeli, uygulama genelinde kullanılan verimiz `(state)` üzerinde kalıcı değişiklikler yapmadan işlemleri
 gerçekleştirmeliyiz. 
 
@@ -918,14 +918,14 @@ if (!isEmailUsed(node)) {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Koşullardan kaçının
+### Koşul oluşturmaktan kaçının
 
 Evet ilk bakışta kulağa biraz saçma geliyor olabilir ancak olabildiğince şarta bağlı yapılardan uzak durmalıyız. Elbette `if` kullanmamız
 gereken şarta bağlı işlemler gerçekleştireceğimiz yerler olacaktır. Ancak bunu yaparken nesne tabanlı programlamanın bütün gücünden
-faydalanmalı, sonra çare olarak koşullara başvurmalıyız.
+faydalanmalı, son çare olarak koşul oluşturma yoluna başvurmalıyız.
 
 Mesela aşağıda örnekte olduğu gibi polimorfik `(polymorphic)` bir yapı kurarak üstesinen gelebileceğimiz bir durumun söz konusu
-olduğunda her olası senaryo için ayrı bir koşul oluşturmak hem kullanım `(usability)` hem de okunurluk `(readbility)` olumsuz
+olduğunda her olası senaryo için ayrı bir koşul oluşturmak hem kullanım `(usability)` hem de okunurluk `(readbility)` açısından olumsuz
 sonuçlar doğuracaktır
 
 **Kötü:**
@@ -992,7 +992,7 @@ class Cessna extends Airplane {
 ### Kodunuzu gereğinden fazla optimize etmeyin
 
 Javascript web programlamada mihenk taşlarından biri halinden geldiğinden beridir modern tarayıcılar artık bir çok optimizasyonu kendileri
-yapmaktadır. Keza artık geliştiriciler EcmaScript'te gerçekleşen her yeniliği yakından takip ettiği ve kullandığı için bir çok üst seviye
+yapmaktadır. Keza artık geliştiriciler esnext ile gelen her yeniliği yakından takip ettiği ve kullandığı için bir çok üst seviye
 javascript kodu tarayıcı desteğinden yoksun olup Babel ve benzeri `transpiler` yardımı ile alt seviye javascript koduna dönüştürmekte
 ve gerekli olan optimizasyonların bir çoğunu bu `transpiler` dediğimiz kod dönüştürücüler gerçekleştirmektedir.
 
@@ -1020,7 +1020,7 @@ for (let i = 0; i < list.length; i++) {
 
 ### Kullanılmayan kodları (dead code) kaldırın.
 
-Kullanımı bırakılan komple terkedilen veya yerine yenileri kullanılan `(deprecated)` kodları Kullanılmayan kod/Ölü kod `(dead code)`.
+Kullanımı bırakılan komple terkedilen veya yerine yenileri getirilen `(deprecated)` kodları Kullanılmayan kod/Ölü kod `(dead code)`.
 olarak adlandırıyoruz. 
 
 Çalışma alanınızda, eğer varsa, kullanımdan kaldırılan bu kodları temizleyin. Bu hem daha temiz bir çalışma ortamı hem de daha küçük
@@ -1058,10 +1058,10 @@ inventoryTracker('apples', req, 'www.inventory-awesome.io');
 
 Yüksek sayıda item içeren veri yığınları ile çalışırken `iterator` ve `generator`leri kullanmanın bir takım avantajları vardır
 
-- Hangi itemlerin erişime açık olduğunu manuel olarak belirleyebilirsiniz
+- Hangi itemlerin erişilebilir olduğunu manuel olarak belirleyebilirsiniz
 - Daha az işlem gücü gerektirir. 
-- Iterator iel birlikte `for..of ` syntaxı kullanılabilir
-- Özel iteratorler kullanılarak ile daha yüksek performans elde edilebilir. (Örn. Binary Tree)
+- Iterator ile birlikte `for..of ` syntaxı kullanılabilir
+- Özel iteratorler yazıbilir, farklı veri yapılarına entegre edilebilir böylece daha yüksek performans elde edilebilir. (Örn. Binary Tree)
 
 **Kötü:**
 
@@ -1143,7 +1143,7 @@ itiriri(fibonacci())
 ### `getter` ve `setter` kullanın
 
 Typescript `getter/setter` kullanımını desteklemektedir.. Bu `notation`'ları kullanarak verinin obje içerisine eklenmesi veya getirilmesi
-sırasında isteğe çeşitli manipülasyonlar yapabilirsiniz. Bu `notation`'lar bize bir akım kullanım kolaylıkları sağlamaktadır
+sırasında obje üzerinde çeşitli manipülasyonlar yapabilirsiniz. Bu `notation`'lar bize bir takım kullanım kolaylıkları sağlamaktadır
 
 - Sadece bir `property` nin obje içerisinde varlığını veya yokluğunu aşan bir durumda, belli bir durumun varlığını veya kontrol etmek
 için `getter` kullanabilirsiniz. Bu aynı zamanda obje çapında bir soyutlama `(Abstraction)` yapmanızı da sağlar.
@@ -1224,19 +1224,26 @@ class BankAccount {
   // ...
 }
 
-// Now `BankAccount` encapsulates the validation logic.
-// If one day the specifications change, and we need extra validation rule,
-// we would have to alter only the `setter` implementation,
-// leaving all dependent code unchanged.
+// Burada BankAccount sınıfı validasyon işlemi ile de tek elden ilgilenmektedir.
+// Eğer ileride yeni bir validasyon eklenecek ise tek yapılması gereken setter uygulanımını güncellemek.
+// Getirilen yeni validasyon uygulama genelinde geçerli olacaktır. Bu aynı zamanda güçlü bir soyutlama (abstraction)
+// imkanı sunar bize
 const account = new BankAccount();
 account.balance = 100;
 ```
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Make objects have private/protected members
+### Private ve protected metodlar oluşturun
 
-TypeScript supports `public` *(default)*, `protected` and `private` accessors on class members.  
+Typescript `public` *(default)*, `protected` ve `private` gibi çeşitli erişim kurallarını `(accessors)` desteklemektedir. 
+Bu kuralları kullanarak tanımladığınız metodun veya `property`'nin hangi erişim izinlerine sahip olduğunu tanımlayabilirsiniz 
+
+**Public:** (halka açık, kamu) erişim kuralı ile tanımladığımız metotlara ve verilere her nesneden erişebiliriz.
+**Private:** (özel, gizli) erişim kuralı ile tanımladığımız bir metoda sadece bu metodun tanımlandığı sınıfdan örneklendirilmiş nesnelerin içinden erişim hakkına sahip oluruz.
+**Protected:** (korumalı) erişim kuralı ile tanımladığımız bir metoda ise bu metodun tanımlandığı sınıfdan örneklendirilmiş nesnelerin içinden ve bu sınıfdan türetilmiş olan alt nesnelerden erişebiliriz.
+
+[Kaynak: Kapsülleme](https://www.wikiwand.com/tr/Kaps%C3%BClleme)
 
 **Kötü:**
 
@@ -1277,11 +1284,14 @@ class Circle {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Prefer immutability
+### Değiştirilemez veriler ile çalışmaya özen gösterin.
 
-TypeScript's type system allows you to mark individual properties on an interface / class as *readonly*. This allows you to work in a functional way (unexpected mutation is bad).  
-For more advanced scenarios there is a built-in type `Readonly` that takes a type `T` and marks all of its properties as readonly using mapped types (see [mapped types](https://www.typescriptlang.org/docs/handbook/advanced-types.html#mapped-types)).
+Typescript ile *readonly* notasyonunu kullanarak istediğiniz bir `property`i değiştirilemez hale getirebilirsiniz. Bu sayede istenmeyen
+sonuçlardan `(side effects)` bir nebze olsun kaçınabiliriz.
 
+Daha gelişmiş senaryolar için `generic` bir `type` olan `Readonly<T>` `type`ını kullanabilirsiniz. Bu sayede bir sınıfa ait bütün
+`property`ler readonly olarak işaretlenir ve dışarıdan gelen bütün müdahelelere kapatılır.
+ 
 **Kötü:**
 
 ```ts
@@ -1301,9 +1311,10 @@ interface Config {
   readonly db: string;
 }
 ```
-
-Case of Array, you can create a read-only array by using `ReadonlyArray<T>`.
-do not allow changes such as `push()` and `fill()`, but can use features such as `concat()` and `slice()` that do not change the value.
+Verinin bir dizi `(Array)` olması durumunda ise `ReadonlyArray<T>` `type`ını kullanabilirsiniz. Readonly olarak işaretlenmiş olan bir dizi
+içerisinde yer alan itemle artık değiştirilemez ve bu diziye yeni bir item eklenemez. Dolayısıyle `push()` ve `fill()` gibi native
+metodlar artık kullanılamaz. Ancak dizi içerisinde yer alan itemleri etkilemeyen ve tamamen yeni bir dizi döndüren `concat()` ve
+`slice()` gibi metodlar ise kullanılabilir.
 
 **Kötü:**
 
@@ -1321,15 +1332,16 @@ array = []; // error
 array.push(100); // error
 ```
 
-Declaring read-only arguments in [TypeScript 3.4 is a bit easier](https://github.com/microsoft/TypeScript/wiki/What's-new-in-TypeScript#improvements-for-readonlyarray-and-readonly-tuples).
+3.4 ve üzeri sürümlerde `readonly` notasyonu kullanılabilir
 
 ```ts
 function hoge(args: readonly string[]) {
   args.push(1); // error
 }
 ```
+`const` notasyonu ile sabit değişkenler oluşturun.
 
-Prefer [const assertions](https://github.com/microsoft/TypeScript/wiki/What's-new-in-TypeScript#const-assertions) for literal values.
+Detaylı bilgi için; [const assertions](https://github.com/microsoft/TypeScript/wiki/What's-new-in-TypeScript#const-assertions)
 
 **Kötü:**
 
@@ -1337,48 +1349,57 @@ Prefer [const assertions](https://github.com/microsoft/TypeScript/wiki/What's-ne
 const config = {
   hello: 'world'
 };
-config.hello = 'world'; // value is changed
+config.hello = 'world'; // değer değişti
 
 const array  = [ 1, 3, 5 ];
-array[0] = 10; // value is changed
+array[0] = 10; // değer değişti
 
-// writable objects is returned
 function readonlyData(value: number) {
   return { value };
 }
 
 const result = readonlyData(100);
-result.value = 200; // value is changed
+result.value = 200; // değer değişti
 ```
 
 **İyi:**
 
 ```ts
-// read-only object
+// obje artık değştirilemez.
 const config = {
   hello: 'world'
 } as const;
-config.hello = 'world'; // error
+config.hello = 'world'; // hata verir
 
-// read-only array
+// dizi değiştirilemez
 const array  = [ 1, 3, 5 ] as const;
-array[0] = 10; // error
+array[0] = 10; // hata verir
 
-// You can return read-only objects
+// obje değiştirilemez
 function readonlyData(value: number) {
   return { value } as const;
 }
 
 const result = readonlyData(100);
-result.value = 200; // error
+result.value = 200; // hata verir
 ```
 
 **[⬆ başa dön](#table-of-contents)**
 
-### type vs. interface
+### Tip vs arayüz `(type vs interface)`
 
-Use type when you might need a union or intersection. Use interface when you want `extends` or `implements`. There is no strict rule however, use the one that works for you.  
-For a more detailed explanation refer to this [answer](https://stackoverflow.com/questions/37233735/typescript-interfaces-vs-types/54101543#54101543) about the differences between `type` and `interface` in TypeScript.
+Ne zaman `type` ne zaman `interface` kullanmalıyız. Bunu anlamak için bu kavramlara iyice hakim olmak gerekiyor. Öncesinde bazı
+fundamental kavramlara hakim olmakta fayda var.
+
+[Basic Types](https://www.typescriptlang.org/docs/handbook/basic-types.html)
+[Advanced Types](https://www.typescriptlang.org/docs/handbook/advanced-types.html)
+[Interface](https://www.typescriptlang.org/docs/handbook/interfaces.html)
+
+Genel olarak eğer birden fazla tanımlamayı birlikte veya alternatif olarak kullanmak gerekiyorsa yani `union` veya `intersect` olarak
+tanımlanan işlemler ile ihtiyacımızı karşılayabiliyorsak `type` oluşturmak ihtiyacımızı görecektir.
+
+Ancak yeri geldiğinde genişletmek `(extends)` yeri geldiğinde ise bir nesneye `(Class)` uygulamak `(implement)` istediğimiz bir
+tanımlama söz konusu ise bu tanımlama için arayüz `(interface)` oluşturmak daha yerinde olacaktır.
 
 **Kötü:**
 
@@ -1433,11 +1454,16 @@ class Square implements Shape {
 
 **[⬆ başa dön](#table-of-contents)**
 
-## Classes
+## Sınıflar/Nesneler `(Class)`
 
-### Classes should be small
+### Sınıflar olabildiğince minimal olmalıdır
+Bir sınıf oluştururken ilk dikkat edilmesi gereken bir SOLID prensini olan *Single Responsibility* prensibidir. Yani bir nesne sadece
+tek bir amaç doğrultusunda oluşturulmalı ve sadece o amaca hizmet etmelidir. Fonksiyonlara benzer bir şekilde nesnelerde amacı dışında 
+çıkmamalı, nesnelere kapsamını aşan görevler yüklenmemelidir.
 
-The class' size is measured by its responsibility. Following the *Single Responsibility principle* a class should be small.
+Eğer benim kendisine sağlanan hayvanın kollarını ve bacaklarını saymaktan sorumlu bir nesnem varsa bu nesne aynı zamanda hayvanın ortalama
+yaşam süresini de hesaplıyorsa burada kapsam dışı, sınıfın amacını aşan bir kullanım söz konusu olup `Single Responsibility` prensibine
+aykırı bir durum vardır.
 
 **Kötü:**
 
@@ -1471,7 +1497,6 @@ class Dashboard {
   getVersion(): string { /* ... */ }
 }
 
-// split the responsibilities by moving the remaining methods to other classes
 // ...
 ```
 
