@@ -34,7 +34,7 @@ function between<T>(value: T, left: T, right: T): boolean {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Teleffauz edilebilir değişken isimleri kullanım
 
@@ -65,7 +65,7 @@ type Customer = {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Belirlediğinize tipe `type` uygun olacak şekilde isimlendirme yapın.
 
@@ -88,7 +88,7 @@ function getUserData(): User;
 function getUser(): User;
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Aramaya uygun ifadeler kullanın.
 
@@ -112,7 +112,7 @@ const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
 setTimeout(restart, MILLISECONDS_IN_A_DAY);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Açıklayıcı ifadeler kullanın
 
@@ -138,7 +138,7 @@ for (const [id, user] of users) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Sadece sizin değil, kodunuzu okuyan herkesin anlayacağı ifadeler kullanın
 
@@ -162,7 +162,7 @@ const subscription = getSubscription();
 const transaction = charge(user, subscription);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Gereksiz ifadelerden kaçının
 
@@ -197,7 +197,7 @@ function print(car: Car): void {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Varsayılan değerleri kullanmaya özen gösterin.
 
@@ -221,7 +221,7 @@ function loadPages(count: number = 10) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### İlişkisel bir gruba ait değerleri bir enum altında tanımlayın
 
@@ -269,7 +269,7 @@ class Projector {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ## Fonksiyonlar
 
@@ -371,15 +371,15 @@ createMenu({
 });
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Her fonksiyon tek bir işlemi yerine getirmelidir.
 
-Bu sadece typescript için değil, yazılım mühendisliğinin en önemli kurallarından biridir. Eğer bir fonksiyon birden fazla görev yapmaya 
+Bu sadece typescript için değil, yazılım mühendisliğinin altın kurallarından biridir. Bir fonksiyon birden fazla görev yapmaya 
 başladığı anda bu fonksiyonu farklı farklı yerlerde kullanmak veya testlerini gerçekleştirmek çok daha zor olacaktır.
 
-Ancak eğer sadece tek bir işlemin gerçekleştirilmesinden sorumlu izole bir fonksiyon yaratırsak, hem bu fonksiyonu gereken parametreleri
-kendisine sağlamak suretiyle istediğimiz yerde kullanabileceğimiz gibi hem de kolayca testlerini gerçekleştirebiliriz
+Ancak eğer sadece tek bir işlemin gerçekleştirilmesinden sorumlu izole bir fonksiyon yaratırsak, hem bu fonksiyonu, gereken parametreleri
+kendisine sağlamak suretiyle, istediğimiz yerde kullanabileceğimiz gibi hem de kolayca testlerini gerçekleştirebiliriz
 
 **Kötü:**
 
@@ -407,9 +407,9 @@ function isActiveClient(client: Client) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
-### Function names should say what they do
+### Fonksiyonun işlevi isminde açıkça belirtilmelidir
 
 **Kötü:**
 
@@ -420,7 +420,8 @@ function addToDate(date: Date, month: number): Date {
 
 const date = new Date();
 
-// It's hard to tell from the function name what is added
+// Tarihe eklenen gün mü, ay mı, yıl mı belli değil
+// fonksiyonu kullanan kişininin fonksiyonun tanımına bakması gerekli
 addToDate(date, 1);
 ```
 
@@ -432,91 +433,28 @@ function addMonthToDate(date: Date, month: number): Date {
 }
 
 const date = new Date();
+// Şimdi tarihe eklenenin ay olduğunu kesin olarak biliyoruz
 addMonthToDate(date, 1);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
-### Functions should only be one level of abstraction
+### Kod tekrarından uzak durun
 
-When you have more than one level of abstraction your function is usually doing too much. Splitting up functions leads to reusability and easier testing.
+Kod tekrarı yapmamak için olabildiğince özen gösterin. Peki neden? Uygulama içerisinde aynı işlevi getiren onlarca kod bloğunun olması
+demek en basit haliyle, değiştirmeniz gereken bir durum olduğunda, düzenlemeniz gereken onlarca kod bloğu olacaktır. 
 
-**Kötü:**
+Çoğu zaman benzer bir mantalite ile çalışan ancak farklı işlevleri yerine getiren durumlara ilişkin kod yazarken, kod tekrarına
+düştüğümüzün farkında olmayız. Benzer çalışan kod blokları farklı parametrelere faklı nesnelere bağlı çalışıyor olabilir. Bu nedenle
+kodların birbirinden farklı olduğunu düşünebiliriz.
 
-```ts
-function parseCode(code: string) {
-  const REGEXES = [ /* ... */ ];
-  const statements = code.split(' ');
-  const tokens = [];
+Ancak doğru bir soyutlama `(abstraction)` işlemi yapılarak, benzer mantıkta çalışan ancak farklı bağımlılıkları olan (farklı parametreler, farklı nesneler)
+bu kod blokları bir fonksiyon, metod veya bir sınıf `(class)` altında toplanabilir ve bu değişkenler parametre olarak sağlanabilir. Bu sayede aynı yapıyı
+sadece gereken değişkenler parametre olarak sağlanmak suretiyle ihtiyaç duyduğumuz her yerde kullanabiliriz. 
 
-  REGEXES.forEach((regex) => {
-    statements.forEach((statement) => {
-      // ...
-    });
-  });
-
-  const ast = [];
-  tokens.forEach((token) => {
-    // lex...
-  });
-
-  ast.forEach((node) => {
-    // parse...
-  });
-}
-```
-
-**İyi:**
-
-```ts
-const REGEXES = [ /* ... */ ];
-
-function parseCode(code: string) {
-  const tokens = tokenize(code);
-  const syntaxTree = parse(tokens);
-
-  syntaxTree.forEach((node) => {
-    // parse...
-  });
-}
-
-function tokenize(code: string): Token[] {
-  const statements = code.split(' ');
-  const tokens: Token[] = [];
-
-  REGEXES.forEach((regex) => {
-    statements.forEach((statement) => {
-      tokens.push( /* ... */ );
-    });
-  });
-
-  return tokens;
-}
-
-function parse(tokens: Token[]): SyntaxTree {
-  const syntaxTree: SyntaxTree[] = [];
-  tokens.forEach((token) => {
-    syntaxTree.push( /* ... */ );
-  });
-
-  return syntaxTree;
-}
-```
-
-**[⬆ back to top](#table-of-contents)**
-
-### Remove duplicate code
-
-Do your absolute best to avoid duplicate code.
-Duplicate code is bad because it means that there's more than one place to alter something if you need to change some logic.  
-
-Imagine if you run a restaurant and you keep track of your inventory: all your tomatoes, onions, garlic, spices, etc.
-If you have multiple lists that you keep this on, then all have to be updated when you serve a dish with tomatoes in them.
-If you only have one list, there's only one place to update!  
-
-Oftentimes you have duplicate code because you have two or more slightly different things, that share a lot in common, but their differences force you to have two or more separate functions that do much of the same things. Removing duplicate code means creating an abstraction that can handle this set of different things with just one function/module/class.  
-
-Getting the abstraction right is critical, that's why you should follow the [SOLID](#solid) principles. Bad abstractions can be worse than duplicate code, so be careful! Having said this, if you can make a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself updating multiple places anytime you want to change one thing.
+Soyutlama `(abstraction)` işlemi son derece önemlidir. Doğru bir soyutlama işlemi kurabilmek için [SOLID](#solid) prensibleri takip etmenizde fayda 
+vardır. Yapılan kötü bir soyutlama işlemi `(abstraction)` yapılan kod tekrarıdan dahi daha kötü sonuçlar doğurabilir. Bu nedenle
+kod yazmaya başlamadan önce olası senarylar düşünülmeli ve buna göre bir soyutlama işlemi gerçekleştirilmelidir.
 
 **Kötü:**
 
@@ -592,11 +530,14 @@ function showEmployeeList(employee: Developer | Manager) {
 }
 ```
 
-You should be critical about code duplication. Sometimes there is a tradeoff between duplicated code and increased complexity by introducing unnecessary abstraction. When two implementations from two different modules look similar but live in different domains, duplication might be acceptable and preferred over extracting the common code. The extracted common code in this case introduces an indirect dependency between the two modules.
+Kod tekrarı konusunda dikkat edilmesi gereken bir diğer nokta ise farklı kütüphaneler veya modüller içerisinde çalışırken, eğer bu modüller
+birbirinden bağımsız, izole bir şekilde çalışıyor ise, yapılan bir soyutlama işlemi kod tekrarından daha olumsuz sonuçlar doğurabilir.
+Bir modül diğer modüle bağımlı hale getirilebilir. Bu husus özellikle eager loading durumlarında ortaya çıkar, ufak bir kod parçası
+yüzünden bütün bir modülün yüklenmesine sebebiyet verebilir ve kod tekrarından çok daha olumsuz bir sonuç ortaya çıkabilir.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
-### Set default objects with Object.assign or destructuring
+### Destruction veya Object.assign kullanarak varsayılan (default) parametreler oluşturun
 
 **Kötü:**
 
@@ -634,11 +575,13 @@ function createMenu(config: MenuConfig) {
 createMenu({ body: 'Bar' });
 ```
 
-Alternatively, you can use destructuring with default values:
+Alternatif olarak parametrelere destructing yöntemi ile default değerler atayabiliriz.
 
 ```ts
 type MenuConfig = { title?: string, body?: string, buttonText?: string, cancellable?: boolean };
 
+// Burada doğrudan config parametresi demek yerine config parametrelerini destructing ile alabiliriz
+// Eğer parametre sağlanmamış ise destructing sırasında tanımladığımız varsayılan değerleri kullanabiliriz
 function createMenu({ title = 'Foo', body = 'Bar', buttonText = 'Baz', cancellable = true }: MenuConfig) {
   // ...
 }
@@ -646,15 +589,17 @@ function createMenu({ title = 'Foo', body = 'Bar', buttonText = 'Baz', cancellab
 createMenu({ body: 'Bar' });
 ```
 
-To avoid any side effects and unexpected behavior by passing in explicitly the `undefined` or `null` value, you can tell the TypeScript compiler to not allow it.
-See [`--strictNullChecks`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#--strictnullchecks) option in TypeScript.
+`undefined` veya `null` değerlerden kaynaklanan istenmeyen durumların oluşmasını önlemek için typescript compiler ayarlarına
+`"strictNullChecks": true` ekleyebilirsiniz.
+Detaylı bilgi için [`strictNullChecks`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#--strictnullchecks)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
-### Don't use flags as function parameters
+### Fonksiyon içerisinde şarta bağlı devreler oluşturmak için boolean parametreler `(namı-diğer flag)` göndermeyin
 
-Flags tell your user that this function does more than one thing.
-Functions should do one thing. Split out your functions if they are following different code paths based on a boolean.
+`Flag`leri kullanarak fonksiyon içerisinde şartı bağlı durumlar oluşturabilir ve farklı senaryoları tek bir fonksiyon
+içerisinde değerlendirebiliriz. Ancak yukarıda belirttiğimiz üzere biz bir fonksiyonun tek bir işlemi yerine getirmesini 
+istiyoruz. Farklı senaryolar söz konusu olduğu durumlarda, bu senaryoları değerlendirecek yeni fonksiyonlar oluşturulmalıdır. 
 
 **Kötü:**
 
@@ -680,23 +625,24 @@ function createFile(name: string) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
-### Avoid Side Effects (part 1)
+### İstenmeyen durumlardan `(Avoid Side Effects)` kaçınmak (Birinci Bölüm)
 
-A function produces a side effect if it does anything other than take a value in and return another value or values.
-A side effect could be writing to a file, modifying some global variable, or accidentally wiring all your money to a stranger.  
+İstenmeyen durum `(Side Effect)` ile belirtilmek istenen fonksiyonun kapsamını aşan, kendisinden beklemediğimiz işlemleri
+gerçekleştirmesidir. Her fonksiyonun kendisine özel tek bir işlevi olup, bu işlevin kapsamının aşılması durumunda İstemeyen Durum
+`(Side Effect)` oluşur. 
 
-Now, you do need to have side effects in a program on occasion. Like the previous example, you might need to write to a file.
-What you want to do is to centralize where you are doing this. Don't have several functions and classes that write to a particular file.
-Have one service that does it. One and only one.  
-
-The main point is to avoid common pitfalls like sharing state between objects without any structure, using mutable data types that can be written to by anything, and not centralizing where your side effects occur. If you can do this, you will be happier than the vast majority of other programmers.
+Mesela görevi konsola yazdırmaktan ibaret olan bir metodun global bir değişkene ait değeri değiştirdiğini veya kendisine gönderilen 
+objenin içerisinde yer alan bilgileri değiştirdiğini düşünelim. Fonksiyonun görevi sadece bir yazdırma işleminden ibaretken, kendisinden
+beklenmeyen (boyunu aşan) bir takım işlemler gerçekleştirmektedir. Yapılan bu kapsam dışı, yetkisiz işlemler `İstenmeyen Durum 
+(Side Effect)` olarak adlandırılır.
 
 **Kötü:**
 
 ```ts
-// Global variable referenced by following function.
+// Fonksiyon içerisinde yer alan değişken parametre olmayıp bir üst scope'ta yer alan 
+// global değişkene bağlıdır..
 let name = 'Robert C. Martin';
 
 function toBase64() {
@@ -704,9 +650,10 @@ function toBase64() {
 }
 
 toBase64();
-// If we had another function that used this name, now it'd be a Base64 value
+// Eğer name değişkenini kullanan başka bir değişken varsa 'Robert C. Martin' değerini değil
+// base64 encode edilmiş değerini alacaklardır
 
-console.log(name); // expected to print 'Robert C. Martin' but instead 'Um9iZXJ0IEMuIE1hcnRpbg=='
+console.log(name); // 'Um9iZXJ0IEMuIE1hcnRpbg=='
 ```
 
 **İyi:**
@@ -722,7 +669,7 @@ const encodedName = toBase64(name);
 console.log(name);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Avoid Side Effects (part 2)
 
@@ -754,7 +701,7 @@ function addItemToCart(cart: CartItem[], item: Item): CartItem[] {
 };
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Don't write to global functions
 
@@ -788,7 +735,7 @@ class MyArray<T> extends Array<T> {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Favor functional programming over imperative programming
 
@@ -843,7 +790,7 @@ const totalOutput = contributions
   .reduce((totalLines, output) => totalLines + output.linesOfCode, 0);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Encapsulate conditionals
 
@@ -867,7 +814,7 @@ if (canActivateService(subscription, account)) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Avoid negative conditionals
 
@@ -895,7 +842,7 @@ if (!isEmailUsed(node)) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Avoid conditionals
 
@@ -960,7 +907,7 @@ class Cessna extends Airplane {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Avoid type checking
 
@@ -990,7 +937,7 @@ function travelToTexas(vehicle: Vehicle) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Don't over-optimize
 
@@ -1014,7 +961,7 @@ for (let i = 0; i < list.length; i++) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Remove dead code
 
@@ -1047,7 +994,7 @@ const req = requestModule;
 inventoryTracker('apples', req, 'www.inventory-awesome.io');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Use iterators and generators
 
@@ -1130,7 +1077,7 @@ itiriri(fibonacci())
   .forEach(fib => console.log(fib));
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ## Objects and Data Structures
 
@@ -1196,7 +1143,7 @@ const account = new BankAccount();
 account.balance = 100;
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Make objects have private/protected members
 
@@ -1239,7 +1186,7 @@ class Circle {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Prefer immutability
 
@@ -1337,7 +1284,7 @@ const result = readonlyData(100);
 result.value = 200; // error
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### type vs. interface
 
@@ -1395,7 +1342,7 @@ class Square implements Shape {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ## Classes
 
@@ -1439,7 +1386,7 @@ class Dashboard {
 // ...
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### High cohesion and low coupling
 
@@ -1519,7 +1466,7 @@ class UserNotifier {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Prefer composition over inheritance
 
@@ -1588,7 +1535,7 @@ class EmployeeTaxData {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Use method chaining
 
@@ -1670,7 +1617,7 @@ const query = new QueryBuilder()
   .build();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ## SOLID
 
@@ -1725,7 +1672,7 @@ class UserSettings {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Open/Closed Principle (OCP)
 
@@ -1818,7 +1765,7 @@ class HttpRequester {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Liskov Substitution Principle (LSP)
 
@@ -1935,7 +1882,7 @@ const shapes = [new Rectangle(4, 5), new Rectangle(4, 5), new Square(5)];
 renderLargeShapes(shapes);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Interface Segregation Principle (ISP)
 
@@ -2016,7 +1963,7 @@ class EconomicPrinter implements Printer {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Dependency Inversion Principle (DIP)
 
@@ -2113,7 +2060,7 @@ const reader = new ReportReader(new JsonFormatter());
 await report = await reader.read('report.json');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ## Testing
 
@@ -2131,7 +2078,7 @@ There's no excuse to not write tests. There are [plenty of good JS test framewor
 
 3. You are not allowed to write any more production code than is sufficient to pass the one failing unit test.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### F.I.R.S.T. rules
 
@@ -2147,7 +2094,7 @@ Clean tests should follow the rules:
 
 - **Timely** unit tests should be written before the production code. If you write tests after the production code, you might find writing tests too hard.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Single concept per test
 
@@ -2197,7 +2144,7 @@ describe('AwesomeDate', () => {
 });
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### The name of the test should reveal its intention
 
@@ -2231,7 +2178,7 @@ describe('Calendar', () => {
 });
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ## Concurrency
 
@@ -2302,7 +2249,7 @@ Promises supports a few helper methods that help make code more concise:
 
 `Promise.all` is especially useful when there is a need to run tasks in parallel. `Promise.race` makes it easier to implement things like timeouts for promises.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Async/Await are even cleaner than Promises
 
@@ -2350,7 +2297,7 @@ try {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ## Error Handling
 
@@ -2417,7 +2364,7 @@ function calculateTotal(items: Item[]): Failable<number, 'empty'> {
 
 For the detailed explanation of this idea refer to the [original post](https://medium.com/@dhruvrajvanshi/making-exceptions-type-safe-in-typescript-c4d200ee78e9).
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Don't ignore caught errors
 
@@ -2453,7 +2400,7 @@ try {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Don't ignore rejected promises
 
@@ -2494,7 +2441,7 @@ try {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ## Formatting
 
@@ -2557,7 +2504,7 @@ type Container = { /* ... */ }
 Prefer using `PascalCase` for class, interface, type and namespace names.  
 Prefer using `camelCase` for variables, functions and class members.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Function callers and callees should be close
 
@@ -2646,7 +2593,7 @@ const review = new PerformanceReview(employee);
 review.review();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Organize imports
 
@@ -2692,7 +2639,7 @@ import { ApiCredentials, Adapters } from './common/api/authorization';
 import { ConfigPlugin } from './plugins/config/configPlugin';
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Use typescript aliases
 
@@ -2726,7 +2673,7 @@ import { UserService } from '@services/UserService';
 ...
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ## Comments
 
@@ -2753,7 +2700,7 @@ const isSubscriptionActive = subscription.endDate > Date.now;
 if (isSubscriptionActive) { /* ... */ }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Don't leave commented out code in your codebase
 
@@ -2779,7 +2726,7 @@ type User = {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Don't have journal comments
 
@@ -2807,7 +2754,7 @@ function combine(a: number, b: number): number {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### Avoid positional markers
 
@@ -2869,7 +2816,7 @@ class Client {
 };
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ### TODO comments
 
@@ -2897,7 +2844,7 @@ function getActiveSubscriptions(): Promise<Subscription[]> {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ başa dön](#table-of-contents)**
 
 ## Translations
 
