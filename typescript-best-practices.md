@@ -671,19 +671,79 @@ console.log(name);
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Avoid Side Effects (part 2)
+### İstenmeyen durumlardan `(Avoid Side Effects)` kaçınmak (İkinci Bölüm)
 
-In JavaScript, primitives are passed by value and objects/arrays are passed by reference. In the case of objects and arrays, if your function makes a change in a shopping cart array, for example, by adding an item to purchase, then any other function that uses that `cart` array will be affected by this addition. That may be great, however it can be bad too. Let's imagine a bad situation:  
+Javascript dilinde ve doğal olarak Javascript için yazılmış bir süper set olan Typescript'te ilkel veri tipleri `primitives` değerleri
+ile geçerken, Objeler `(Object)` ve diziler `(Array)` referens yoluyla geçer. 
 
-The user clicks the "Purchase", button which calls a `purchase` function that spawns a network request and sends the `cart` array to the server. Because of a bad network connection, the purchase function has to keep retrying the request. Now, what if in the meantime the user accidentally clicks "Add to Cart" button on an item they don't actually want before the network request begins? If that happens and the network request begins, then that purchase function will send the accidentally added item because it has a reference to a shopping cart array that the `addItemToCart` function modified by adding an unwanted item.  
+Burada muhtemel aklınızda oluşan iki soru var. Birincisi 'geçmek' ile kast edilen nedir ? Bir ikincisi değer yoluyla veya referans
+yoluyla geçmek ne anlam ifade ediyor. Öncelikle aşağıda anlatacaklarımıza geçmeden önce bu iki hususa değinmekte fayda var.
 
-A great solution would be for the `addItemToCart` to always clone the `cart`, edit it, and return the clone. This ensures that no other functions that are holding onto a reference of the shopping cart will be affected by any changes.  
+1. Geçmek ile kast edilen bir veri tipinden kalıtım alınması demektedir. Kalıtım alınması fonksiyona parametre olarak geçiş sırasında
+gerçekleşebileceği gibi, başka bir değişkene tanımlama yoluyla da gerçekleşebilir. 
 
-Two caveats to mention to this approach:
+```ts
+// Burada b değerini a dan kalıtım almakta, a ilkel bir veritipi olduğu için değer yoluyla geçmektedir.
+const a = 10;
+const b = a;
+```
 
-1. There might be cases where you actually want to modify the input object, but when you adopt this programming practice you will find that those cases are pretty rare. Most things can be refactored to have no side effects! (see [pure function](https://en.wikipedia.org/wiki/Pure_function))
+2.Peki değer oluyla veya referans yoluyla geçme ne anlam ifade ediyor? Kod yazarken tanımladığımız her veri ram'de `(memory)` de belirli
+bir alanda saklanmaktadır. Ancak ilkel veriler `(primitives)` geçerken (kalıtım verirken) klonlanarak geçiş yapar. Yani kalıtım alan
+ilkel veri ile kalıtım veren ilkel veri ram'de `(memory)` aynı noktada saklanmak, kalıtım alan klonlandığı için yeni bir alanda saklanır.
 
-2. Cloning big objects can be very expensive in terms of performance. Luckily, this isn't a big issue in practice because there are great libraries that allow this kind of programming approach to be fast and not as memory intensive as it would be for you to manually clone objects and arrays.
+```ts
+let a = 47;
+// b nin değeri a ya eşittir ancak ram (memory) içerisinde farklı noktalarda saklanırlar
+let b = a;
+
+// a üzerinde yapılan bir değişim b yi etkilemez
+a = 1;
+
+console.log(a) // 1
+console.log(b) // 47
+```
+
+Referans yoluyla geçişlerde ise klonlama yoktur, kalıtım verenin kendisi kalıtım alana geçer. Ram üzerinde yeni bir alan oluşturulmaz. 
+Hem kalıtım alan hem de kalıtım veren aynı noktada saklanır, her ikiside aynı veriye bağlıdır. Javascript dilinde objeler `object` ve diziler
+`(array)` referans yoluyla geçerler.
+
+```ts
+const user = {name: "Hasan Teoman Tıngır"};
+// user ile person artık aynı objeye bağlıdır
+const person = user;
+
+// a üzerinde yapılan bir değişim b yi etkiler
+user.name = "Kemal Gözler";
+
+console.log(user) // {name: "Kemal Gözler"}
+console.log(person) // {name: "Kemal Gözler"}
+```
+Objeler veya diziler `(Array)` referans yoluyla geçtiği için ve bu veriler üzerinde yapılan işlemler doğrudan objenin ve dizinin
+kendisini değiştirdiği için, uygulamada bir takım istenmeyen sonuçların `side effects` doğmasın sebebiyet vermektedir. Bu nedenle
+state yönetim sistemlerinde obje ve dizilerden oluşan state dondurularak `Object.freeze` state üzerinde kalıcı işlemlerin yapılması
+bir nebze engellenmeye çalışılmaktadır. Ancak state yönetimi kullanılmayan uygulamalarda ise bu işin sorumluluğu geliştiricilerin 
+ellerine kalmaktadır. 
+
+İstenmeyen bir sonucun oluşmasını engellemek amacıyla obje ve diziler `array` ile çalışırken doğrudan bu verileri düzenlemek yerine
+bu veriler içerisinde yer alan bilgileri `destructing` yöntemi ile elde edip kullanmak ve bu verileri doğrudan değiştirmemek son derece
+önem arz etmektedir. 
+
+Konuyu daha iyi anlamak için örnek bir senaryo üzerinden gidelim. Bir e-ticaret uygulamamız olduğunu düşünelim, kullanıcının sepet ikonuna
+tıkladığında seçtiği ürünü `cart` dizisine eklediğimizi alış verişi tamamla dediğinde `cart` içerisinde yer alan bütün ürünleri ise ajax ile
+gönderdiğimizi düşünelim. 
+
+Uygulamamızda her isteğin bir hata durumunda 3 kez tekrarlandığı bir senaryoda, ilk isteğin sucunun boot zamanına denk geldiğini ve
+ikinci isteğin 5 sn sonra yeniden gönderileceği bir durumda, kullanıcının yanlışlıkla sepete ürün eklediğini düşünelim. 
+
+Eğer doğrudan `cart` dizisine bu ürünleri ekliyorsak, her ürün eklediğimizde yeni bir dizi oluşturmuyorsak, kullanıcının son yaptığı
+gerek hatalı gerek kasıtlı bir işlem sonucu sonradan eklediği ürünü ikinci istek ile `(retry)` sunucuya gönderdiğimizi ve kullanıcının
+öncesinde tamamladığı ödemeye eklediğimizi düşünelim. Kullanıcı sonrasında faturaya baktığında boom!!, sepete sonradan eklediği ürünün
+de satın alındığını görecek. Bu hem kullanıcının hem de bizim istemediğimiz bir sonuç. 
+
+İşte bi gibi istenmeyen durumların `(Side Effect)` oluşmasını engellemek için, bilhassa obje ve diziler `(array)` üzerinde işlem 
+yaparkendaha temkinli hareket etmeli, uygulama genelinde kullanılan verimiz `(state)` üzerinde kalıcı değişiklikler yapmadan işlemleri
+gerçekleştirmeliyiz. 
 
 **Kötü:**
 
@@ -703,10 +763,20 @@ function addItemToCart(cart: CartItem[], item: Item): CartItem[] {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Don't write to global functions
+### Global fonksiyonlar yazmayın.
+Javascript ile çalışırken hiçbirimiz pure javascript ile sıfırdan bir uygulama yazmaya çalışmıyoruz. Bu hem ciddi miktarda zaman hem de 
+ciddi miktarda emek demek. Bunun yerine daha öncesinde yazılmış olan kütüphaneleri sık sık kullanıyoruz. 
 
-Polluting globals is a bad practice in JavaScript because you could clash with another library and the user of your API would be none-the-wiser until they get an exception in production. Let's think about an example: what if you wanted to extend JavaScript's native Array method to have a `diff` method that could show the difference between two arrays? You could write your new function to the `Array.prototype`, but it could clash with another library that tried to do the same thing. What if that other library was just using `diff` to find the difference between the first and last elements of an array? This is why it would be much better to just use classes and simply extend the `Array` global.
+Eğer global bir fonksiyon tanımlıyorsak, yazdığımız bu global fonksiyonun başka bir kütüphaneye ait fonksiyonu `override` etme riski
+ile karşı karşıya kalmamız gibi tehlikeli bir olasık soz konusu olacaktır. 
 
+Örneğin native `Array` sınıfını genişlettiğimizi `(extend)` ve `diff` adlı, iki dizi `(array)` arasındaki farklı itemleri gösteren bir 
+metod eklediğimizi düşünelim. Aynı metodu kullandığımız bir kütüphanenin, farklı bir syntax veya farklı bir işlevle tanımlamış durumunda
+kütüphanin işleyişine kalıcı olarak hasar vermek gibi sonuç ile karşı karşıya kalacağız. 
+
+Bu gibi durumlardan kaçınmak için doğrudan global fonksiyonlar oluşturmak ve native sınıfları genişletmek `extend` yerine bu sınıflardan
+miras alan `inheritance` özel sınıflar (collections vs) oluşturabilir ve yardımcı metodlarımızı bu sınıflar üzerinde tanımlayabiliriz. 
+    
 **Kötü:**
 
 ```ts
@@ -716,12 +786,10 @@ declare global {
   }
 }
 
-if (!Array.prototype.diff) {
-  Array.prototype.diff = function <T>(other: T[]): T[] {
-    const hash = new Set(other);
-    return this.filter(elem => !hash.has(elem));
-  };
-}
+Array.prototype.diff = function <T>(other: T[]): T[] {
+  const hash = new Set(other);
+  return this.filter(elem => !hash.has(elem));
+};
 ```
 
 **İyi:**
@@ -737,9 +805,13 @@ class MyArray<T> extends Array<T> {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Favor functional programming over imperative programming
+### Olabildiğince fonksiyonel bir şekilde kod yazmaya özen gösterin.
 
-Favor this style of programming when you can.
+Javascript her an her saniye gelişen canlı bir dil. Daha rahat ve esnek bir geliştirme ortamı sağlamak amacıyla TC39 ve bir çok 
+gönüllü geliştirici ciddi bir çaba sarf ediyor.
+
+Bu gelişmeleri takip etmek, yeniliklere hakim olmak ve eski alışkanlıkları terk edip olabildiğince bu yenilikleri uygulamak gerekiyor.
+Bu yenilikler hem kod yazımında büyük kolaylıklar sunarken, okunurluk `(readibilty)` açısından da daha temiz bir syntax içeriyor.
 
 **Kötü:**
 
@@ -792,7 +864,9 @@ const totalOutput = contributions
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Encapsulate conditionals
+### Koşulları fonksiyon veya metodlar içerise taşıyın
+`Encapsulation` işlemi gerçekleştirerek, yani var olan kodumuzu bir fonksiyon veya bir metod yardımıyla bütünleşik bir yapı içerisine
+taşıyarak okunabilirliği `(readibility)` artırmaya özen göstermeliyiz.
 
 **Kötü:**
 
@@ -816,7 +890,7 @@ if (canActivateService(subscription, account)) {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Avoid negative conditionals
+### Olumsuz koşullardan kaçının
 
 **Kötü:**
 
@@ -844,9 +918,15 @@ if (!isEmailUsed(node)) {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Avoid conditionals
+### Koşullardan kaçının
 
-This seems like an impossible task. Upon first hearing this, most people say, "how am I supposed to do anything without an `if` statement?" The answer is that you can use polymorphism to achieve the same task in many cases. The second question is usually, "well that's great but why would I want to do that?" The answer is a previous clean code concept we learned: a function should only do one thing. When you have classes and functions that have `if` statements, you are telling your user that your function does more than one thing. Remember, just do one thing.
+Evet ilk bakışta kulağa biraz saçma geliyor olabilir ancak olabildiğince şarta bağlı yapılardan uzak durmalıyız. Elbette `if` kullanmamız
+gereken şarta bağlı işlemler gerçekleştireceğimiz yerler olacaktır. Ancak bunu yaparken nesne tabanlı programlamanın bütün gücünden
+faydalanmalı, sonra çare olarak koşullara başvurmalıyız.
+
+Mesela aşağıda örnekte olduğu gibi polimorfik `(polymorphic)` bir yapı kurarak üstesinen gelebileceğimiz bir durumun söz konusu
+olduğunda her olası senaryo için ayrı bir koşul oluşturmak hem kullanım `(usability)` hem de okunurluk `(readbility)` olumsuz
+sonuçlar doğuracaktır
 
 **Kötü:**
 
@@ -909,45 +989,20 @@ class Cessna extends Airplane {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Avoid type checking
+### Kodunuzu gereğinden fazla optimize etmeyin
 
-TypeScript is a strict syntactical superset of JavaScript and adds optional static type checking to the language.
-Always prefer to specify types of variables, parameters and return values to leverage the full power of TypeScript features.
-It makes refactoring more easier.
-
-**Kötü:**
-
-```ts
-function travelToTexas(vehicle: Bicycle | Car) {
-  if (vehicle instanceof Bicycle) {
-    vehicle.pedal(currentLocation, new Location('texas'));
-  } else if (vehicle instanceof Car) {
-    vehicle.drive(currentLocation, new Location('texas'));
-  }
-}
-```
-
-**İyi:**
-
-```ts
-type Vehicle = Bicycle | Car;
-
-function travelToTexas(vehicle: Vehicle) {
-  vehicle.move(currentLocation, new Location('texas'));
-}
-```
-
-**[⬆ başa dön](#table-of-contents)**
-
-### Don't over-optimize
-
-Modern browsers do a lot of optimization under-the-hood at runtime. A lot of times, if you are optimizing then you are just wasting your time. There are good [resources](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers) for seeing where optimization is lacking. Target those in the meantime, until they are fixed if they can be.
+Javascript web programlamada mihenk taşlarından biri halinden geldiğinden beridir modern tarayıcılar artık bir çok optimizasyonu kendileri
+yapmaktadır. Keza artık geliştiriciler EcmaScript'te gerçekleşen her yeniliği yakından takip ettiği ve kullandığı için bir çok üst seviye
+javascript kodu tarayıcı desteğinden yoksun olup Babel ve benzeri `transpiler` yardımı ile alt seviye javascript koduna dönüştürmekte
+ve gerekli olan optimizasyonların bir çoğunu bu `transpiler` dediğimiz kod dönüştürücüler gerçekleştirmektedir.
 
 **Kötü:**
 
 ```ts
-// On old browsers, each iteration with uncached `list.length` would be costly
-// because of `list.length` recomputation. In modern browsers, this is optimized.
+// Eski tarayıcılar önbellekleme özelliğini etkin kullanmadığı için her iteration sırasında 
+// list dizisinin item sayısını tekrar tekrar tekrar hesaplamaktadır
+// Ancak artık modern tarayıcılar sadece ilk iteration sırasında bu değeri hesaplamakta
+// ve sonraki iterationlarda bu değeri kullanmaktadır
 for (let i = 0, len = list.length; i < len; i++) {
   // ...
 }
@@ -963,10 +1018,13 @@ for (let i = 0; i < list.length; i++) {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Remove dead code
+### Kullanılmayan kodları (dead code) kaldırın.
 
-Dead code is just as bad as duplicate code. There's no reason to keep it in your codebase.
-If it's not being called, get rid of it! It will still be safe in your version history if you still need it.
+Kullanımı bırakılan komple terkedilen veya yerine yenileri kullanılan `(deprecated)` kodları Kullanılmayan kod/Ölü kod `(dead code)`.
+olarak adlandırıyoruz. 
+
+Çalışma alanınızda, eğer varsa, kullanımdan kaldırılan bu kodları temizleyin. Bu hem daha temiz bir çalışma ortamı hem de daha küçük
+`bundle` boyutu sağlar.
 
 **Kötü:**
 
@@ -987,7 +1045,7 @@ inventoryTracker('apples', req, 'www.inventory-awesome.io');
 
 ```ts
 function requestModule(url: string) {
-  // ...
+
 }
 
 const req = requestModule;
@@ -996,16 +1054,14 @@ inventoryTracker('apples', req, 'www.inventory-awesome.io');
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Use iterators and generators
+### `Iterables` ve `generator`leri kullanın
 
-Use generators and iterables when working with collections of data used like a stream.  
-There are some good reasons:
+Yüksek sayıda item içeren veri yığınları ile çalışırken `iterator` ve `generator`leri kullanmanın bir takım avantajları vardır
 
-- decouples the callee from the generator implementation in a sense that callee decides how many
-items to access
-- lazy execution, items are streamed on demand
-- built-in support for iterating items using the `for-of` syntax
-- iterables allow to implement optimized iterator patterns
+- Hangi itemlerin erişime açık olduğunu manuel olarak belirleyebilirsiniz
+- Daha az işlem gücü gerektirir. 
+- Iterator iel birlikte `for..of ` syntaxı kullanılabilir
+- Özel iteratorler kullanılarak ile daha yüksek performans elde edilebilir. (Örn. Binary Tree)
 
 **Kötü:**
 
@@ -1026,15 +1082,17 @@ function print(n: number) {
   fibonacci(n).forEach(fib => console.log(fib));
 }
 
-// Print first 10 Fibonacci numbers.
+// İlk 10 fibonnaci sayılarını yazdır.
 print(10);
 ```
 
 **İyi:**
 
 ```ts
-// Generates an infinite stream of Fibonacci numbers.
-// The generator doesn't keep the array of all numbers.
+
+// Sınırsız sayıda fibonacci sayıları üretir.
+// Generator bütün sayılara ait rakamları tutmaz. Yani sadece o anki dizi ile ilgilenir. Önceki ve sonraki diziye ait bilgileri
+// biriktirmez. Bu sayede kullanımı tamamlanan diziler Garbage Collectorun sularına doğru yol alır
 function* fibonacci(): IterableIterator<number> {
   let [a, b] = [0, 1];
 
@@ -1052,13 +1110,14 @@ function print(n: number) {
   }  
 }
 
-// Print first 10 Fibonacci numbers.
+// İlk 10 fibonnaci sayılarını yazdır.
 print(10);
 ```
+`Iterables` metodların aynı native diziler `(Array)` gibi kullanılmasını sağlamak amacıyla çeşitli açık kaynak kodlu kütüphaneler
+mevcut. Bu kütüphaneler sayesinde dizilere ait `map`, `slice`, `forEach` gibi metodları `Iterables` için kullanabilirsiniz. 
 
-There are libraries that allow working with iterables in a similar way as with native arrays, by
-chaining methods like `map`, `slice`, `forEach` etc. See [itiriri](https://www.npmjs.com/package/itiriri) for
-an example of advanced manipulation with iterables (or [itiriri-async](https://www.npmjs.com/package/itiriri-async) for manipulation of async iterables).
+1. [itiriri](https://www.npmjs.com/package/itiriri)
+2. [itiriri-async](https://www.npmjs.com/package/itiriri-async)
 
 ```ts
 import itiriri from 'itiriri';
@@ -1079,19 +1138,49 @@ itiriri(fibonacci())
 
 **[⬆ başa dön](#table-of-contents)**
 
-## Objects and Data Structures
+## Objeler `(Object)` ve Veri Yapıları `(Data Structures)`
 
-### Use getters and setters
+### `getter` ve `setter` kullanın
 
-TypeScript supports getter/setter syntax.
-Using getters and setters to access data from objects that encapsulate behavior could be better than simply looking for a property on an object.
-"Why?" you might ask. Well, here's a list of reasons:
+Typescript `getter/setter` kullanımını desteklemektedir.. Bu `notation`'ları kullanarak verinin obje içerisine eklenmesi veya getirilmesi
+sırasında isteğe çeşitli manipülasyonlar yapabilirsiniz. Bu `notation`'lar bize bir akım kullanım kolaylıkları sağlamaktadır
 
-- When you want to do more beyond getting an object property, you don't have to look up and change every accessor in your codebase.
-- Makes adding validation simple when doing a `set`.
-- Encapsulates the internal representation.
-- Easy to add logging and error handling when getting and setting.
-- You can lazy load your object's properties, let's say getting it from a server.
+- Sadece bir `property` nin obje içerisinde varlığını veya yokluğunu aşan bir durumda, belli bir durumun varlığını veya kontrol etmek
+için `getter` kullanabilirsiniz. Bu aynı zamanda obje çapında bir soyutlama `(Abstraction)` yapmanızı da sağlar.
+**Kötü:**
+```ts
+const user = {
+  name: "Kemal Gözler",
+  emailVerifiedAt: "12-04-2020",
+  status: "Approved"
+}
+
+if (user.emailVerifiedAt && status === "Approved") {
+  //...
+}
+```
+**İyi:**
+```ts
+const user = {
+  name: "Kemal Gözler",
+  emailVerifiedAt: "12-04-2020",
+  status: "Approved",
+
+  get approved(){
+    return user.emailVerifiedAt && user.status === "Approved"
+  } 
+}
+
+if (user.approved) {
+  //...
+}
+```
+
+- `set` işlemi sırasında validasyon işlemlerini yapabilirsiniz.
+- Obje içerisindeki `property`ler obje dışında çağrılırken veya set edilirken manipüle edilebilir.
+- `set` ve `get` kullanımı sayesinde hata yönetimi ve hata loglama işlemleri daha zarif bir şekilde halledilebilir.
+- Eğer *remote* bir veri söz konusu ise bu veri obje oluşturulduğu sırada değil, `propert` çağrıldığı sırada `lazy loading` ile
+çağrılabilir.
 
 **Kötü:**
 
