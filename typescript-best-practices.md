@@ -17,7 +17,7 @@
 Değişkenlerinizi ve parametrelerinizi isimlendirirken hem sizin hem de yazdığınız kodu okuyacak kimselerin anlayabilecekleri şekilde,
 yazdığınız kodun içeriği ile ilgili olarak değişkenlerinizi anlamlı bir şekilde isimlendirin.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 function between<T>(a1: T, a2: T, a3: T): boolean {
@@ -26,7 +26,7 @@ function between<T>(a1: T, a2: T, a3: T): boolean {
 
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 function between<T>(value: T, left: T, right: T): boolean {
@@ -45,7 +45,7 @@ yaptığınız değerlendirmelerde yazılan kodları tartışmak, değişkenleri
 Ayrıca kısaltmalardan oluşan, telaffuzu ve hatırlaması zor değişkenleri kullanmak istediğiniz bir çok zaman
 geriye dönük olarak değişken ismini aramak zorunda kalacak ve zaman kaybedeceksiniz.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 type DtaRcrd102 = {
@@ -55,7 +55,7 @@ type DtaRcrd102 = {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 type Customer = {
@@ -72,7 +72,7 @@ type Customer = {
 Eğer yazdığınız bir fonksiyon bir servisten spesifik bir tipe `type` ait bir verinin getirilmesini sağlıyor
 ve ya spesifik bir verinin düzenlenmesi işlevini getiriyorsa bu veri tipine `type` uygun isimlendirmeler yapmaya özen gösterin.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 // Burada aldığımız User adlı bir model olduğuna göre
@@ -82,7 +82,7 @@ function getUserDetails(): User;
 function getUserData(): User;
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 function getUser(): User;
@@ -96,14 +96,14 @@ Bir kodu bir kez yazıyorsak defalarca kez okuruz. Bu yüzden okunabilir ve aran
 Salt sayısal ifadeler, bir anlam ifade etmeyen sabitler hem sizin için hem de kodunuzu inceleyen ekip arkadaşlarınız için
 hem anlaması hem de araştırması kısıtlı bir imkan sunacaktır. Bu nedenle yazdığınız sayısal ifadeler için anlamlı sabitler kullanın.
 
-**İyi:**
+**Doğru:**
 
 ```ts
 // 86400000 değeri neyi ifade ediyor?
 setTimeout(restart, 86400000);
 ```
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 // Sabitler tanımlarken büyük harf kullanın
@@ -118,7 +118,7 @@ setTimeout(restart, MILLISECONDS_IN_A_DAY);
 
 Bir değişken, parametre, fonksiyon veya sabit tanımlarken olabildiğince açıklayıcı ifadeler kullanın.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 declare const users: Map<string, User>;
@@ -128,7 +128,7 @@ for (const keyValue of users) {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 declare const users: Map<string, User>;
@@ -146,7 +146,7 @@ Daha hızlı kod yazmak, daha az yer kaplayan kod yazmak ve sair maksatlarla kı
 Hem yazdığınız kodu sonradan okuyan sizin hem de ekip arkadaşlarınızın yazdığı kodu anlayabilmesi için açıklayıcı ifadeler
 kullanın  
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 const u = getUser();
@@ -154,7 +154,7 @@ const s = getSubscription();
 const t = charge(u, s);
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 const user = getUser();
@@ -169,7 +169,7 @@ const transaction = charge(user, subscription);
 Eğer değişkeniniz üst bir yapıya bağlı ise (sınıf `(class)`, type `(type)`) halihazırda bu üst yapı ile ilişki içerisinde bulunduğundan
 bubu yapılara bağlı isimlendirme yaparken, bağlı olduğu üst yapıya ilişkin ifadeleri kullanmaktan kaçının. Daha yalın ifadeler kullanın
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 type Car = {
@@ -183,7 +183,7 @@ function print(car: Car): void {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 type Car = {
@@ -204,7 +204,7 @@ function print(car: Car): void {
 Bir fonksiyon veya metod içerisinde şarta bağlı yapılar veya devreler kullanmak yerine varsayılan `default` değerler kullanarak
 bu sorunu çözebilirsiniz.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 function loadPages(count?: number) {
@@ -213,7 +213,7 @@ function loadPages(count?: number) {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 function loadPages(count: number = 10) {
@@ -228,7 +228,7 @@ function loadPages(count: number = 10) {
 Enums can help you document the intent of the code. For example when we are concerned about values being
 different rather than the exact value of those.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 projector.configureFilm(GENRE.COMEDY);
@@ -246,7 +246,7 @@ class Projector {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 enum GENRE {
@@ -327,7 +327,7 @@ Ancak ilkel veri tipleri `primitives` fonksiyon içerisinde gönderilirken veya 
 klonlanacağı için yeni bir referansa sahip olur ve ram'de `memory` yeni bir noktayı işaret eder. Bu veri tiplerinin düzenlenmesi fonksiyon 
 dışında bir sonuç doğurmaz.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 function createMenu(title: string, body: string, buttonText: string, cancellable: boolean) {
@@ -337,7 +337,7 @@ function createMenu(title: string, body: string, buttonText: string, cancellable
 createMenu('Foo', 'Bar', 'Baz', true);
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 function createMenu(options: { title: string, body: string, buttonText: string, cancellable: boolean }) {
@@ -381,7 +381,7 @@ başladığı anda bu fonksiyonu farklı farklı yerlerde kullanmak veya testler
 Ancak eğer sadece tek bir işlemin gerçekleştirilmesinden sorumlu izole bir fonksiyon yaratırsak, hem bu fonksiyonu, gereken parametreleri
 kendisine sağlamak suretiyle, istediğimiz yerde kullanabileceğimiz gibi hem de kolayca testlerini gerçekleştirebiliriz
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 function emailClients(clients: Client[]) {
@@ -394,7 +394,7 @@ function emailClients(clients: Client[]) {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 function emailClients(clients: Client[]) {
@@ -411,7 +411,7 @@ function isActiveClient(client: Client) {
 
 ### Fonksiyonun işlevi isminde açıkça belirtilmelidir
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 function addToDate(date: Date, month: number): Date {
@@ -425,7 +425,7 @@ const date = new Date();
 addToDate(date, 1);
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 function addMonthToDate(date: Date, month: number): Date {
@@ -456,7 +456,7 @@ Soyutlama `(abstraction)` işlemi son derece önemlidir. Doğru bir soyutlama i�
 vardır. Yapılan kötü bir soyutlama işlemi `(abstraction)` yapılan kod tekrarıdan dahi daha kötü sonuçlar doğurabilir. Bu nedenle
 kod yazmaya başlamadan önce olası senarylar düşünülmeli ve buna göre bir soyutlama işlemi gerçekleştirilmelidir.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 function showDeveloperList(developers: Developer[]) {
@@ -492,7 +492,7 @@ function showManagerList(managers: Manager[]) {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 class Developer {
@@ -539,7 +539,7 @@ yüzünden bütün bir modülün yüklenmesine sebebiyet verebilir ve kod tekrar
 
 ### Destruction veya Object.assign kullanarak varsayılan (default) parametreler oluşturun
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 type MenuConfig = { title?: string, body?: string, buttonText?: string, cancellable?: boolean };
@@ -556,7 +556,7 @@ function createMenu(config: MenuConfig) {
 createMenu({ body: 'Bar' });
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 type MenuConfig = { title?: string, body?: string, buttonText?: string, cancellable?: boolean };
@@ -601,7 +601,7 @@ Detaylı bilgi için [`strictNullChecks`](https://www.typescriptlang.org/docs/ha
 içerisinde değerlendirebiliriz. Ancak yukarıda belirttiğimiz üzere biz bir fonksiyonun tek bir işlemi yerine getirmesini 
 istiyoruz. Farklı senaryolar söz konusu olduğu durumlarda, bu senaryoları değerlendirecek yeni fonksiyonlar oluşturulmalıdır. 
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 function createFile(name: string, temp: boolean) {
@@ -613,7 +613,7 @@ function createFile(name: string, temp: boolean) {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 function createTempFile(name: string) {
@@ -638,7 +638,7 @@ objenin içerisinde yer alan bilgileri değiştirdiğini düşünelim. Fonksiyon
 beklenmeyen (boyunu aşan) bir takım işlemler gerçekleştirmektedir. Yapılan bu kapsam dışı, yetkisiz işlemler `İstenmeyen Durum 
 (Side Effect)` olarak adlandırılır.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 // Fonksiyon içerisinde yer alan değişken parametre olmayıp bir üst scope'ta yer alan 
@@ -656,7 +656,7 @@ toBase64();
 console.log(name); // 'Um9iZXJ0IEMuIE1hcnRpbg=='
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 const name = 'Robert C. Martin';
@@ -745,7 +745,7 @@ de satın alındığını görecek. Bu hem kullanıcının hem de bizim istemedi
 yaparkendaha temkinli hareket etmeli, uygulama genelinde kullanılan verimiz `(state)` üzerinde kalıcı değişiklikler yapmadan işlemleri
 gerçekleştirmeliyiz. 
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 function addItemToCart(cart: CartItem[], item: Item): void {
@@ -753,7 +753,7 @@ function addItemToCart(cart: CartItem[], item: Item): void {
 };
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 function addItemToCart(cart: CartItem[], item: Item): CartItem[] {
@@ -777,7 +777,7 @@ kütüphanin işleyişine kalıcı olarak hasar vermek gibi sonuç ile karşı k
 Bu gibi durumlardan kaçınmak için doğrudan global fonksiyonlar oluşturmak ve native sınıfları genişletmek `extend` yerine bu sınıflardan
 miras alan `inheritance` özel sınıflar (collections vs) oluşturabilir ve yardımcı metodlarımızı bu sınıflar üzerinde tanımlayabiliriz. 
     
-**Kötü:**
+**Yanlış:**
 
 ```ts
 declare global {
@@ -792,7 +792,7 @@ Array.prototype.diff = function <T>(other: T[]): T[] {
 };
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 class MyArray<T> extends Array<T> {
@@ -813,7 +813,7 @@ gönüllü geliştirici ciddi bir çaba sarf ediyor.
 Bu gelişmeleri takip etmek, yeniliklere hakim olmak ve eski alışkanlıkları terk edip olabildiğince bu yenilikleri uygulamak gerekiyor.
 Bu yenilikler hem kod yazımında büyük kolaylıklar sunarken, okunurluk `(readibilty)` açısından da daha temiz bir syntax içeriyor.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 const contributions = [
@@ -839,7 +839,7 @@ for (let i = 0; i < contributions.length; i++) {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 const contributions = [
@@ -868,7 +868,7 @@ const totalOutput = contributions
 `Encapsulation` işlemi gerçekleştirerek, yani var olan kodumuzu bir fonksiyon veya bir metod yardımıyla bütünleşik bir yapı içerisine
 taşıyarak okunabilirliği `(readibility)` artırmaya özen göstermeliyiz.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 if (subscription.isTrial || account.balance > 0) {
@@ -876,7 +876,7 @@ if (subscription.isTrial || account.balance > 0) {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 function canActivateService(subscription: Subscription, account: Account) {
@@ -892,7 +892,7 @@ if (canActivateService(subscription, account)) {
 
 ### Olumsuz koşullardan kaçının
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 function isEmailNotUsed(email: string): boolean {
@@ -904,7 +904,7 @@ if (isEmailNotUsed(email)) {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 function isEmailUsed(email: string): boolean {
@@ -928,7 +928,7 @@ Mesela aşağıda örnekte olduğu gibi polimorfik `(polymorphic)` bir yapı kur
 olduğunda her olası senaryo için ayrı bir koşul oluşturmak hem kullanım `(usability)` hem de okunurluk `(readbility)` açısından olumsuz
 sonuçlar doğuracaktır
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 class Airplane {
@@ -954,7 +954,7 @@ class Airplane {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 abstract class Airplane {
@@ -996,7 +996,7 @@ yapmaktadır. Keza artık geliştiriciler esnext ile gelen her yeniliği yakınd
 javascript kodu tarayıcı desteğinden yoksun olup Babel ve benzeri `transpiler` yardımı ile alt seviye javascript koduna dönüştürmekte
 ve gerekli olan optimizasyonların bir çoğunu bu `transpiler` dediğimiz kod dönüştürücüler gerçekleştirmektedir.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 // Eski tarayıcılar önbellekleme özelliğini etkin kullanmadığı için her iteration sırasında 
@@ -1008,7 +1008,7 @@ for (let i = 0, len = list.length; i < len; i++) {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 for (let i = 0; i < list.length; i++) {
@@ -1026,7 +1026,7 @@ olarak adlandırıyoruz.
 Çalışma alanınızda, eğer varsa, kullanımdan kaldırılan bu kodları temizleyin. Bu hem daha temiz bir çalışma ortamı hem de daha küçük
 `bundle` boyutu sağlar.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 function oldRequestModule(url: string) {
@@ -1041,7 +1041,7 @@ const req = requestModule;
 inventoryTracker('apples', req, 'www.inventory-awesome.io');
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 function requestModule(url: string) {
@@ -1063,7 +1063,7 @@ Yüksek sayıda item içeren veri yığınları ile çalışırken `iterator` ve
 - Iterator ile birlikte `for..of ` syntaxı kullanılabilir
 - Özel iteratorler yazıbilir, farklı veri yapılarına entegre edilebilir böylece daha yüksek performans elde edilebilir. (Örn. Binary Tree)
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 function fibonacci(n: number): number[] {
@@ -1086,7 +1086,7 @@ function print(n: number) {
 print(10);
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 
@@ -1147,7 +1147,7 @@ sırasında obje üzerinde çeşitli manipülasyonlar yapabilirsiniz. Bu `notati
 
 - Sadece bir `property` nin obje içerisinde varlığını veya yokluğunu aşan bir durumda, belli bir durumun varlığını veya kontrol etmek
 için `getter` kullanabilirsiniz. Bu aynı zamanda obje çapında bir soyutlama `(Abstraction)` yapmanızı da sağlar.
-**Kötü:**
+**Yanlış:**
 ```ts
 const user = {
   name: "Kemal Gözler",
@@ -1159,7 +1159,7 @@ if (user.emailVerifiedAt && status === "Approved") {
   //...
 }
 ```
-**İyi:**
+**Doğru:**
 ```ts
 const user = {
   name: "Kemal Gözler",
@@ -1182,7 +1182,7 @@ if (user.approved) {
 - Eğer *remote* bir veri söz konusu ise bu veri obje oluşturulduğu sırada değil, `propert` çağrıldığı sırada `lazy loading` ile
 çağrılabilir.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 type BankAccount = {
@@ -1203,7 +1203,7 @@ if (value < 0) {
 account.balance = value;
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 class BankAccount {
@@ -1245,7 +1245,7 @@ Bu kuralları kullanarak tanımladığınız metodun veya `property`'nin hangi e
 
 [Kaynak: Kapsülleme](https://www.wikiwand.com/tr/Kaps%C3%BClleme)
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 class Circle {
@@ -1265,7 +1265,7 @@ class Circle {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 class Circle {
@@ -1292,7 +1292,7 @@ sonuçlardan `(side effects)` bir nebze olsun kaçınabiliriz.
 Daha gelişmiş senaryolar için `generic` bir `type` olan `Readonly<T>` `type`ını kullanabilirsiniz. Bu sayede bir sınıfa ait bütün
 `property`ler readonly olarak işaretlenir ve dışarıdan gelen bütün müdahelelere kapatılır.
  
-**Kötü:**
+**Yanlış:**
 
 ```ts
 interface Config {
@@ -1302,7 +1302,7 @@ interface Config {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 interface Config {
@@ -1316,7 +1316,7 @@ içerisinde yer alan itemle artık değiştirilemez ve bu diziye yeni bir item e
 metodlar artık kullanılamaz. Ancak dizi içerisinde yer alan itemleri etkilemeyen ve tamamen yeni bir dizi döndüren `concat()` ve
 `slice()` gibi metodlar ise kullanılabilir.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 const array: number[] = [ 1, 3, 5 ];
@@ -1324,7 +1324,7 @@ array = []; // error
 array.push(100); // array will updated
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 const array: ReadonlyArray<number> = [ 1, 3, 5 ];
@@ -1343,7 +1343,7 @@ function hoge(args: readonly string[]) {
 
 Detaylı bilgi için; [const assertions](https://github.com/microsoft/TypeScript/wiki/What's-new-in-TypeScript#const-assertions)
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 const config = {
@@ -1362,7 +1362,7 @@ const result = readonlyData(100);
 result.value = 200; // değer değişti
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 // obje artık değştirilemez.
@@ -1398,10 +1398,10 @@ fundamental kavramlara hakim olmakta fayda var.
 Genel olarak eğer birden fazla tanımlamayı birlikte veya alternatif olarak kullanmak gerekiyorsa yani `union` veya `intersect` olarak
 tanımlanan işlemler ile ihtiyacımızı karşılayabiliyorsak `type` oluşturmak ihtiyacımızı görecektir.
 
-Ancak yeri geldiğinde genişletmek `(extends)` yeri geldiğinde ise bir nesneye `(Class)` uygulamak `(implement)` istediğimiz bir
+Ancak yeri geldiğinde genişletmek `(extends)` yeri geldiğinde ise bir nesneye `(class)` uygulamak `(implement)` istediğimiz bir
 tanımlama söz konusu ise bu tanımlama için arayüz `(interface)` oluşturmak daha yerinde olacaktır.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 interface EmailConfig {
@@ -1423,7 +1423,7 @@ type Shape = {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 
@@ -1454,7 +1454,7 @@ class Square implements Shape {
 
 **[⬆ başa dön](#table-of-contents)**
 
-## Sınıflar/Nesneler `(Class)`
+## Sınıflar/Nesneler `(class)`
 
 ### Sınıflar olabildiğince minimal olmalıdır
 Bir sınıf oluştururken ilk dikkat edilmesi gereken bir SOLID prensini olan *Single Responsibility* prensibidir. Yani bir nesne sadece
@@ -1465,7 +1465,7 @@ Eğer benim kendisine sağlanan hayvanın kollarını ve bacaklarını saymaktan
 yaşam süresini de hesaplıyorsa burada kapsam dışı, sınıfın amacını aşan bir kullanım söz konusu olup `Single Responsibility` prensibine
 aykırı bir durum vardır.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 class Dashboard {
@@ -1488,7 +1488,7 @@ class Dashboard {
 
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 class Dashboard {
@@ -1502,23 +1502,74 @@ class Dashboard {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### High cohesion and low coupling
+### Yüksek bütünleşme ve düşük bağlanma `(High cohesion ve low coupling)`
+Bu kavramları doğrudan türkçe aktarmak güç. Ancak dilin elverdiği ölçüde açıklamaya çalışacağım.
 
-Cohesion defines the degree to which class members are related to each other. Ideally, all fields within a class should be used by each method.
-We then say that the class is *maximally cohesive*. In practice, this however is not always possible, nor even advisable. You should however prefer cohesion to be high.  
+Bütünleşme yani `cohesion` ile ifade edilen bir nesnenin `(class)` yönettiği veri `(data)` ile bu veriyi yönetmesini sağlayan metodların uyum içerisinde çalışması
+metodlarının görevinin bu verinin veya nesnenin yapması gereken işlevin dışına çıkmaması, bütünleşik bir şekilde çalışması demektedir.  
 
-Coupling refers to how related or dependent are two classes toward each other. Classes are said to be low coupled if changes in one of them doesn't affect the other one.  
-  
-Good software design has **high cohesion** and **low coupling**.
+**Yanlış:**
+```ts
+declare class User{
+  constructor(private name: string, private email: string) 
+  //... getters and setters
+  sendEmail(): void
+  approveUser(): void
+}
+```
+Yukarıda gereğinden fazla görevi yerine getiren, sınırlarını zorlayan bir model söz konusu. Eğer model sadece getter ve setter metodlarından oluşsa
+sendEmail gibi işlemler için ayrı bir `Mailer` nesnesi oluşturulsa daha sağlıklı bir yapı kurulabilecekken, işlemler tek bir sınıf altında toplanmış,
+model konsepti ile *bütünleşik* olmayan bir nesne oluşturulmuştur.
+**Doğru:**
+```ts
+declare interface CanReceiveMail {
+  setEmail(): string 
+  getEmail(): string 
+}
 
-**Kötü:**
+declare class User extends Model implements CanReceiveMail {
+  constructor(private name: string, private email: string) 
+  setName(): string
+  getName(): string 
+  setEmail(): string 
+  getEmail(): string 
+}
+
+declare class Mail {
+  //... diğer mail metodları
+  to(to: string | CanReceiveMail): Mail
+}
+
+declare class Mailer {
+  send(mail: Mail): void
+}
+
+declare class UserService {
+  approveUser(user: User): boolean
+}
+```
+Yukarıda gerçekleşmesini istediğiniz işlemleri farklı sınıflara bölerek hem `Single Responsiblity` prensibine uygun hem de amacına uygun, yönettiği veri ile
+*bütünleşik* `(cohesional)`, nesne tabanlı programlamada amaç edinilen **yüksek bütünleşme** prensibine uygun bir yapı oluşturduk.
+
+**Düşük bağlanma** ise nesnelerin olabildiğine izole olarak oluşturulması, oluşturulan bir modül içerisinde diğer nesneler ile arasındaki ilişkinin olabildiğince
+az ve belli koşullar altında gerçekleşmesi. Belirli bir nesnenin varlığından bağımsız olarak çalışabilmesi demektedir. 
+
+Bir nesne, component veya modül her ne kadar çevresinden bağımsız `(decoupled)` ise kullanım açısından, özellikle de tekrar tekrar `(reusability)` farklı çalışma
+ortamlarında kullanılması açısından bir o kadar iyidir.
+
+Yukarıda yer alan örneği sürdürsek `Mail` sınıfı hem bir mail adresine hem de `CanReceiveMail` sınıfına ait özellikleri yani içerisinde email adresi olan herhangi
+bir sınıf ile birlikte çalışabilecektir. Ancak `CanReceiveMail` yerine `User` demiş olsaydık bu maili ancak bir email adresine veya sadece user modeline
+gönderebilecektik. Ancak artık biz bu maili `Model` olsun olmasın, `User` olsun olmasın `CanReceiveMail` arayüzünü uygulayan `(implements)` her nesneyi mail gönderirken
+kullanabiliriz.
+
+**Yanlış:**
 
 ```ts
 class UserManager {
-  // Bad: each private variable is used by one or another group of methods.
-  // It makes clear evidence that the class is holding more than a single responsibility.
-  // If I need only to create the service to get the transactions for a user,
-  // I'm still forced to pass and instance of `emailSender`.
+  // Bu örnekte private property iki veya daha fazla sayıda method tarafından kullanılmaktadır.
+  // Bu örnek ile daha açık bir şekilde anlaşılacağı üzere bu sınıf kapasitesini aşan işlerden sorumludur.
+  // Örnekte sadece temel bilgiler almak, kullanıcı iblgilerini görüntülemek için bile olsa `EmailSender`,
+  // sınıfı sağlanmak zorundadır. Kullanıcı modeli, bir modelin amacını aşan görevleri gerçekleştirmektedir.
   constructor(
     private readonly db: Database,
     private readonly emailSender: EmailSender) {
@@ -1546,7 +1597,7 @@ class UserManager {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 class UserService {
@@ -1582,19 +1633,22 @@ class UserNotifier {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Prefer composition over inheritance
+### Bir nesneden miras almak `(inheritence)` yerine `Composition` kullanın.
 
-As stated famously in [Design Patterns](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four, you should *prefer composition over inheritance* where you can. There are lots of good reasons to use inheritance and lots of good reasons to use composition. The main point for this maxim is that if your mind instinctively goes for inheritance, try to think if composition could model your problem better. In some cases it can.  
-  
-You might be wondering then, "when should I use inheritance?" It depends on your problem at hand, but this is a decent list of when inheritance makes more sense than composition:
+Öncelikle `Composition` kavramının ne olduğu üzerinde durmakta fayda var. En basit haliyle, nesnelerin birbiri içerisinde kullanılması demektir. Ancak yukarıda
+nesneleri olabildiğince izole bir şekilde çalışmasından, diğer nesnelerden bağımsız bir şekilde çalışmasından bahsetmişken peki neden şimdi bir öyle bir böyle 
+konuşuyoruz.
 
-1. Your inheritance represents an "is-a" relationship and not a "has-a" relationship (Human->Animal vs. User->UserDetails).
+Nesnelerin izole olmasını ve birbirinden bağımsız çalışmasını istiyoruz ancak bu nesnelerin kendi işi olmayan görevleri de yapmasını istemiyoruz. Dolayısıyla bir
+noktada farklı nesnelerin varlığına ihtiyaç duyuyoruz. Ancak bu ihtiyacımızı belirlerken yaptığımız soyutlama önem arz ediyor. Yani kalıcı olarak spesifik bir 
+nesneye değil, arayüzler `(interface)` kullanarak ihtiyacımız olan şartları sağlayan herhangi bir nesne ile çalışabilecek şekilde bir yapı kurmalıyız.
 
-2. You can reuse code from the base classes (Humans can move like all animals).
+İşte `Composition` tam bu noktada devreye giriyor. Ben kullanıcılara mail göndermek için, `Mail` sınıfında sadece kullanıcının mail adresine ulaşmak için, 
+koca bir modeli miras almak yerine, oluşturduğum Mail sınıfında `CanReceiveMail` arayüzünü uygulayan `(implements)` `User` modelimi kullanabilirim. 
+Bu sayede hem Mail nesnemi, mail adresi dışında hiç bir ortak noktasının olmadığı `Model` sınıfından ayırmış olurum hem de `CanReceiveMail` arayüzünü uygulamış
+`(implements)` bütün nesnelerin sahip olduğu mail adreslerine mail gönderebilirim.
 
-3. You want to make global changes to derived classes by changing a base class. (Change the caloric expenditure of all animals when they move).
-
-**Kötü:**
+**Yanlış:**
 
 ```ts
 class Employee {
@@ -1606,7 +1660,9 @@ class Employee {
   // ...
 }
 
-// Bad because Employees "have" tax data. EmployeeTaxData is not a type of Employee
+// Burada yaptığımız işlem oldukça kötü bir pratik çünkü 
+// EmployeeTaxData doğrudan Employee modeli ile ilişkisi
+// yok hatta herhangi bir ortak property'si dahi yok 
 class EmployeeTaxData extends Employee {
   constructor(
     name: string,
@@ -1620,7 +1676,7 @@ class EmployeeTaxData extends Employee {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 class Employee {
@@ -1648,14 +1704,57 @@ class EmployeeTaxData {
   // ...
 }
 ```
+ÇN: Yukarıdaki örnek daha akla yatkın ve doğru ancak yine de şöyle bir sıkıntı var. Öncelikle yukarıda yer alan kodu çevirdiğim dökümandan aldığım için müdahele etmedim.
+Ancak dökümanı yazan şahsın kasıtlı veya kasıtsız olabilir atladığı bir husus var. `setTaxData` metodunda `EmployeeTaxData` örneği oluşturup kullanıyoruz. Ancak
+farklı durumlarda, örneğin farklı ülkelerde, vergi bilgileri farklı şekillerde elde ediliyor olabilir. Bu durumda `EmployeeTaxData` benzeri farklı bir nesneye
+ihtiyaç duyacağız. 
+
+Ancak `EmployeeTaxData` sınıfını doğrudan `setTaxData` metodu içerisinde örneklediğimiz için dışarıdan müdahele etme şansımız sıfır. Üstelik yukarıda bahsettiğimiz
+gibi bir sınıfı başka sınıflara bağımlı ettiğimiz zaman, doğrudan spesifik bir sınıfa değil, bir arayüz `(interface)` kullanarak soyut bir varlığa bağımlı hale
+getirmek dah doğru bir yol olur.
+
+**Daha Doğru:**
+
+```ts
+class Employee {
+  private taxData: EmployeeTaxData;
+
+  constructor(
+    private readonly name: string,
+    private readonly email: string) {
+  }
+
+  setTaxData(taxData: TaxData): Employee {
+    this.taxData = taxData;
+    return this;
+  }
+  // ...
+}
+
+interface TaxData {
+  getTaxData()
+}
+
+class EmployeeTaxData implements TaxData {
+  getTaxData(){
+  }
+}
+
+class EmployeeTaxDataAtUSA implements TaxData {
+  getTaxData(){
+  }
+}
+```
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Use method chaining
+### Zincirleme metodlar `(method chaining)` kullanın.
 
-This pattern is very useful and commonly used in many libraries. It allows your code to be expressive, and less verbose. For that reason, use method chaining and take a look at how clean your code will be.
+Bu syntax sıklıkla kütüphanelerde kullanılmaktadır. Genellikle `setter` metodlarda `void` yerine objenin kendisi döndürülmek suretiyle akışkan `fluent` bir yapı
+oluşturulur. Bu yapı hem kullanım `(usability)` hem de okunurluk `(readibility)` açısından kolaylık sağlar.
 
-**Kötü:**
+
+**Yanlış:**
 
 ```ts
 class QueryBuilder {
@@ -1692,7 +1791,7 @@ queryBuilder.orderBy('firstName', 'lastName');
 const query = queryBuilder.build();
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 class QueryBuilder {
@@ -1735,11 +1834,18 @@ const query = new QueryBuilder()
 
 ## SOLID
 
-### Single Responsibility Principle (SRP)
+### Tekil Sorumluluk `(Single Responsibility)` Prensibi (SRP)
 
-As stated in Clean Code, "There should never be more than one reason for a class to change". It's tempting to jam-pack a class with a lot of functionality, like when you can only take one suitcase on your flight. The issue with this is that your class won't be conceptually cohesive and it will give it many reasons to change. Minimizing the amount of times you need to change a class is important. It's important because if too much functionality is in one class and you modify a piece of it, it can be difficult to understand how that will affect other dependent modules in your codebase.
+Tekil Sorumluluk yani `Single Responsibilty` bir nesnenin `(class)` sadece tek bir amaca hizmet etmesini, tek bir amacı gerçekleştirmesini, tek bir işin yönetiminden sorumlu
+olmasını ifade eder.
 
-**Kötü:**
+Bir nesnenin birden fazla işin yönetiminden sorumlu olması, örneğin, alış veriş ürünlerinin tutan Card nesnesinin aynı zamanda ödeme bilgileri tutması ve ödeme 
+işlemi gerçekleştirebilmesi Tekil Sorumluluk `(Single Responsibility)` ilkesine aykırılık teşkil edecektir.
+
+Bir nesne `(class)` oluştururken bu nesnenin kapsam ve görevleri, daha doğrusu ne tür bir amaca hizmet edeceği, bu nesnenin konsepti daha nesne oluturulmadan önce 
+net bir şekilde *(fiziken veya mental olarak)* çizilmelidir. 
+
+**Yanlış:**
 
 ```ts
 class UserSettings {
@@ -1758,7 +1864,7 @@ class UserSettings {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 class UserAuth {
@@ -1788,11 +1894,17 @@ class UserSettings {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Open/Closed Principle (OCP)
+### Açık/Kapalı Prensibi `(Open Closed Princible)`
 
-As stated by Bertrand Meyer, "software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification." What does that mean though? This principle basically states that you should allow users to add new functionalities without changing existing code.
+Bertrand Meyer tarafından ifade edildiği üzere;
 
-**Kötü:**
+> Yazılım mimarısında kullanılan varlıklar (nesneler, modüller, fonksiyonlar ...) düzenlemeye **kapalı** ancak her daim genişletmeye **açık** olmalıdır
+
+Bertrand Meyer'in burada demek istediği yazdığınız bir nesne veya modül gelişime açık olmalı, bu nesnelere yeni özellikler, yeni işlevler, 
+yeni metodlar eklenebilmeli ancak var olan kodlar değiştirilmemeli *(genişletilebilmeli)*, mevcut kodların çalışma düzeni zarar 
+görmeden bu genişletme işlemi yapılabilmelidir. 
+
+**Yanlış:**
 
 ```ts
 class AjaxAdapter extends Adapter {
@@ -1818,30 +1930,24 @@ class HttpRequester {
   async fetch<T>(url: string): Promise<T> {
     if (this.adapter instanceof AjaxAdapter) {
       const response = await makeAjaxCall<T>(url);
-      // transform response and return
     } else if (this.adapter instanceof NodeAdapter) {
       const response = await makeHttpCall<T>(url);
-      // transform response and return
     }
   }
 }
 
 function makeAjaxCall<T>(url: string): Promise<T> {
-  // request and return promise
 }
 
 function makeHttpCall<T>(url: string): Promise<T> {
-  // request and return promise
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 abstract class Adapter {
   abstract async request<T>(url: string): Promise<T>;
-
-  // code shared to subclasses ...
 }
 
 class AjaxAdapter extends Adapter {
@@ -1878,6 +1984,11 @@ class HttpRequester {
   }
 }
 ```
+Eğer koşula dayalı bir yapı kullanırsak her yeni adapter eklediğimizde, `HttpRequester.fetch` metodunu düzenlemek zorundayız. Ancak
+Açık/Kapalı prensibinde kabul ettiğimiz üzere biz yeni bir adapter eklediğimizde mevcut kod üzerinde bir değişim olmasını istemiyoruz. 
+
+Dolayısıyla en başta bizim sonradan yaptığımız eklemelerden etkilenmeyecek bir yapı kurmamız gerekiyor. Yukarıda yer alan örnekte sürücü
+dizaynı `(Driver Pattern)` ile oluşturulmuş bir yapı söz konusu. Bu yapı sayesinde biz 40 farklı adapter dahi 
 
 **[⬆ başa dön](#table-of-contents)**
 
@@ -1887,7 +1998,7 @@ This is a scary term for a very simple concept. It's formally defined as "If S i
   
 The best explanation for this is if you have a parent class and a child class, then the parent class and child class can be used interchangeably without getting incorrect results. This might still be confusing, so let's take a look at the classic Square-Rectangle example. Mathematically, a square is a rectangle, but if you model it using the "is-a" relationship via inheritance, you quickly get into trouble.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 class Rectangle {
@@ -1948,7 +2059,7 @@ const rectangles = [new Rectangle(), new Rectangle(), new Square()];
 renderLargeRectangles(rectangles);
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 abstract class Shape {
@@ -2003,7 +2114,7 @@ renderLargeShapes(shapes);
 ISP states that "Clients should not be forced to depend upon interfaces that they do not use.". This principle is very much related to the Single Responsibility Principle.
 What it really means is that you should always design your abstractions in a way that the clients that are using the exposed methods do not get the whole pie instead. That also include imposing the clients with the burden of implementing methods that they don’t actually need.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 interface SmartPrinter {
@@ -2041,7 +2152,7 @@ class EconomicPrinter implements SmartPrinter {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 interface Printer {
@@ -2091,7 +2202,7 @@ This can be hard to understand at first, but if you've worked with Angular, you'
   
 DIP is usually achieved by a using an inversion of control (IoC) container. An example of a powerful IoC container for TypeScript is [InversifyJs](https://www.npmjs.com/package/inversify)
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 import { readFile as readFileCb } from 'fs';
@@ -2126,7 +2237,7 @@ const reader = new ReportReader();
 await report = await reader.read('report.xml');
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 import { readFile as readFileCb } from 'fs';
@@ -2214,7 +2325,7 @@ Clean tests should follow the rules:
 
 Tests should also follow the *Single Responsibility Principle*. Make only one assert per unit test.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 import { assert } from 'chai';
@@ -2235,7 +2346,7 @@ describe('AwesomeDate', () => {
 });
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 import { assert } from 'chai';
@@ -2264,7 +2375,7 @@ describe('AwesomeDate', () => {
 
 When a test fail, its name is the first indication of what may have gone wrong.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 describe('Calendar', () => {
@@ -2278,7 +2389,7 @@ describe('Calendar', () => {
 });
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 describe('Calendar', () => {
@@ -2302,7 +2413,7 @@ Callbacks aren't clean, and they cause excessive amounts of nesting *(the callba
 There are utilities that transform existing functions using the callback style to a version that returns promises
 (for Node.js see [`util.promisify`](https://nodejs.org/dist/latest-v8.x/docs/api/util.html#util_util_promisify_original), for general purpose see [pify](https://www.npmjs.com/package/pify), [es6-promisify](https://www.npmjs.com/package/es6-promisify))
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 import { get } from 'request';
@@ -2333,7 +2444,7 @@ downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html'
 });
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 import { get } from 'request';
@@ -2369,7 +2480,7 @@ Promises supports a few helper methods that help make code more concise:
 
 With `async`/`await` syntax you can write code that is far cleaner and more understandable than chained promises. Within a function prefixed with `async` keyword you have a way to tell the JavaScript runtime to pause the execution of code on the `await` keyword (when used on a promise).
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 import { get } from 'request';
@@ -2387,7 +2498,7 @@ downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html'
   .catch(error => console.error(error));  
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 import { get } from 'request';
@@ -2426,7 +2537,7 @@ It would be very confusing to catch a string message there and would make
 [debugging more painful](https://basarat.gitbook.io/typescript/type-system/exceptions#always-use-error).  
 For the same reason you should reject promises with `Error` types.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 function calculateTotal(items: Item[]): number {
@@ -2438,7 +2549,7 @@ function get(): Promise<Item[]> {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 function calculateTotal(items: Item[]): number {
@@ -2484,7 +2595,7 @@ For the detailed explanation of this idea refer to the [original post](https://m
 
 Doing nothing with a caught error doesn't give you the ability to ever fix or react to said error. Logging the error to the console (`console.log`) isn't much better as often times it can get lost in a sea of things printed to the console. If you wrap any bit of code in a `try/catch` it means you think an error may occur there and therefore you should have a plan, or create a code path, for when it occurs.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 try {
@@ -2502,7 +2613,7 @@ try {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 import { logger } from './logging'
@@ -2520,7 +2631,7 @@ try {
 
 For the same reason you shouldn't ignore caught errors from `try/catch`.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 getUser()
@@ -2532,7 +2643,7 @@ getUser()
   });
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 import { logger } from './logging'
@@ -2583,7 +2694,7 @@ Refer also to this great [TypeScript StyleGuide and Coding Conventions](https://
 
 Capitalization tells you a lot about your variables, functions, etc. These rules are subjective, so your team can choose whatever they want. The point is, no matter what you all choose, just *be consistent*.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 const DAYS_IN_WEEK = 7;
@@ -2599,7 +2710,7 @@ type animal = { /* ... */ }
 type Container = { /* ... */ }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 const DAYS_IN_WEEK = 7;
@@ -2625,7 +2736,7 @@ Prefer using `camelCase` for variables, functions and class members.
 If a function calls another, keep those functions vertically close in the source file. Ideally, keep the caller right above the callee.
 We tend to read code from top-to-bottom, like a newspaper. Because of this, make your code read that way.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 class PerformanceReview {
@@ -2666,7 +2777,7 @@ const review = new PerformanceReview(employee);
 review.review();
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 class PerformanceReview {
@@ -2726,7 +2837,7 @@ With clean and easy to read import statements you can quickly see the dependenci
   - modules from a parent directory (i.e. `import foo from '../foo'; import qux from '../../foo/qux';`)
   - modules from the same or a sibling's directory (i.e. `import bar from './bar'; import baz from './bar/baz';`)
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 import { TypeDefinition } from '../types/typeDefinition';
@@ -2738,7 +2849,7 @@ import { BindingScopeEnum, Container } from 'inversify';
 import 'reflect-metadata';
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 import 'reflect-metadata';
@@ -2761,13 +2872,13 @@ Create prettier imports by defining the paths and baseUrl properties in the comp
 
 This will avoid long relative paths when doing imports.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 import { UserService } from '../../../services/UserService';
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 import { UserService } from '@services/UserService';
@@ -2800,14 +2911,14 @@ The use of a comments is an indication of failure to express without them. Code 
 
 Comments are an apology, not a requirement. Good code *mostly* documents itself.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 // Check if subscription is active.
 if (subscription.endDate > Date.now) {  }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 const isSubscriptionActive = subscription.endDate > Date.now;
@@ -2820,7 +2931,7 @@ if (isSubscriptionActive) { /* ... */ }
 
 Version control exists for a reason. Leave old code in your history.
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 type User = {
@@ -2831,7 +2942,7 @@ type User = {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 type User = {
@@ -2846,7 +2957,7 @@ type User = {
 
 Remember, use version control! There's no need for dead code, commented code, and especially journal comments. Use `git log` to get history!
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 /**
@@ -2860,7 +2971,7 @@ function combine(a: number, b: number): number {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 function combine(a: number, b: number): number {
@@ -2875,7 +2986,7 @@ function combine(a: number, b: number): number {
 They usually just add noise. Let the functions and variable names along with the proper indentation and formatting give the visual structure to your code.  
 Most IDE support code folding feature that allows you to collapse/expand blocks of code (see Visual Studio Code [folding regions](https://code.visualstudio.com/updates/v1_17#_folding-regions)).
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 ////////////////////////////////////////////////////////////////////////////////
@@ -2907,7 +3018,7 @@ class Client {
 };
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 class Client {
@@ -2940,7 +3051,7 @@ you can quickly go over the entire list of todos.
 
 Keep in mind however that a *TODO* comment is not an excuse for bad code. 
 
-**Kötü:**
+**Yanlış:**
 
 ```ts
 function getActiveSubscriptions(): Promise<Subscription[]> {
@@ -2949,7 +3060,7 @@ function getActiveSubscriptions(): Promise<Subscription[]> {
 }
 ```
 
-**İyi:**
+**Doğru:**
 
 ```ts
 function getActiveSubscriptions(): Promise<Subscription[]> {
