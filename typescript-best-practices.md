@@ -1462,11 +1462,12 @@ class Square implements Shape {
 ## <a name="classes"></a> Sınıflar/Nesneler `(class)`
 
 ### Sınıflar olabildiğince minimal olmalıdır
-Bir sınıf oluştururken ilk dikkat edilmesi gereken bir SOLID prensini olan *Single Responsibility* prensibidir. Yani bir nesne sadece
-tek bir amaç doğrultusunda oluşturulmalı ve sadece o amaca hizmet etmelidir. Fonksiyonlara benzer bir şekilde nesnelerde amacı dışında 
+
+Bir sınıf oluştururken ilk dikkat edilmesi gereken ve aynı zamanda bir SOLID prensini olan *Single Responsibility* prensibidir. Yani bir nesne sadece
+tek bir amaç doğrultusunda oluşturulmalı ve sadece o amaca hizmet etmelidir. Fonksiyonlara benzer bir şekilde nesnelerde amacı dışına 
 çıkmamalı, nesnelere kapsamını aşan görevler yüklenmemelidir.
 
-Eğer benim kendisine sağlanan hayvanın kollarını ve bacaklarını saymaktan sorumlu bir nesnem varsa bu nesne aynı zamanda hayvanın ortalama
+Eğer kendisine sağlanan hayvanın kollarını ve bacaklarını saymaktan sorumlu bir nesne varsa bu nesne aynı zamanda hayvanın ortalama
 yaşam süresini de hesaplıyorsa burada kapsam dışı, sınıfın amacını aşan bir kullanım söz konusu olup `Single Responsibility` prensibine
 aykırı bir durum vardır.
 
@@ -1525,6 +1526,7 @@ declare class User{
 Yukarıda gereğinden fazla görevi yerine getiren, sınırlarını zorlayan bir model söz konusu. Eğer model sadece getter ve setter metodlarından oluşsa
 sendEmail gibi işlemler için ayrı bir `Mailer` nesnesi oluşturulsa daha sağlıklı bir yapı kurulabilecekken, işlemler tek bir sınıf altında toplanmış,
 model konsepti ile *bütünleşik* olmayan bir nesne oluşturulmuştur.
+
 **Doğru:**
 ```ts
 declare interface CanReceiveMail {
@@ -1553,8 +1555,8 @@ declare class UserService {
   approveUser(user: User): boolean
 }
 ```
-Yukarıda gerçekleşmesini istediğiniz işlemleri farklı sınıflara bölerek hem `Single Responsiblity` prensibine uygun hem de amacına uygun, yönettiği veri ile
-*bütünleşik* `(cohesional)`, nesne tabanlı programlamada amaç edinilen **yüksek bütünleşme** prensibine uygun bir yapı oluşturduk.
+Yukarıda gerçekleşmesini istediğiniz işlemleri farklı sınıflara bölerek hem `Single Responsiblity` prensibine hem de amacına uygun, yönettiği veri ile
+*bütünleşik* `(cohesional)` bir şekilde çalışan, nesne tabanlı programlamada amaç edinilen **yüksek bütünleşme** prensibine uygun bir yapı oluşturduk.
 
 **Düşük bağlanma** ise nesnelerin olabildiğine izole olarak oluşturulması, oluşturulan bir modül içerisinde diğer nesneler ile arasındaki ilişkinin olabildiğince
 az ve belli koşullar altında gerçekleşmesi. Belirli bir nesnenin varlığından bağımsız olarak çalışabilmesi demektedir. 
@@ -1716,7 +1718,7 @@ ihtiyaç duyacağız.
 
 Ancak `EmployeeTaxData` sınıfını doğrudan `setTaxData` metodu içerisinde örneklediğimiz için dışarıdan müdahele etme şansımız sıfır. Üstelik yukarıda bahsettiğimiz
 gibi bir sınıfı başka sınıflara bağımlı ettiğimiz zaman, doğrudan spesifik bir sınıfa değil, bir arayüz `(interface)` kullanarak soyut bir varlığa bağımlı hale
-getirmek dah doğru bir yol olur.
+getirmek daha doğru bir yol olur.
 
 **Daha Doğru:**
 
@@ -1755,7 +1757,7 @@ class EmployeeTaxDataAtUSA implements TaxData {
 
 ### Zincirleme metodlar `(method chaining)` kullanın.
 
-Bu syntax sıklıkla kütüphanelerde kullanılmaktadır. Genellikle `setter` metodlarda `void` yerine objenin kendisi döndürülmek suretiyle akışkan `fluent` bir yapı
+Bu *syntax* sıklıkla kütüphanelerde kullanılmaktadır. Genellikle `setter` metodlarda `void` yerine objenin kendisi döndürülmek suretiyle akışkan `(fluent)` bir yapı
 oluşturulur. Bu yapı hem kullanım `(usability)` hem de okunurluk `(readibility)` açısından kolaylık sağlar.
 
 
@@ -1844,7 +1846,7 @@ const query = new QueryBuilder()
 Tekil Sorumluluk yani `Single Responsibilty` bir nesnenin `(class)` sadece tek bir amaca hizmet etmesini, tek bir amacı gerçekleştirmesini, tek bir işin yönetiminden sorumlu
 olmasını ifade eder.
 
-Bir nesnenin birden fazla işin yönetiminden sorumlu olması, örneğin, alış veriş ürünlerinin tutan Card nesnesinin aynı zamanda ödeme bilgileri tutması ve ödeme 
+Bir nesnenin birden fazla işin yönetiminden sorumlu olması, örneğin, alış veriş ürünlerinin tutan `Card` nesnesinin aynı zamanda ödeme bilgileri tutması ve ödeme 
 işlemi gerçekleştirebilmesi Tekil Sorumluluk `(Single Responsibility)` ilkesine aykırılık teşkil edecektir.
 
 Bir nesne `(class)` oluştururken bu nesnenin kapsam ve görevleri, daha doğrusu ne tür bir amaca hizmet edeceği, bu nesnenin konsepti daha nesne oluturulmadan önce 
@@ -1903,7 +1905,7 @@ class UserSettings {
 
 Bertrand Meyer tarafından ifade edildiği üzere;
 
-> Yazılım mimarısında kullanılan varlıklar (nesneler, modüller, fonksiyonlar ...) düzenlemeye **kapalı** ancak her daim genişletmeye **açık** olmalıdır
+> Yazılım mimarısında kullanılan varlıklar (nesneler, modüller, fonksiyonlar ...) düzenlemeye **kapalı** ancak her daim genişlemeye **açık** olmalıdır
 
 Bertrand Meyer'in burada demek istediği yazdığınız bir nesne veya modül gelişime açık olmalı, bu nesnelere yeni özellikler, yeni işlevler, 
 yeni metodlar eklenebilmeli ancak var olan kodlar değiştirilmemeli *(genişletilebilmeli)*, mevcut kodların çalışma düzeni zarar 
@@ -2128,8 +2130,8 @@ renderLargeShapes(shapes);
 zorunda bırakılmamalı.*
 
 Burada anlatılmak istenen aslında yukarıda `Single Responsibility` prensibinde anlatılandan çok da farklı değildir. Bu prensipte ise
-nesnelerin yerine arayüzlerin `(interface)` kapsamının daha dar, daha **öz** olması gerektiğinden, bir arayüzün kapsamı dışında kalan metodları
-tanımlamamasından bahseder.
+nesnelerin yerine arayüzlerin `(interface)` kapsamının daha dar, daha **öz** olması gerektiğinden, bir arayüzün ancak tek bir işlevi yerine getirmek
+amacıyla gereken metodlara sahip olması gerektiğini ifade eder.
 
 Bu sayede bir arayüzü `(interface)` uygulayan `(implement eden)` geliştiricinin hiç ihtiyacı olmadığı halde bu metodları, sadece 
 arayüzde tanımlandığı için oluşturduğu sınıfa uygulamak zorunda bırakılmaması amaçlanır.
@@ -2224,12 +2226,11 @@ Okunduğunda çok fazla bir anlam ifade etmiyor gibi görünebilir ancak aslınd
 hatalı bulduğumuz bir örneği düzenlemek yoluyla kullandık.
 
 Hatırlarsanız `EmployeeTaxData` sınıfını `setTaxData` metodu içerisinde oluşturan *(örnekleyen)* `Employee` sınıfını düzenlemiştik
-ve bu sınıfın doğrudan `EmployeeTaxData` sınıfına bağımlı bırakılmaması gerektiğini, bunun yerine `getTaxData` gibi soyut bir 
+ve bu sınıfın doğrudan `EmployeeTaxData` sınıfına bağımlı bırakılmaması gerektiğini, bunun yerine `TaxData` gibi soyut bir 
 implementasyonu yerine getiren herhangi bir sınıfla ile çalışabilmesi gerektiğinden bahsetmiştik. 
 
-Burada aslında yaptığımız düzenleme ile `Dependency Inversion` prensibi ile bizden beklenen üst nesnenin alt nesneye bağımlı olmaktan
-kurtulmasından başkaca bir şey değil. Bunun yerine biz `Employee` nesnesini `EmployeeTaxData` sınıfından kurtarak `TaxData` arayüzünü
-`(interface)` sağlayan herhangi bir sınıfla çalışabilecek hale getirdik. 
+Yukarıda yaptığımız by işlem aslında yaptığımız düzenleme ile `Dependency Inversion` prensibi ile bizden beklenen üst nesnenin alt nesneye bağımlı olmaktan
+kurtulmasından başkaca bir şey değil.
 
 **Yanlış:**
 
@@ -2313,7 +2314,7 @@ const reader = new ReportReader(new JsonFormatter());
 await report = await reader.read('report.json');
 ```
 
-Burada yaptığımız soyutlama işlemi sayesinde ReportReader nesnemiz artık spesifik bir Formatter nesnesine bağımlı olmadan çalışabilecek,
+Burada yaptığımız soyutlama işlemi sayesinde `ReportReader` nesnemiz artık spesifik bir `Formatter` nesnesine bağımlı olmadan,
 `Formatter` arayüzünde istenen implementasyonları yerine getiren herhangi bir nesne ile çalışabilecektir. 
 
 **[⬆ başa dön](#iindekiler)**
@@ -2325,14 +2326,17 @@ uygulamada bir hata oluşup oluşmayacağından asla tam olarak emin olamazsın�
 10 milyon kullanıcı tarafından kullanılmakta olan bir uygulama düşünün ve yayınladığınız yeni bir özelliğin veya yaptığınız bir değişikliğin 10 milyon kişiyi etkilediğini,
 kodunuzda yanlış çalışan bir bölüm olduğu veya mevcut kodla bir çakışma meydana getirdiği bir senaryoda milyonlarca müşterinin mağduriyetine yol açacaktır.
 
+Bu gibi mağduretiyetlerin ve zararların oluşmaması için, yazdığımız kodları test etmemiz ve yayın almadan önce sorunsuz bir şekilde çalışacağından emin olmamız
+gerekiyor.
+
 [Javascript için yaazılmış test `framework`leri](http://jstherightway.org/#testing-tools) 
 
 Bu `framework`ler ayrıca typescript desteği de sunmaktadır.
 
 ### Test Öncelikli Geliştirme `(Test Driven Development (TDD))`
 
-`TDD` olarak bilinen bu yöntem, henüz kod yazmaya başlamadan önce kodunuz soyut çalışma mantığında önce testleri yazmayı, sonrasında ise uygulamanızı çalıştıracak
-olan kodların yazılmasını amaçlar. `TDD` için belirlenmiş üç ana kural vardır
+`TDD` olarak bilinen bu yöntem, henüz kod yazmaya başlamadan önce yapmak istediğiniz uygulamanın bir senaryosunu oluşturup, bu senaryoya göre testleri yazıp, 
+sonrasında ise uygulamanızı çalıştıracak olan kodların yazılmasını amaçlar. `TDD` için belirlenmiş üç ana kural vardır
 
 1. Test süresince kod yazılmaz, test yazım aşaması bittikten sonra kod yazım aşamasına geçilir.
 
@@ -2346,13 +2350,13 @@ olan kodların yazılmasını amaçlar. `TDD` için belirlenmiş üç ana kural 
 
 Temiz *(açık)* `(Clean)` bir test yazmak için aşağıda belirtilen kurallar takip edilmelidir:
 
-- **Fast** Testler sık sık yazılan kodları kontrol etmek için kullandığından olabildiğince hızlı bir şekilde çalışmalıdır.
+- **Fast:** Testler sık sık yazılan kodları kontrol etmek için kullandığından olabildiğince hızlı bir şekilde çalışmalıdır.
 
-- **Independent** Bir test başka bir teste dayanmamalı, izole olmalıdır. Testlerin hangi sırayla çalıştırıldığı önem arz etmemelidir.
+- **Independent:** Bir test başka bir teste dayanmamalı, izole olmalıdır. Testlerin hangi sırayla çalıştırıldığı önem arz etmemelidir.
 
-- **Repeatable** Testler farklı farklı ortamlarda aynı bir şekilde çalışabilmelidir. Çalıştırıldığı ortamdan bağımsız olmalıdır.
+- **Repeatable:** Testler farklı farklı ortamlarda aynı bir şekilde çalışabilmelidir. Çalıştırıldığı ortamdan bağımsız olmalıdır.
 
-- **Self-Validating** Bir test başarılı ise *Passed* şeklinde, başarısız ise *Failed* şeklinde cevap vermelidir. Bir testing başarılı mı yoksa başarısız mı
+- **Self-Validating:** Bir test başarılı ise *Passed* şeklinde, başarısız ise *Failed* şeklinde cevap vermelidir. Bir testing başarılı mı yoksa başarısız mı
 sonuçlandığını anlamak için log kayıtları incelenmek zorunda kalınmamalı.
 
 - **Timely** Birim `(Birim)` testleri kod yazmaya başlamadan önce yazılmalıdır. Mevcut kod için test yazmak zor gelebilir.
@@ -2361,7 +2365,7 @@ sonuçlandığını anlamak için log kayıtları incelenmek zorunda kalınmamal
 
 ### Her testing tek bir konsepti olmalı.
 
-Aynı nesneler gibi testlerde Tekil Sorumluluk `(Single Responsibility)` Prensibine uymalıdır. Bir test için tek bir doğrulama `(assertion)` yapılmalıdır..
+Aynı nesneler gibi testlerde Tekil Sorumluluk `(Single Responsibility)` Prensibine uymalıdır. Her test için tek bir doğrulama `(assertion)` yapılmalıdır..
 
 **Yanlış:**
 
@@ -2409,9 +2413,9 @@ describe('AwesomeDate', () => {
 
 **[⬆ başa dön](#iindekiler)**
 
-### Testing adı yaptığı işlevi açık bir şekilde ortaya koymalıdır.
+### Testin adı yaptığı işlevi açık bir şekilde ortaya koymalıdır.
 
-Bir test başarısız olduğunda sadece testing ismine bakılarak hangi işlemin başarısız olduğu anlaşılabilmeli, kaynak kodlar incelenmek zorunda bırakılmamalıdır.
+Bir test başarısız olduğunda sadece testin ismine bakılarak hangi işlemin başarısız olduğu anlaşılabilmeli, kaynak kodlar incelenmek zorunda bırakılmamalıdır.
 
 **Yanlış:**
 
@@ -2448,11 +2452,11 @@ describe('Calendar', () => {
 ### `Callback` yerine `Promise` kullanın
 
 `Callback` kullanılan yapılar özellikle basamaklı işlemler birden fazla `Callback` kullanmanızı gerektirecek durumlarda hem kullanım `(usability)` hem de okunabilirlik
- `(readibility)` açısından sıkıntılı bir hal almaktadır. Bu geliştiriciler arasında `callback cehennemi` `(callback hell)` olarak da adlandırılır.
+ `(readibility)` açısından sıkıntılı bir hal almaktadır. Bu geliştiriciler arasında callback cehennemi `(callback hell)` olarak da adlandırılır.
   
 Bunun yerine ES6 ile birlikte gelen ve kısa zamanda yaygın bir kullanım kazanan `Promise` yapısını kullanabilirsiniz. 
 
-[es6-promisify](https://www.npmjs.com/package/es6-promisify))
+ - [es6-promisify](https://www.npmjs.com/package/es6-promisify)
 
 **Yanlış:**
 
@@ -2506,7 +2510,6 @@ downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html'
 
 `Promises` nesnesi `(class)` bir takım yardımcı metodlar içermektedir.  
 
-|---------------------------------------------------------------------------------------|  
 | Method                   | Açıklama                                                   |   
 | ------------------------ | -----------------------------------------------------------|  
 | `Promise.resolve(value)` | Girilen değeri bir `Promise` olarak çözümler.              |  
@@ -2521,7 +2524,6 @@ downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html'
 | `Promise.race(promises)` | Girilen bütün `Promise`ler den herhangi biri tamamlandığı  | 
 |                          | anda `Promise` tamamlanır. Geri kalan `Promise`ler         |
 |                          | çözümlenmez                                                |
-|---------------------------------------------------------------------------------------|  
 
 `Promise.all` genellike eşzamanlı *(birbirine paralel)* işlemlerde kullanılır. 
 
