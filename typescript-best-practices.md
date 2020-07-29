@@ -2531,7 +2531,7 @@ downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html'
 `async`/`await` *syntax*'ı ile birlikte daha zincirleme yapılara kıyasla daha temiz daha anlaşılır kod yazabiliriz. `async` anahtar kelimesi ile birlikte çalışma 
 zamanında `(runtime)` kodu okuyan javascript motoruna burada asenkron bir işlem gerçekleşeceğini, `await` anahtar kelimesi ile birlikte ise burada gerçekleşek olan
 işlemin anlık olarak gerçekleşmeyeceğini, bu nedenle tamamlanmasının beklememesini, bu işlemi sıraya alarak aşağıda yer alan kodların okunmaya devam etmesini kodumuzu
-okuyan javascript motora `(enginee, örn. v8)` söyleriz.
+okuyan javascript motoruna `(enginee, örn. v8)` söyleriz.
 
 **Yanlış:**
 
@@ -2578,16 +2578,17 @@ try {
 **[⬆ başa dön](#iindekiler)**
 
 ## <a name="error-handling"></a> Hata Yönetimi (Error Handling)
-Hata almak, hata vermek bunlar güzel şeyler. Bir hata aldığınız yazığınızda bir şeylerin ters gittiğini, bazı şeylerin doğru çalışmadığını hemen anlarız. Ancak 
-hata almadığımız bir senaryoda, çalışması gerektiği gibi çalışmayan bu kod parçasından haberimiz olmayacak, belki yayına çıktıktan ve belli bir maddi zarara sebep
+Hata almak, hata vermek bunlar güzel şeyler. Bir hata aldığımız zaman kodunuzda bir şeylerin ters gittiğini, bazı şeylerin doğru çalışmadığını hemen anlarız. Ancak 
+hata almadığımız bir senaryoda, çalışması gerektiği gibi çalışmayan bir kod parçasının varlığından haberimiz olmayacak, belki yayına çıktıktan ve belli bir zarara sebep
 olduktan sonra, harcayacağımız saatlerce `debugging` işleminden sonra tespit edebileceğiz. 
 
-Bu yüzden bir uygulama yazarken, eğer bir aksiyonda istenmeyen bir durum oluşma, daha doğru bir ifadeyle, hataya sebebiyet verecek bir halin varlığı söz konusu ise
-bu noktaları gerek `try..catch` gerek farklı yapılar kullanarak, bu hataları almak ve bildirmek geliştirme sürecinde büyük bir kolaylık sağlayacaktır.
+Bu yüzden bir uygulama yazarken, eğer bir aksiyonda istenmeyen bir durum meydana gelmiş ise, daha doğru bir ifadeyle, hataya sebebiyet verecek bir halin varlığı söz konusu ise
+bu gibi durumlar hata fırlatmak ve bu hataları gerek `try..catch` gerek farklı yapılar kullanarak, yakalamak ve bildirmek geliştirme sürecinde bize büyük bir kolaylık 
+ve yazdığımız kod üzerinde denetim sağlayacaktır.
 
 ### Bir hata bildirmek istediğinizde her zaman `Error` nesnesini fırlatın `(throw)` 
 
-Javascript'te olduğu gibi Typescript'te bir objeyi fırlatmanıza `(throw)` imkan verir. Keza Promise nesnesi de herhangi bir objeyi hata olarak 
+Javascript'te olduğu gibi Typescript'te bir objeyi fırlatmanıza `(throw)` imkan verir. Keza `Promise` nesnesi de herhangi bir objeyi hata olarak 
 çözümlemenize `(reject)` imkan tanır. 
 
 Javascript'te hata yönetiminde `Error` sınıfını `throw` anahtar sözcüğü ile birlikte kullanıyoruz. `throw` anahtar kelimesi, adından da anlaşılacağı üzere
@@ -2596,7 +2597,8 @@ bir objeyi fırlatmanıza olanak sağlar, bu sayede, bir üst kod segmesinde yer
 İstenmeyen bir durum ile karşılaştığımızda hata sınıfını ve `throw` anahtar kelimesini kullanarak, oluşan hatalar ile ilgilenen `catch` bloğuna bu hatayı iletebilir
 ve istenmeyen durumun gerçekleştiğini kayıt altına alabilir, ve eğer mümkünse, hataya sebebiyet veren olayın oluşturduğu olumsuz sonuçları önlemeye çalışabiliriz.
 
-[Hata yönetimi hakkında](https://basarat.gitbook.io/typescript/type-system/exceptions#always-use-error).  
+[Hata yönetimi hakkında bir makale](https://basarat.gitbook.io/typescript/type-system/exceptions#always-use-error).  
+
 **Yanlış:**
 
 ```ts
@@ -2627,7 +2629,7 @@ async function get(): Promise<Item[]> {
 }
 ```
 
-Hata yönetiminde `Error` sınıfını kullanmanın en önemli avantajlarından biri de sahip olduğu `stack` adlı *property*'si sayesinde hata meydana gelmeden hangi satır
+Hata yönetiminde `Error` sınıfını kullanmanın en önemli avantajlarından biri de sahip olduğu `stack` adlı *property*'si sayesinde hata meydana gelmeden önce hangi satır
 hangi sütünda hangi işlemlerin gerçekleştiğini, hangi metodların çalıştırıldığını görebilir ve hatanın kaynağını çok daha kolay bir şekilde tespit edebiliriz.
 
 `throw` anahtar kelimesine alternatif olarak, Typescript ile ile kod yazarken daha uyumlu bir şekilde çalışabilecek şekilde türü `(type)` belirli hata sınıfları
@@ -2655,7 +2657,7 @@ Daha detaylı bilgi için [Making exceptions type safe in Typescript](https://me
 
 ### Yakalanan hataları ihtmal etmeyin.
 
-Hata fırlatmak hata yönetiminin sadece bir yüzüdür, eğer fırlatılan hatayı yakalayıp değerlendirmiyorsak bu hatayı ne tespit etmenin ne fırlatmanın bir anlamı 
+Hata fırlatmak hata yönetiminin sadece bir yüzüdür, eğer fırlatılan hatayı yakalayıp değerlendirmiyorsak bu hatayı ne tespit etmenin ne de fırlatmanın bir anlamı 
 kalmayacaktır. Geliştirme sırasında hatayı konsola yazdırmak ihtiyacımızı büyük bir ölçüde karşılayabilir, ancak, yayında kaynaklanan hataların konsola yazdırılması
 bize hiç bir fayda sağlamayacaktır. Bu yüzden yakalanan hataların kayıt altına alması için bir `logger` yapısına ihtiyaç duyuyoruz. 
 
@@ -2696,7 +2698,7 @@ try {
 
 ### Hata olarak `(reject)` çözümlenen `Promise`leri ihmal etmeyin
 
-Yukarıda throw ile fırlattığımız hatalarda olduğu gibi, `Promise` ile hata olarak çözümlediğimiz beklenmeyen olayları da kayıt altına almamız gerekmektedir.
+Yukarıda `throw` ile fırlattığımız hatalarda olduğu gibi, `Promise` ile hata olarak çözümlediğimiz beklenmeyen olayları da kayıt altına almamız gerekmektedir.
 
 **Yanlış:**
 
@@ -2737,14 +2739,14 @@ try {
 
 ## <a name="formatting"></a> Yazım Kuralları (Formatting)
 
-Yazım kuralları kişiden kişiye değişkenlik gösterebilir. Typescript yazımında herkesin zorunlu olarak uyması gereken zorunlu bir `yazım kuralları listesi` yoktur.
-Bu kurallar daha çok bir ekip halinde çalışırken, gerek açık kaynak kütüphanelerde, gerek ekip arkadaşlarınız ile çalışırken ortak bir standart oluşturmak
+Yazım kuralları kişiden kişiye değişkenlik gösterebilir. Typescript yazımında herkesin zorunlu olarak uyması gereken katı bir `yazım kuralları listesi` yoktur.
+Bu kurallar daha çok bir ekip halinde çalışırken, gerek açık kaynak kütüphanelerde, gerek ekip arkadaşlarınız ile çalışırken ortak bir standart oluşturmak için,
 bu sayede farklı farklı kişilerin yazdığı kodlar arasında bir uyum oluşturmak amacıyla belirlenen ortak standartlardan başka bir şey değildir. 
 
 Günümüzde bu standartları otomatik olarak uygulamak için çeşitli, konfigurasyon sistemleri geliştirilmiş olup `IDE`ler bu konfigurasyonları okuyup anlayabilmekte
-ve yazdığınız kodu bu konfigurasyonlara formatlayabilmektedir. Bu konfigurasyonlarda belirlenen standartlara aykırı bir şekilde yazıyorsanız ise sizi uyarmaktadır.
+ve yazdığınız kodu bu konfigurasyonlara uygun olarak formatlayabilmektedir. Bu konfigurasyonlarda belirlenen standartlara aykırı bir şekilde yazıyorsanız ise sizi uyarmaktadır.
  
-Typescript için bu konfigurasyonları oluşturmak amacıyla [TSLint](https://palantir.github.io/tslint/) geliştirilmiştir. TSLint belirlediğiniz konfigurasyonlar
+Typescript için bu yazım denetimini sağlamak amacıyl [TSLint](https://palantir.github.io/tslint/) geliştirilmiştir. TSLint belirlediğiniz konfigurasyonlar
 doğrultusunda kodunuzu tarayarak, standartlara aykırı olarak yazılmış noktaları tespit eder. 
 
 Bu yazım standartlarını manuel olarak oluşturabileceğiniz gibi, daha önceden yazılmış olan ve typscript ile geliştiren bir çok kimse tarafından kullanılan hazır
@@ -2760,7 +2762,7 @@ konfigurasyonları da kullanabilirsiniz.
 - [Immutable](https://www.npmjs.com/package/tslint-immutable)
 
 ÇN: Şöyle bir durum var. TSLint kendi dökümanına göre kullanımı durdurulmuş `(deprecated)` görünüyor. `Eslint` altında `eslint-typescript` yardımcı kütüphanesi
-ile birlikte kullılacağı bildirilmiş. 
+ile birlikte kullanılacağı bildirilmiş. 
 
 ### Büyük harf kullanımında sabit bir teknik izleyin.
 
@@ -2804,7 +2806,7 @@ type Container = { /* ... */ }
 ```
 
 Genel olarak javascript geliştiren toplulukta kabul edilen ve kullanılan bir takım yazım kuralları vardır.
-,
+
 1. Nesne `(class)`, arayüz `(interface)` ve namespace tanımlarken her zaman `PascalCase` kullanın.
 2. Değişkenler, fonksiyonlar, metodlar ve `property`leri isimlendirirken `camelCase` kullanın
 
@@ -2817,7 +2819,7 @@ sınıf içerisinde tanımladığınız diğer metodları çağırıyorsanız bu
 çağırdığınız bu metodların en üstüne yerleştirin.
 
 
-Ancak sınıf dışında tanımladığınız yardımcı metodlarınız varsa ve uygulama genelinde bu yardımcı metodları kullanıyorsanız bu metodları `helpers.ts` veya `utils.ts`
+Ancak sınıf dışında tanımladığınız yardımcı fonksiyonlarınız varsa ve uygulama genelinde bu yardımcı fonksiyonları kullanıyorsanız bu fonksiyonları `helpers.ts` veya `utils.ts`
 adı altında ayrı bir dosya içerisinde tutmanız daha sağlıklı olacaktır. 
 
 **Yanlış:**
@@ -2996,7 +2998,7 @@ Bir kod bloğu içerisinde gerçekleşen işlemi açıklamak yerine, önceliğin
 
 ### Yorum yazmak yerine, okunduğunda anlaşılacak kodlar yazmaya özen gösterin.
 
-Yorumlar bir zorunluluk değil, kötü yazılmış bir kod için mazeretten ibarettir. İyi bir şekilde yazılmış kodu anlamak için yorum gerekmez.
+Yorum yazmak bir zorunluluk değil, kötü yazılmış bir kod için üretilen mazeretten ibarettir. İyi bir şekilde yazılmış kodu anlamak için yorum gerekmez.
 
 **Yanlış:**
 
