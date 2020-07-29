@@ -1,8 +1,10 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
 ## İçindekiler
 
   1. [Değişkenler](#deikenler)
   2. [Fonksiyonlar](#fonksiyonlar)
-  3. [Objeler ve Veri Yapıları](#objeler-object-ve-veri-yaplar-data-structures)
+  3. [Objeler ve Veri Yapıları](#object-and-data-sructures)
   4. [Sınıflar (Nesneler)](#snflarnesneler-class)
   5. [SOLID](#solid)
   6. [Testing](#testing)
@@ -1138,7 +1140,7 @@ itiriri(fibonacci())
 
 **[⬆ başa dön](#iindekiler)**
 
-## Objeler `(Object)` ve Veri Yapıları `(Data Structures)`
+## <a name="object-and-data-sructures"></a> Objeler `(Object)` ve Veri Yapıları `(Data Structures)`
 
 ### `getter` ve `setter` kullanın
 
