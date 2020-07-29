@@ -1,14 +1,14 @@
 ## İçindekiler
 
   1. [Değişkenler](#deikenler)
-  2. [Fonksiyonlar](#functions)
-  3. [Objeler ve Veri Tipleri](#objects-and-data-structures)
-  4. [Sınıflar](#classes)
+  2. [Fonksiyonlar](#fonksiyonlar)
+  3. [Objeler ve Veri Yapıları](#objeler-object-ve-veri-yaplar-data-structures)
+  4. [Sınıflar (Nesneler)](#snflarnesneler-class)
   5. [SOLID](#solid)
   6. [Testing](#testing)
-  7. [Asenkron İşlemler](#asenkron-islemler)
-  8. [Hata Yönetimi](#error-handling)
-  9. [Düzenleme](#formatting)
+  7. [Asenkron İşlemler](#asenkron-ilemler)
+  8. [Hata Yönetimi](#hata-ynetimi-error-handling)
+  9. [Yazım Kuralları](#yazm-kurallar-formatting)
 
 ## Değişkenler
 
