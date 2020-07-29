@@ -2,17 +2,17 @@
 
 ## İçindekiler
 
-  1. [Değişkenler](#deikenler)
-  2. [Fonksiyonlar](#fonksiyonlar)
+  1. [Değişkenler](#variables)
+  2. [Fonksiyonlar](#functions)
   3. [Objeler ve Veri Yapıları](#object-and-data-sructures)
-  4. [Sınıflar (Nesneler)](#snflarnesneler-class)
+  4. [Sınıflar (Nesneler)](#classes)
   5. [SOLID](#solid)
   6. [Testing](#testing)
-  7. [Asenkron İşlemler](#asenkron-ilemler)
-  8. [Hata Yönetimi](#hata-ynetimi-error-handling)
-  9. [Yazım Kuralları](#yazm-kurallar-formatting)
+  7. [Asenkron İşlemler](#asenkron-islemler)
+  8. [Hata Yönetimi](#error-handling)
+  9. [Yazım Kuralları](#formatting)
 
-## Değişkenler
+## <a name="variables"></a> Değişkenler
 
 ### Bir anlam ifade eden değişken isimleri kullanın
 
@@ -273,7 +273,7 @@ class Projector {
 
 **[⬆ başa dön](#iindekiler)**
 
-## Fonksiyonlar
+## <a name="functions"></a> Fonksiyonlar
 
 ### Fonksiyon parametreleri (İdeal olarak 2 veya daha az parametre kullanın)
 
@@ -1456,7 +1456,7 @@ class Square implements Shape {
 
 **[⬆ başa dön](#iindekiler)**
 
-## Sınıflar/Nesneler `(class)`
+## <a name="classes"></a> Sınıflar/Nesneler `(class)`
 
 ### Sınıflar olabildiğince minimal olmalıdır
 Bir sınıf oluştururken ilk dikkat edilmesi gereken bir SOLID prensini olan *Single Responsibility* prensibidir. Yani bir nesne sadece
@@ -2440,7 +2440,7 @@ describe('Calendar', () => {
 
 **[⬆ başa dön](#iindekiler)**
 
-## Asenkron İşlemler
+## <a name="asenkron-islemler"></a> Asenkron İşlemler
 
 ### `Callback` yerine `Promise` kullanın
 
@@ -2575,7 +2575,7 @@ try {
 
 **[⬆ başa dön](#iindekiler)**
 
-## Hata Yönetimi (Error Handling)
+## <a name="error-handling"></a> Hata Yönetimi (Error Handling)
 Hata almak, hata vermek bunlar güzel şeyler. Bir hata aldığınız yazığınızda bir şeylerin ters gittiğini, bazı şeylerin doğru çalışmadığını hemen anlarız. Ancak 
 hata almadığımız bir senaryoda, çalışması gerektiği gibi çalışmayan bu kod parçasından haberimiz olmayacak, belki yayına çıktıktan ve belli bir maddi zarara sebep
 olduktan sonra, harcayacağımız saatlerce `debugging` işleminden sonra tespit edebileceğiz. 
@@ -2733,7 +2733,7 @@ try {
 
 **[⬆ başa dön](#iindekiler)**
 
-## Yazım Kuralları (Formatting)
+## <a name="formatting"></a> Yazım Kuralları (Formatting)
 
 Yazım kuralları kişiden kişiye değişkenlik gösterebilir. Typescript yazımında herkesin zorunlu olarak uyması gereken zorunlu bir `yazım kuralları listesi` yoktur.
 Bu kurallar daha çok bir ekip halinde çalışırken, gerek açık kaynak kütüphanelerde, gerek ekip arkadaşlarınız ile çalışırken ortak bir standart oluşturmak
