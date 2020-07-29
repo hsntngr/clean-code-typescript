@@ -1396,9 +1396,9 @@ result.value = 200; // hata verir
 Ne zaman `type` ne zaman `interface` kullanmalıyız. Bunu anlamak için bu kavramlara iyice hakim olmak gerekiyor. Öncesinde bazı
 fundamental kavramlara hakim olmakta fayda var.
 
--[Basic Types](https://www.typescriptlang.org/docs/handbook/basic-types.html)
--[Advanced Types](https://www.typescriptlang.org/docs/handbook/advanced-types.html)
--[Interface](https://www.typescriptlang.org/docs/handbook/interfaces.html)
+- [Basic Types](https://www.typescriptlang.org/docs/handbook/basic-types.html)
+- [Advanced Types](https://www.typescriptlang.org/docs/handbook/advanced-types.html)
+- [Interface](https://www.typescriptlang.org/docs/handbook/interfaces.html)
 
 Genel olarak eğer birden fazla tanımlamayı birlikte veya alternatif olarak kullanmak gerekiyorsa yani `union` veya `intersect` olarak
 tanımlanan işlemler ile ihtiyacımızı karşılayabiliyorsak `type` oluşturmak ihtiyacımızı görecektir.
