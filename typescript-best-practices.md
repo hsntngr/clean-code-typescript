@@ -16,8 +16,9 @@
 
 ### Bir anlam ifade eden değişken isimleri kullanın
 
-Değişkenlerinizi ve parametrelerinizi isimlendirirken hem sizin hem de yazdığınız kodu okuyacak kimselerin anlayabilecekleri şekilde,
-yazdığınız kodun içeriği ile ilgili olarak değişkenlerinizi anlamlı bir şekilde isimlendirin.
+Değişkenlerinizi ve parametrelerinizi isimlendirirken hem sizin hem de yazdığınız kodu okuyacak kimselerin anlayabileceği şekilde 
+isimlendirin. Yazdığınız kodun içeriği hakkında bilgi verebilecek, değişken ne amaçlı kullanıldığını ve kullanılacağını açıklayacak
+bir şekilde isimlendirmeye özen gösterin.
 
 **Yanlış:**
 
@@ -42,9 +43,9 @@ function between<T>(value: T, left: T, right: T): boolean {
 
 Telaffuz edilemeyen veya bir anlam ifade etmeyen isimler, kısaltmalardan oluşan üstü kapalı ifadeler hem akılda kalıcı
 olmayacağı gibi hem kodunuzu sonradan inceleyen kimselerce anlaşılmayacaktır. Yazdığınız kodlara ilişkin ekip arkadaşlarınız ile
-yaptığınız değerlendirmelerde yazılan kodları tartışmak, değişkenleri telaffuz etmek karmaşık bir hal alacaktır. 
+yaptığınız değerlendirmelerde yazılan kodları tartışmak, değişkenleri telaffuz etmek sizin ve ekibiniz için zor bir hal alacaktır. 
 
-Ayrıca kısaltmalardan oluşan, telaffuzu ve hatırlaması zor değişkenleri kullanmak istediğiniz bir çok zaman
+Ayrıca kısaltmalardan oluşan, telaffuzu ve hatırlaması zor değişkenleri kullanmak istediğiniz zaman
 geriye dönük olarak değişken ismini aramak zorunda kalacak ve zaman kaybedeceksiniz.
 
 **Yanlış:**
@@ -71,13 +72,13 @@ type Customer = {
 
 ### Belirlediğinize tipe `type` uygun olacak şekilde isimlendirme yapın.
 
-Eğer yazdığınız bir fonksiyon bir servisten spesifik bir tipe `type` ait bir verinin getirilmesini sağlıyor
-ve ya spesifik bir verinin düzenlenmesi işlevini getiriyorsa bu veri tipine `type` uygun isimlendirmeler yapmaya özen gösterin.
+Eğer yazdığınız bir fonksiyon bir servisten spesifik bir tipe `(type)` ait bir verinin getirilmesini sağlıyor
+ve ya spesifik bir verinin düzenlenmesi işlevini getiriyorsa bu veri tipine `(type)` uygun isimlendirmeler yapmaya özen gösterin.
 
 **Yanlış:**
 
 ```ts
-// Burada aldığımız User adlı bir model olduğuna göre
+// Burada geri dönen User adlı bir model olduğuna göre
 // fonksiyona eklediğim ekstra ifadeler anlam kargaşasına yol açacaktır.
 function getUserInfo(): User;
 function getUserDetails(): User;
@@ -94,9 +95,9 @@ function getUser(): User;
 
 ### Aramaya uygun ifadeler kullanın.
 
-Bir kodu bir kez yazıyorsak defalarca kez okuruz. Bu yüzden okunabilir ve aranabilir kod yazmak önem arz ediyor.
-Salt sayısal ifadeler, bir anlam ifade etmeyen sabitler hem sizin için hem de kodunuzu inceleyen ekip arkadaşlarınız için
-hem anlaması hem de araştırması kısıtlı bir imkan sunacaktır. Bu nedenle yazdığınız sayısal ifadeler için anlamlı sabitler kullanın.
+Kod yazmaktan çok yazdığımız kodları okuruz. Bu yüzden okunabilir ve aranabilir kod yazmak önem arz ediyor.
+Salt sayısal ifadeler, bir anlam ifade etmeyen sabitler hem sizin için hem de kodunuzu inceleyen ekip arkadaşlarınız için anlaması ve 
+de araştırması kısıtlı bir imkan sunacaktır. Bu nedenle yazdığınız sayısal ifadeler için anlamlı sabitler oluşturun.
 
 **Doğru:**
 
@@ -168,8 +169,8 @@ const transaction = charge(user, subscription);
 
 ### Gereksiz ifadelerden kaçının
 
-Eğer değişkeniniz üst bir yapıya bağlı ise (sınıf `(class)`, type `(type)`) halihazırda bu üst yapı ile ilişki içerisinde bulunduğundan
-bubu yapılara bağlı isimlendirme yaparken, bağlı olduğu üst yapıya ilişkin ifadeleri kullanmaktan kaçının. Daha yalın ifadeler kullanın
+Eğer değişkeniniz üst bir yapıya bağlı ise *(sınıf `(class)`, type `(type)`)* halihazırda bu üst yapı ile ilişki içerisinde bulunduğundan,
+bu yapılara bağlı isimlendirme yaparken, bağlı olduğu üst yapıya ilişkin ifadeleri kullanmaktan kaçının. Daha yalın ifadeler kullanın
 
 **Yanlış:**
 
@@ -203,7 +204,7 @@ function print(car: Car): void {
 
 ### Varsayılan değerleri kullanmaya özen gösterin.
 
-Bir fonksiyon veya metod içerisinde şarta bağlı yapılar veya devreler kullanmak yerine varsayılan `default` değerler kullanarak
+Bir fonksiyon veya metod içerisinde şarta bağlı yapılar veya devreler kullanmak yerine varsayılan `(default)` değerler kullanarak
 bu sorunu çözebilirsiniz.
 
 **Yanlış:**
@@ -227,8 +228,8 @@ function loadPages(count: number = 10) {
 
 ### İlişkisel bir gruba ait değerleri bir enum altında tanımlayın
 
-Enums can help you document the intent of the code. For example when we are concerned about values being
-different rather than the exact value of those.
+`Enum` kullanarak anlam bütünlüğü içerisinde bulunan ifadeleri hem sabit bir değer atayabilir hem de belli bir yapı altında 
+gruplayabiliriz. 
 
 **Yanlış:**
 
@@ -236,12 +237,11 @@ different rather than the exact value of those.
 projector.configureFilm(GENRE.COMEDY);
 
 class Projector {
-  // declaration of Projector
   configureFilm(genre) {
     switch (genre) {
-      case "horror":
+      case 0: // horror
         // ... 
-      case "sci-fi":    
+      case 1: //sci-fi    
         // ...
     }
   }
@@ -253,18 +253,17 @@ class Projector {
 ```ts
 enum GENRE {
   HORROR,
-  SCIFI,
+  SCI_FI,
 }
 
 projector.configureFilm(GENRE.COMEDY);
 
 class Projector {
-  // declaration of Projector
   configureFilm(genre) {
     switch (genre) {
       case GENRE.HORROR:
         //...
-      case GENRE.SCIFI:    
+      case GENRE.SCI_FI:    
       //...    
     }
   }
@@ -281,18 +280,18 @@ Fonksiyon kullanırken olabildiğince az sayıda parametre kullanmak hem yazdı�
 sırasında büyük kolaylık sağlar.
 
 Bir veya iki parametre kullanmak ideal iken, zorunluluk arz eden bir durum söz konusu olmadıkça üçüncü bir parametre
-kullanılmaktan kaçınılmalıdır. Eğer fonksiyonunuz fazla sayıda parametreye ihtiyaç duyuyorsa, bu parametreleri, obje `{}`
+kullanmaktan kaçınılmalıdır. Eğer fonksiyonunuz fazla sayıda parametreye ihtiyaç duyuyorsa, bu parametreleri, obje `({})`
 yardımı ile gruplayarak göndermeniz daha sağlıklıdır.
 
-Parametreleri obje yardımıyla gruplayarak göndermek bize bir takım faydalar sağlamaktadır. Bunlar;
+Parametreleri obje yardımıyla gruplayarak göndermek bize bir takım fayda sağlamaktadır. Bunlar;
 
 
 1. Daha temiz bir syntax sunar. `function createUser(user: User)`
 
-2. c# ve benzer dillerde olan isimlendirilmiş değişkenler `named parameters` benzeri bir kullanım kolaylığı sağlar.
+2. c# ve benzer dillerde olan isimlendirilmiş değişkenler `(named parameters)` benzeri bir kullanım kolaylığı sağlar.
 
-3. Obje `{}` içerisinde yer alan parametreleri `destructing` yöntemiyle kolayca alabiliriz. Burada avantajlar olduğu gibi dezavantajlar da söz konusudur.
-İlkel veri tipleri `primitives` obje içerisine kopyalanırken, obje `object - {}` ve diziler `array - []` referans yoluyla geçeceği için
+3. Obje `({})` içerisinde yer alan parametreleri `destructing` yöntemiyle kolayca alabiliriz. Burada avantajlar olduğu gibi dezavantajlar da söz konusudur.
+İlkel veri tipleri `(primitives)` obje içerisine kopyalanırken, obje `(object - {})` ve diziler `(array - [])` referans yoluyla geçeceği için
 obje içerisinden aldığınız obje ve diziler üzerinde yaptığınız bir düzenleme bir üst `scope`dan gönderilen objeyi de etkleyecektir.
 
 Örneğin;
@@ -322,11 +321,11 @@ function createUser(user: User){
 }
 ```
 Objeler ve diziler referans ile birlikte geçtiği için fonksiyon içinde yer alan obje ile fonksiyon dışında yer alan obje aynıdır.
-Ram'de `memory` aynı noktayı işaret etmektedir. Bu nedenle fonksiyon içerisinde obje içerisinde yapılan bir değişiklik, 
+Ram'de `(memory)` aynı noktayı işaret etmektedir. Bu nedenle fonksiyon içerisinde obje içerisinde yapılan bir değişiklik, 
 fonksiyonun dışında yer alan objeyi de değitirecektir.
 
-Ancak ilkel veri tipleri `primitives` fonksiyon içerisinde gönderilirken veya `destructing` yoluyla obje içerisinden dışarı çekilirken
-klonlanacağı için yeni bir referansa sahip olur ve ram'de `memory` yeni bir noktayı işaret eder. Bu veri tiplerinin düzenlenmesi fonksiyon 
+Ancak ilkel veri tipleri `(primitives)` fonksiyon içerisinde gönderilirken veya `destructing` yoluyla obje içerisinden dışarı çekilirken
+klonlanacağı için yeni bir referansa sahip olur ve ram'de `(memory)` yeni bir noktayı işaret eder. Bu veri tiplerinin düzenlenmesi fonksiyon 
 dışında bir sonuç doğurmaz.
 
 **Yanlış:**
@@ -354,7 +353,7 @@ createMenu({
 });
 ```
 
-Daha okunabilir daha temiz bir syntax ile kod yazmak için [type aliases](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases) veya arayüz `Interface`
+Daha okunabilir daha temiz bir syntax ile kod yazmak için [type aliases](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases) veya arayüz `(interface)`
 kullanılabilir
 
 ```ts
@@ -377,7 +376,7 @@ createMenu({
 
 ### Her fonksiyon tek bir işlemi yerine getirmelidir.
 
-Bu sadece typescript için değil, yazılım mühendisliğinin altın kurallarından biridir. Bir fonksiyon birden fazla görev yapmaya 
+Bu sadece typescript için değil, yazılım mühendisliğinin de altın kurallarından biridir. Bir fonksiyon birden fazla görev yapmaya 
 başladığı anda bu fonksiyonu farklı farklı yerlerde kullanmak veya testlerini gerçekleştirmek çok daha zor olacaktır.
 
 Ancak eğer sadece tek bir işlemin gerçekleştirilmesinden sorumlu izole bir fonksiyon yaratırsak, hem bu fonksiyonu, gereken parametreleri
@@ -446,7 +445,7 @@ addMonthToDate(date, 1);
 Kod tekrarı yapmamak için olabildiğince özen gösterin. Peki neden? Uygulama içerisinde aynı işlevi yerine getiren onlarca kod bloğunun olması
 demek en basit haliyle, değiştirmeniz gereken bir durum olduğunda, düzenlemeniz gereken onlarca kod bloğu olacak demektir. 
 
-Çoğu zaman benzer bir mantalite ile çalışan ancak farklı işlevleri yerine getiren durumlara ilişkin kod yazarken, kod tekrarına
+Çoğu zaman benzer bir mantık ile çalışan ancak farklı işlevleri yerine getiren durumlara ilişkin kod yazarken, kod tekrarına
 düştüğümüzün farkında olmayız. Benzer çalışan kod blokları farklı parametrelere faklı nesnelere bağlı çalışıyor olabilir. Bu nedenle
 kodların birbirinden farklı olduğunu düşünebiliriz.
 
@@ -454,9 +453,9 @@ Ancak doğru bir soyutlama `(abstraction)` işlemi yapılarak, benzer mantıkta 
 bu kod blokları bir fonksiyon, metod veya bir sınıf `(class)` altında toplanabilir ve bu değişkenler parametre olarak sağlanabilir. Bu sayede aynı yapıyı
 sadece gereken değişkenler parametre olarak sağlanmak suretiyle ihtiyaç duyduğumuz her yerde kullanabiliriz. 
 
-Soyutlama `(abstraction)` işlemi son derece önemlidir. Doğru bir soyutlama işlemi kurabilmek için [SOLID](#solid) prensibleri takip etmenizde fayda 
+Soyutlama `(abstraction)` işlemi son derece önemlidir. Doğru bir soyutlama işlemi kurabilmek için [SOLID](#solid) prensiblerine hakim olmakta fayda 
 vardır. Yapılan kötü bir soyutlama işlemi `(abstraction)` yapılan kod tekrarıdan dahi daha kötü sonuçlar doğurabilir. Bu nedenle
-kod yazmaya başlamadan önce olası senarylar düşünülmeli ve buna göre bir soyutlama işlemi gerçekleştirilmelidir.
+kod yazmaya başlamadan önce olası senaryolar düşünülmeli ve bu sonuca göre bir soyutlama işlemi gerçekleştirilmelidir.
 
 **Yanlış:**
 
@@ -539,7 +538,7 @@ yüzünden bütün bir modülün yüklenmesine sebebiyet verebilir ve kod tekrar
 
 **[⬆ başa dön](#iindekiler)**
 
-### Destruction veya Object.assign kullanarak varsayılan (default) parametreler oluşturun
+### Destruction veya Object.assign kullanarak varsayılan `(default)` parametreler oluşturun
 
 **Yanlış:**
 
@@ -637,7 +636,7 @@ gerçekleştirmesidir. Her fonksiyonun kendisine özel tek bir işlevi olup, bu 
 
 Mesela görevi konsola yazdırmaktan ibaret olan bir metodun global bir değişkene ait değeri değiştirdiğini veya kendisine gönderilen 
 objenin içerisinde yer alan bilgileri değiştirdiğini düşünelim. Fonksiyonun görevi sadece bir yazdırma işleminden ibaretken, kendisinden
-beklenmeyen (boyunu aşan) bir takım işlemler gerçekleştirmektedir. Yapılan bu kapsam dışı, yetkisiz işlemler `İstenmeyen Durum 
+beklenmeyen `(boyunu - kapsamını aşan)` bir takım işlemler gerçekleştirmektedir. Yapılan bu kapsam dışı, yetkisiz işlemler `İstenmeyen Durum 
 (Side Effect)` olarak adlandırılır.
 
 **Yanlış:**
@@ -652,7 +651,7 @@ function toBase64() {
 }
 
 toBase64();
-// Eğer name değişkenini kullanan başka bir değişken varsa 'Robert C. Martin' değerini değil
+// Eğer name değişkenini kullanan başka bir fonksiyon, metod varsa 'Robert C. Martin' değerini değil
 // base64 encode edilmiş değerini alacaklardır
 
 console.log(name); // 'Um9iZXJ0IEMuIE1hcnRpbg=='
@@ -675,24 +674,24 @@ console.log(name);
 
 ### İstenmeyen durumlardan `(Side Effects)` kaçınmak (İkinci Bölüm)
 
-Javascript dilinde ve doğal olarak Javascript için yazılmış bir süper set olan Typescript'te ilkel veri tipleri `primitives` değerleri
+Javascript dilinde ve doğal olarak Javascript için yazılmış bir süper set olan Typescript'te ilkel veri tipleri `(primitives)` değerleri
 ile geçerken, Objeler `(Object)` ve diziler `(Array)` referens yoluyla geçer. 
 
 Burada muhtemel aklınızda oluşan iki soru var. Birincisi 'geçmek' ile kast edilen nedir ? Bir ikincisi değer yoluyla veya referans
 yoluyla geçmek ne anlam ifade ediyor. Öncelikle aşağıda anlatacaklarımıza geçmeden önce bu iki hususa değinmekte fayda var.
 
-1. Geçmek ile kast edilen bir veri tipinden kalıtım alınması demektedir. Kalıtım alınması fonksiyona parametre olarak geçiş sırasında
+1. Geçmek ile kast edilen veri tipinin başka bir değişkene aktarılması demektedir. Bu altarma işlemi, fonksiyona parametre olarak geçiş sırasında
 gerçekleşebileceği gibi, başka bir değişkene tanımlama yoluyla da gerçekleşebilir. 
 
 ```ts
-// Burada b değerini a dan kalıtım almakta, a ilkel bir veritipi olduğu için değer yoluyla geçmektedir.
+// Burada a nın değeri b ye aktarılmaktadır, a ilkel bir veritipi olduğu için değer yoluyla geçmektedir.
 const a = 10;
 const b = a;
 ```
 
-2.Peki değer yoluyla veya referans yoluyla geçme ne anlam ifade ediyor? Kod yazarken tanımladığımız her veri ram'de `(memory)` de belirli
-bir alanda saklanmaktadır. Ancak ilkel veriler `(primitives)` geçerken (kalıtım verirken) klonlanarak geçiş yapar. Yani kalıtım alan
-ilkel veri ile kalıtım veren ilkel veri ram'de `(memory)` aynı noktada saklanmaz, kalıtım alan klonlandığı için yeni bir alanda saklanır.
+2. Peki değer yoluyla veya referans yoluyla geçme ne anlam ifade ediyor? Kod yazarken tanımladığımız her veri ram'de `(memory)` de belirli
+bir alanda saklanmaktadır. Ancak ilkel veriler `(primitives)` geçerken (aktarılırken) klonlanarak geçiş yapar. Yani aktarım sırasında oluşturulan yeni değişken
+aktarılanın değeri kendisine klonlandığı için ram'de `(memory)` farklı bir noktada saklanır.
 
 ```ts
 let a = 47;
@@ -706,8 +705,8 @@ console.log(a) // 1
 console.log(b) // 47
 ```
 
-Referans yoluyla geçişlerde ise klonlama yoktur, kalıtım verenin kendisi kalıtım alana geçer. Ram üzerinde yeni bir alan oluşturulmaz. 
-Hem kalıtım alan hem de kalıtım veren aynı noktada saklanır, her ikiside aynı veriye bağlıdır. Javascript dilinde objeler `(object)` ve diziler
+Referans yoluyla geçişlerde ise klonlama yoktur, objenin değeri değil doğrudan kendisini aktarılır. Ram üzerinde yeni bir alan oluşturulmaz. 
+Yeni değişken, aktarılan obje ile birlikte ram'de `(memory)` aynı noktada saklanır, her ikiside aynı veriye bağlıdır. Javascript dilinde objeler `(object)` ve diziler
 `(array)` referans yoluyla geçerler.
 
 ```ts
@@ -724,7 +723,7 @@ console.log(person) // {name: "Kemal Gözler"}
 Objeler veya diziler `(Array)` referans yoluyla geçtiği için ve bu veriler üzerinde yapılan işlemler doğrudan objenin ve dizinin
 kendisini değiştirdiği için, uygulamada bir takım istenmeyen sonuçların `(side effects)` doğmasın sebebiyet vermektedir. Bu nedenle
 state yönetim sistemlerinde obje ve dizilerden oluşan state dondurularak `(Object.freeze)` state üzerinde kalıcı işlemlerin yapılması
-bir nebze engellenmeye çalışılmaktadır. Ancak state yönetimi kullanılmayan uygulamalarda ise bu işin sorumluluğu geliştiricilerin 
+bir nebze engellenmeye çalışılmaktadır. Ancak state yönetimi kullanılmayan sistemlerde ise bu işin sorumluluğu geliştiricilerin 
 ellerine kalmaktadır. 
 
 İstenmeyen bir sonucun oluşmasını engellemek amacıyla obje ve diziler `(array)` ile çalışırken doğrudan bu verileri düzenlemek yerine
@@ -732,10 +731,10 @@ bu veriler içerisinde yer alan bilgileri `destructing` yöntemi ile elde edip k
 önem arz etmektedir. 
 
 Konuyu daha iyi anlamak için örnek bir senaryo üzerinden gidelim. Bir e-ticaret uygulamamız olduğunu düşünelim, kullanıcının sepet ikonuna
-tıkladığında seçtiği ürünü `cart` dizisine eklediğimizi alış verişi tamamla dediğinde `cart` içerisinde yer alan bütün ürünleri ise ajax ile
+tıkladığında seçtiği ürünü `cart` dizisine `([])` eklediğimizi alış verişi tamamla dediğinde `cart` içerisinde yer alan bütün ürünleri ise ajax ile
 gönderdiğimizi düşünelim. 
 
-Uygulamamızda her isteğin bir hata durumunda 3 kez tekrarlandığı bir senaryoda, ilk isteğin sunucunun boot zamanına denk geldiğini ve
+Uygulamamızda her isteğin bir hata durumunda 3 kez tekrarlandığı bir senaryoda, ilk isteğin sunucunun boot zamanına denk geldiği için başarısız olduğunu ve
 ikinci isteğin 5 sn sonra yeniden gönderileceği bir durumda, kullanıcının yanlışlıkla sepete ürün eklediğini düşünelim. 
 
 Eğer doğrudan `cart` dizisine bu ürünleri ekliyorsak, her ürün eklediğimizde yeni bir dizi oluşturmuyorsak, kullanıcının son yaptığı
@@ -743,7 +742,7 @@ gerek hatalı gerek kasıtlı bir işlem sonucu sonradan eklediği ürünü ikin
 öncesinde tamamladığı ödemeye eklediğimizi düşünelim. Kullanıcı sonrasında faturaya baktığında boom!! sepete sonradan eklediği ürünün
 de satın alındığını görecek. Bu hem kullanıcının hem de bizim istemediğimiz bir sonuç. 
 
-İşte bu gibi istenmeyen durumların (fonksiyonun uygulamanın `state`'ini değiştirmesi gibi) `(Side Effect)` oluşmasını engellemek için, bilhassa obje ve diziler `(array)` üzerinde işlem 
+İşte bu gibi istenmeyen durumların *(fonksiyonun uygulamanın `state`'ini değiştirmesi gibi)* `(Side Effect)` oluşmasını engellemek için, bilhassa obje ve diziler `(array)` üzerinde işlem 
 yaparkendaha temkinli hareket etmeli, uygulama genelinde kullanılan verimiz `(state)` üzerinde kalıcı değişiklikler yapmadan işlemleri
 gerçekleştirmeliyiz. 
 
@@ -766,18 +765,18 @@ function addItemToCart(cart: CartItem[], item: Item): CartItem[] {
 **[⬆ başa dön](#iindekiler)**
 
 ### Global fonksiyonlar yazmayın.
-Javascript ile çalışırken hiçbirimiz pure javascript ile sıfırdan bir uygulama yazmaya çalışmıyoruz. Bu hem ciddi miktarda zaman hem de 
+Javascript ile çalışırken hiç birimiz pure javascript ile sıfırdan bir uygulama yazmaya çalışmıyoruz. Bu hem ciddi miktarda zaman hem de 
 ciddi miktarda emek demek. Bunun yerine daha öncesinde yazılmış olan kütüphaneleri sık sık kullanıyoruz. 
 
 Eğer global bir fonksiyon tanımlıyorsak, yazdığımız bu global fonksiyonun başka bir kütüphaneye ait fonksiyonu `override` etme riski
 ile karşı karşıya kalmamız gibi tehlikeli bir olasık soz konusu olacaktır. 
 
 Örneğin native `Array` sınıfını genişlettiğimizi `(extend)` ve `diff` adlı, iki dizi `(array)` arasındaki farklı itemleri gösteren bir 
-metod eklediğimizi düşünelim. Aynı metodu kullandığımız bir kütüphanenin, farklı bir syntax veya farklı bir işlevle tanımlamış durumunda
+metod eklediğimizi düşünelim. Aynı metodu *(diff)*, kullandığımız bir kütüphanenin, farklı bir syntax veya farklı bir işlevle kendisinin de tanımlamış durumunda
 kütüphanin işleyişine kalıcı olarak hasar vermek gibi sonuç ile karşı karşıya kalacağız. 
 
-Bu gibi durumlardan kaçınmak için doğrudan global fonksiyonlar oluşturmak ve native sınıfları genişletmek `extend` yerine bu sınıflardan
-miras alan `inheritance` özel sınıflar (collections vs) oluşturabilir ve yardımcı metodlarımızı bu sınıflar üzerinde tanımlayabiliriz. 
+Bu gibi durumlardan kaçınmak için doğrudan global fonksiyonlar oluşturmak ve native sınıfları genişletmek `(extend)` yerine bu sınıflardan
+kalıtım alan `(inheritance)` özel sınıflar (collections vs) oluşturabilir ve yardımcı metodlarımızı bu sınıflar üzerinde tanımlayabiliriz. 
     
 **Yanlış:**
 
@@ -809,8 +808,8 @@ class MyArray<T> extends Array<T> {
 
 ### Olabildiğince fonksiyonel bir şekilde kod yazmaya özen gösterin.
 
-Javascript her an her saniye gelişen canlı bir dil. Daha rahat ve esnek bir geliştirme ortamı sağlamak amacıyla TC39 ve bir çok 
-gönüllü geliştirici ciddi bir çaba sarf ediyor.
+Javascript her an her saniye gelişen canlı bir dil. Daha fonksiyonel, pratik ve esnek bir geliştirme ortamı sağlamak amacıyla TC39 ve bir çok 
+gönüllü geliştirici büyük bir çaba sarf ediyor.
 
 Bu gelişmeleri takip etmek, yeniliklere hakim olmak ve eski alışkanlıkları terk edip olabildiğince bu yenilikleri uygulamak gerekiyor.
 Bu yenilikler hem kod yazımında büyük kolaylıklar sunarken, okunurluk `(readibilty)` açısından da daha temiz bir syntax içeriyor.
@@ -866,8 +865,8 @@ const totalOutput = contributions
 
 **[⬆ başa dön](#iindekiler)**
 
-### Koşulları fonksiyon veya metodlar içerise taşıyın
-`Encapsulation` işlemi gerçekleştirerek, yani var olan kodumuzu bir fonksiyon veya bir metod yardımıyla bütünleşik bir yapı içerisine
+### Koşulları fonksiyon veya metodlar içerisine taşıyın
+Kapsülleme `(Encapsulation)` işlemi gerçekleştirerek, yani var olan kodumuzu bir fonksiyon veya bir metod yardımıyla anlamlı bir bütünleşik bir yapı içerisine
 taşıyarak okunabilirliği `(readibility)` artırmaya özen göstermeliyiz.
 
 **Yanlış:**
@@ -993,7 +992,7 @@ class Cessna extends Airplane {
 
 ### Kodunuzu gereğinden fazla optimize etmeyin
 
-Javascript web programlamada mihenk taşlarından biri halinden geldiğinden beridir modern tarayıcılar artık bir çok optimizasyonu kendileri
+Javascript web programlamada mihenk taşlarından biri haline geldiğinden beridir modern tarayıcılar artık bir çok optimizasyonu kendileri
 yapmaktadır. Keza artık geliştiriciler esnext ile gelen her yeniliği yakından takip ettiği ve kullandığı için bir çok üst seviye
 javascript kodu tarayıcı desteğinden yoksun olup Babel ve benzeri `transpiler` yardımı ile alt seviye javascript koduna dönüştürmekte
 ve gerekli olan optimizasyonların bir çoğunu bu `transpiler` dediğimiz kod dönüştürücüler gerçekleştirmektedir.
@@ -1020,12 +1019,12 @@ for (let i = 0; i < list.length; i++) {
 
 **[⬆ başa dön](#iindekiler)**
 
-### Kullanılmayan kodları (dead code) kaldırın.
+### Kullanılmayan kodları `(dead code)` kaldırın.
 
 Kullanımı bırakılan komple terkedilen veya yerine yenileri getirilen `(deprecated)` kodları Kullanılmayan kod/Ölü kod `(dead code)`.
 olarak adlandırıyoruz. 
 
-Çalışma alanınızda, eğer varsa, kullanımdan kaldırılan bu kodları temizleyin. Bu hem daha temiz bir çalışma ortamı hem de daha küçük
+Çalışma alanınızda `(codebase)`, eğer varsa, kullanımdan kaldırılan bu kodları temizleyin. Bu hem daha temiz bir çalışma ortamı hem de daha küçük
 `bundle` boyutu sağlar.
 
 **Yanlış:**
@@ -1061,9 +1060,9 @@ inventoryTracker('apples', req, 'www.inventory-awesome.io');
 Yüksek sayıda item içeren veri yığınları ile çalışırken `iterator` ve `generator`leri kullanmanın bir takım avantajları vardır
 
 - Hangi itemlerin erişilebilir olduğunu manuel olarak belirleyebilirsiniz
-- Daha az işlem gücü gerektirir. 
-- Iterator ile birlikte `for..of ` syntaxı kullanılabilir
-- Özel iteratorler yazıbilir, farklı veri yapılarına entegre edilebilir böylece daha yüksek performans elde edilebilir. (Örn. Binary Tree)
+- Kullanımı sırasında daha az işlem gücü gerektirir. 
+- Iterator ile birlikte `for..of ` *syntax*'ı kullanılabilir
+- Özel iteratorler yazıbilir, farklı veri yapılarına entegre edilebilir böylece daha yüksek performans elde edilebilir. *(örn. Binary Tree)*
 
 **Yanlış:**
 
@@ -1094,7 +1093,7 @@ print(10);
 
 // Sınırsız sayıda fibonacci sayıları üretir.
 // Generator bütün sayılara ait rakamları tutmaz. Yani sadece o anki dizi ile ilgilenir. Önceki ve sonraki diziye ait bilgileri
-// biriktirmez. Bu sayede kullanımı tamamlanan diziler Garbage Collectorun sularına doğru yol alır
+// biriktirmez. Bu sayede kullanımı tamamlanan diziler Garbage Collectorun sularına doğru yol alır. Ram'de (memory) de uzun süre yer tutmaz
 function* fibonacci(): IterableIterator<number> {
   let [a, b] = [0, 1];
 
@@ -1147,8 +1146,9 @@ itiriri(fibonacci())
 Typescript `getter/setter` kullanımını desteklemektedir.. Bu `notation`'ları kullanarak verinin obje içerisine eklenmesi veya getirilmesi
 sırasında obje üzerinde çeşitli manipülasyonlar yapabilirsiniz. Bu `notation`'lar bize bir takım kullanım kolaylıkları sağlamaktadır
 
-- Sadece bir `property` nin obje içerisinde varlığını veya yokluğunu aşan bir durumda, belli bir durumun varlığını veya kontrol etmek
+- Sadece bir `property` nin obje içerisinde varlığını veya yokluğunu aşan bir işlem durumunda, belli bir durumun varlığını veya kontrol etmek
 için `getter` kullanabilirsiniz. Bu aynı zamanda obje çapında bir soyutlama `(Abstraction)` yapmanızı da sağlar.
+
 **Yanlış:**
 ```ts
 const user = {
@@ -1181,8 +1181,9 @@ if (user.approved) {
 - `set` işlemi sırasında validasyon işlemlerini yapabilirsiniz.
 - Obje içerisindeki `property`ler obje dışında çağrılırken veya set edilirken manipüle edilebilir.
 - `set` ve `get` kullanımı sayesinde hata yönetimi ve hata loglama işlemleri daha zarif bir şekilde halledilebilir.
-- Eğer *remote* bir veri söz konusu ise bu veri obje oluşturulduğu sırada değil, `propert` çağrıldığı sırada `lazy loading` ile
-çağrılabilir.
+- Eğer *remote* bir veri söz konusu ise bu veri obje oluşturulduğu sırada değil, `property` çağrıldığı yüklenebilir. Bu sayede obje içerisinde 
+lazy loading işlemleri gerçekleştirilevilir.
+
 
 **Yanlış:**
 
@@ -1242,7 +1243,9 @@ Typescript `public` *(default)*, `protected` ve `private` gibi çeşitli erişim
 Bu kuralları kullanarak tanımladığınız metodun veya `property`'nin hangi erişim izinlerine sahip olduğunu tanımlayabilirsiniz 
 
 **Public:** (halka açık, kamu) erişim kuralı ile tanımladığımız metotlara ve verilere her nesneden erişebiliriz.
+
 **Private:** (özel, gizli) erişim kuralı ile tanımladığımız bir metoda sadece bu metodun tanımlandığı sınıfdan örneklendirilmiş nesnelerin içinden erişim hakkına sahip oluruz.
+
 **Protected:** (korumalı) erişim kuralı ile tanımladığımız bir metoda ise bu metodun tanımlandığı sınıfdan örneklendirilmiş nesnelerin içinden ve bu sınıfdan türetilmiş olan alt nesnelerden erişebiliriz.
 
 [Kaynak: Kapsülleme](https://www.wikiwand.com/tr/Kaps%C3%BClleme)
@@ -1286,12 +1289,12 @@ class Circle {
 
 **[⬆ başa dön](#iindekiler)**
 
-### Değiştirilemez veriler ile çalışmaya özen gösterin.
+### Değiştirilemez `(immutable/readonly)` veriler ile çalışmaya özen gösterin.
 
 Typescript ile *readonly* notasyonunu kullanarak istediğiniz bir `property`i değiştirilemez hale getirebilirsiniz. Bu sayede istenmeyen
 sonuçlardan `(side effects)` bir nebze olsun kaçınabiliriz.
 
-Daha gelişmiş senaryolar için `generic` bir `type` olan `Readonly<T>` `type`ını kullanabilirsiniz. Bu sayede bir sınıfa ait bütün
+Daha gelişmiş senaryolar için `generic` bir `type` olan `Readonly<T>` `type`ını kullanabilirsiniz. Readonly `type`'ı sayesinde bir sınıfa ait bütün
 `property`ler readonly olarak işaretlenir ve dışarıdan gelen bütün müdahelelere kapatılır.
  
 **Yanlış:**
@@ -1341,7 +1344,7 @@ function hoge(args: readonly string[]) {
   args.push(1); // error
 }
 ```
-`const` notasyonu ile sabit değişkenler oluşturun.
+## `const` notasyonu ile sabit değişkenler oluşturun.
 
 Detaylı bilgi için; [const assertions](https://github.com/microsoft/TypeScript/wiki/What's-new-in-TypeScript#const-assertions)
 
@@ -1393,9 +1396,9 @@ result.value = 200; // hata verir
 Ne zaman `type` ne zaman `interface` kullanmalıyız. Bunu anlamak için bu kavramlara iyice hakim olmak gerekiyor. Öncesinde bazı
 fundamental kavramlara hakim olmakta fayda var.
 
-[Basic Types](https://www.typescriptlang.org/docs/handbook/basic-types.html)
-[Advanced Types](https://www.typescriptlang.org/docs/handbook/advanced-types.html)
-[Interface](https://www.typescriptlang.org/docs/handbook/interfaces.html)
+-[Basic Types](https://www.typescriptlang.org/docs/handbook/basic-types.html)
+-[Advanced Types](https://www.typescriptlang.org/docs/handbook/advanced-types.html)
+-[Interface](https://www.typescriptlang.org/docs/handbook/interfaces.html)
 
 Genel olarak eğer birden fazla tanımlamayı birlikte veya alternatif olarak kullanmak gerekiyorsa yani `union` veya `intersect` olarak
 tanımlanan işlemler ile ihtiyacımızı karşılayabiliyorsak `type` oluşturmak ihtiyacımızı görecektir.
@@ -1635,7 +1638,7 @@ class UserNotifier {
 
 **[⬆ başa dön](#iindekiler)**
 
-### Bir nesneden miras almak `(inheritence)` yerine `Composition` kullanın.
+### Bir nesneden kalıtım almak `(inheritence)` yerine `Composition` kullanın.
 
 Öncelikle `Composition` kavramının ne olduğu üzerinde durmakta fayda var. En basit haliyle, nesnelerin birbiri içerisinde kullanılması demektir. Ancak yukarıda
 nesneleri olabildiğince izole bir şekilde çalışmasından, diğer nesnelerden bağımsız bir şekilde çalışmasından bahsetmişken peki neden şimdi bir öyle bir böyle 
@@ -1646,7 +1649,7 @@ noktada farklı nesnelerin varlığına ihtiyaç duyuyoruz. Ancak bu ihtiyacım�
 nesneye değil, arayüzler `(interface)` kullanarak ihtiyacımız olan şartları sağlayan herhangi bir nesne ile çalışabilecek şekilde bir yapı kurmalıyız.
 
 İşte `Composition` tam bu noktada devreye giriyor. Ben kullanıcılara mail göndermek için, `Mail` sınıfında sadece kullanıcının mail adresine ulaşmak için, 
-koca bir modeli miras almak yerine, oluşturduğum Mail sınıfında `CanReceiveMail` arayüzünü uygulayan `(implements)` `User` modelimi kullanabilirim. 
+koca bir modeli kalıtım almak yerine, oluşturduğum Mail sınıfında `CanReceiveMail` arayüzünü uygulayan `(implements)` `User` modelimi kullanabilirim. 
 Bu sayede hem Mail nesnemi, mail adresi dışında hiç bir ortak noktasının olmadığı `Model` sınıfından ayırmış olurum hem de `CanReceiveMail` arayüzünü uygulamış
 `(implements)` bütün nesnelerin sahip olduğu mail adreslerine mail gönderebilirim.
 
