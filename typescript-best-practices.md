@@ -6,7 +6,7 @@
   4. [Sınıflar](#classes)
   5. [SOLID](#solid)
   6. [Testing](#testing)
-  7. [Concurrency](#concurrency)
+  7. [Asenkron İşlemler](#asenkron-islemler)
   8. [Hata Yönetimi](#error-handling)
   9. [Düzenleme](#formatting)
 
@@ -1717,7 +1717,7 @@ getirmek dah doğru bir yol olur.
 
 ```ts
 class Employee {
-  private taxData: EmployeeTaxData;
+  private taxData: TaxData;
 
   constructor(
     private readonly name: string,
@@ -1834,7 +1834,7 @@ const query = new QueryBuilder()
 
 ## SOLID
 
-### Tekil Sorumluluk `(Single Responsibility)` Prensibi (SRP)
+### Tekil Sorumluluk `(Single Responsibility)` Prensibi
 
 Tekil Sorumluluk yani `Single Responsibilty` bir nesnenin `(class)` sadece tek bir amaca hizmet etmesini, tek bir amacı gerçekleştirmesini, tek bir işin yönetiminden sorumlu
 olmasını ifade eder.
@@ -1894,7 +1894,7 @@ class UserSettings {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Açık/Kapalı Prensibi `(Open Closed Princible)`
+### Açık/Kapalı `(Open Closed)` Prensibi
 
 Bertrand Meyer tarafından ifade edildiği üzere;
 
@@ -1988,19 +1988,26 @@ Eğer koşula dayalı bir yapı kullanırsak her yeni adapter eklediğimizde, `H
 Açık/Kapalı prensibinde kabul ettiğimiz üzere biz yeni bir adapter eklediğimizde mevcut kod üzerinde bir değişim olmasını istemiyoruz. 
 
 Dolayısıyla en başta bizim sonradan yaptığımız eklemelerden etkilenmeyecek bir yapı kurmamız gerekiyor. Yukarıda yer alan örnekte sürücü
-dizaynı `(Driver Pattern)` ile oluşturulmuş bir yapı söz konusu. Bu yapı sayesinde biz 40 farklı adapter dahi 
+dizaynı `(Driver Pattern)` ile oluşturulmuş bir yapı söz konusu. Bu yapı sayesinde 40 farklı adapter dahi olsa, `Adapter` abstract
+nesnesinde yer alan gereken nitelikleri sağladığı sürece, mevcut kodumuzda hiçbir düzenleme yapmaksızın kullanabiliriz. 
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Liskov Substitution Principle (LSP)
+### Yerine Geçme `(Liskov Substitution)` Prensibi
 
-This is a scary term for a very simple concept. It's formally defined as "If S is a subtype of T, then objects of type T may be replaced with objects of type S (i.e., objects of type S may substitute objects of type T) without altering any of the desirable properties of that program (correctness, task performed, etc.)." That's an even scarier definition.  
-  
-The best explanation for this is if you have a parent class and a child class, then the parent class and child class can be used interchangeably without getting incorrect results. This might still be confusing, so let's take a look at the classic Square-Rectangle example. Mathematically, a square is a rectangle, but if you model it using the "is-a" relationship via inheritance, you quickly get into trouble.
+Kabaca tabiriyle kalıtım alan ve kalıtım veren sınıfların hiç bir ekstra müdahele olmaksızın birbirlerinin yerine kullanılabilmesidir.
+*Yerine Geçme* prensibi olarak da geçen **Liskov Substitution** prensibinde amaç kalıtım veren `(parent)` nesnenin bütün kalıtım alan
+`(child)` nesneleri kapsayacak şekilde oluşturulması, bu sayede kalıtım alan sınıflar `(child)` ile çalışırken mevcut kod yapısının
+dışına çıkmadan, if else devreleri kurmak zorunda kalmadan kalıtım aldığı işlemleri yerine getirebilmesidir. 
+
+Kalıtım alan çocuk nesne `(child)` kalıtım aldığı `(parent)` nesnenin soyut `(abstract)` ve somut bilgilerini, metodlarını kullanarak
+kendisinden beklenen işlevi yerine getirebilmelidir. Kalıtım veren `(parent)` ne gereğinden az (çocuk nesneleri kendi ortamını kurmaya 
+zorlamadan), ne de gereğinden fazla (çocuk nesnelerin ihtiyaç duymayacağı) bilgi-metod içermelidir. 
 
 **Yanlış:**
 
 ```ts
+// Rectangle: Dikdörtgen
 class Rectangle {
   constructor(
     protected width: number = 0,
@@ -2030,7 +2037,7 @@ class Rectangle {
     return this.width * this.height;
   }
 }
-
+// Square: Kare
 class Square extends Rectangle {
   setWidth(width: number): this {
     this.width = width;
@@ -2050,7 +2057,7 @@ function renderLargeRectangles(rectangles: Rectangle[]) {
     const area = rectangle
       .setWidth(4)
       .setHeight(5)
-      .getArea(); // BAD: Returns 25 for Square. Should be 20.
+      .getArea(); // Hatalı çalışacak ve kareyi dikdörtgen olarak renderleyecektir.
     rectangle.render(area);
   });
 }
@@ -2062,6 +2069,7 @@ renderLargeRectangles(rectangles);
 **Doğru:**
 
 ```ts
+// Share: Şekil
 abstract class Shape {
   setColor(color: string): this {
     // ...
@@ -2109,10 +2117,17 @@ renderLargeShapes(shapes);
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Interface Segregation Principle (ISP)
+### Arayüz Ayrımı `(Interface Segregation)` Prensibi
 
-ISP states that "Clients should not be forced to depend upon interfaces that they do not use.". This principle is very much related to the Single Responsibility Principle.
-What it really means is that you should always design your abstractions in a way that the clients that are using the exposed methods do not get the whole pie instead. That also include imposing the clients with the burden of implementing methods that they don’t actually need.
+`Interface Segregation` prensibi şu şekilde tanımlanır: *Geliştiriciler hiç kullanmayacakları arayüzleri `(Interface)` kullanmak 
+zorunda bırakılmamalı.*
+
+Burada anlatılmak istenen aslında yukarıda `Single Responsibility` prensibinde anlatılandan çok da farklı değildir. Bu prensipte ise
+nesnelerin yerine arayüzlerin `(interface)` kapsamının daha dar, daha **öz** olması gerektiğinden, bir arayüzün kapsamı dışında kalan metodları
+tanımlamamasından bahseder.
+
+Bu sayede bir arayüzü `(interface)` uygulayan `(implement eden)` geliştiricinin hiç ihtiyacı olmadığı halde bu metodları, sadece 
+arayüzde tanımlandığı için oluşturduğu sınıfa uygulamak zorunda bırakılmaması amaçlanır.
 
 **Yanlış:**
 
@@ -2190,17 +2205,26 @@ class EconomicPrinter implements Printer {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Dependency Inversion Principle (DIP)
+### Bağımlılığın Ters Çevrilmesi `(Dependency Inversion)` Prensibi (DIP)
 
-This principle states two essential things:
+Bu prensip 2 temel kural üzerine kurulmuştır:
 
-1. High-level modules should not depend on low-level modules. Both should depend on abstractions.
+1. Yüksek seviye modüller, nesneler alt seviye modüllere dayanmamalıdır. Bu bağımlılık soyutlanmalıdır.
 
-2. Abstractions should not depend upon details. Details should depend on abstractions.
+2. Soyutlama işlemi alt seviye bağımlılığın detaylarına dayanmamalıdır. Alt seviye nesnenin sorumluluğu soyutlanmalı, ancak bu
+sorumluluğu alt seviye nesnenin nasıl yerine getirileceği onun insifiyatine bırakılmalı, üst seviye nesne veya modül alt nesnenin 
+bu sorumluluklarından bağımsız hareket edebilmelidir. 
 
-This can be hard to understand at first, but if you've worked with Angular, you've seen an implementation of this principle in the form of Dependency Injection (DI). While they are not identical concepts, DIP keeps high-level modules from knowing the details of its low-level modules and setting them up. It can accomplish this through DI. A huge benefit of this is that it reduces the coupling between modules. Coupling is a very bad development pattern because it makes your code hard to refactor.  
-  
-DIP is usually achieved by a using an inversion of control (IoC) container. An example of a powerful IoC container for TypeScript is [InversifyJs](https://www.npmjs.com/package/inversify)
+Okunduğunda çok fazla bir anlam ifade etmiyor gibi görünebilir ancak aslında burada anlattığımız bu prensibi biraz önce yukarıda
+hatalı bulduğumuz bir örneği düzenlemek yoluyla kullandık.
+
+Hatırlarsanız `EmployeeTaxData` sınıfını `setTaxData` metodu içerisinde oluşturan *(örnekleyen)* `Employee` sınıfını düzenlemiştik
+ve bu sınıfın doğrudan `EmployeeTaxData` sınıfına bağımlı bırakılmaması gerektiğini, bunun yerine `getTaxData` gibi soyut bir 
+implementasyonu yerine getiren herhangi bir sınıfla ile çalışabilmesi gerektiğinden bahsetmiştik. 
+
+Burada aslında yaptığımız düzenleme ile `Dependency Inversion` prensibi ile bizden beklenen üst nesnenin alt nesneye bağımlı olmaktan
+kurtulmasından başkaca bir şey değil. Bunun yerine biz `Employee` nesnesini `EmployeeTaxData` sınıfından kurtarak `TaxData` arayüzünü
+`(interface)` sağlayan herhangi bir sınıfla çalışabilecek hale getirdik. 
 
 **Yanlış:**
 
@@ -2216,14 +2240,14 @@ type ReportData = {
 
 class XmlFormatter {
   parse<T>(content: string): T {
-    // Converts an XML string to an object T
+    // Xml veriyi generic bir sınıfa dönüştürür.
   }
 }
 
 class ReportReader {
 
-  // BAD: We have created a dependency on a specific request implementation.
-  // We should just have ReportReader depend on a parse method: `parse`
+  // Burada yaptığımız işlem ile ReportReader nesnesini doğrudan
+  // XmlFormatter sınıfına bağımlı hale getirmiş olduk
   private readonly formatter = new XmlFormatter();
 
   async read(path: string): Promise<ReportData> {
@@ -2255,14 +2279,14 @@ interface Formatter {
 
 class XmlFormatter implements Formatter {
   parse<T>(content: string): T {
-    // Converts an XML string to an object T
+    // Xml veriyi generic bir sınıfa dönüştürür
   }
 }
 
 
 class JsonFormatter implements Formatter {
   parse<T>(content: string): T {
-    // Converts a JSON string to an object T
+    // Xml veriyi generic bir sınıfa dönüştürür
   }
 }
 
@@ -2280,50 +2304,59 @@ class ReportReader {
 const reader = new ReportReader(new XmlFormatter());
 await report = await reader.read('report.xml');
 
-// or if we had to read a json report
 const reader = new ReportReader(new JsonFormatter());
 await report = await reader.read('report.json');
 ```
+
+Burada yaptığımız soyutlama işlemi sayesinde ReportReader nesnemiz artık spesifik bir Formatter nesnesine bağımlı olmadan çalışabilecek,
+`Formatter` arayüzünde istenen implementasyonları yerine getiren herhangi bir nesne ile çalışabilecektir. 
 
 **[⬆ başa dön](#table-of-contents)**
 
 ## Testing
 
-Testing is more important than shipping. If you have no tests or an inadequate amount, then every time you ship code you won't be sure that you didn't break anything.
-Deciding on what constitutes an adequate amount is up to your team, but having 100% coverage (all statements and branches)
-is how you achieve very high confidence and developer peace of mind. This means that in addition to having a great testing framework, you also need to use a good [coverage tool](https://github.com/gotwarlost/istanbul).
+Testing yazılım geliştirmenin en önemli parçalarından biridir. Eğer hiç test yazılmamış ise veya yetersiz sayıda test yazılmış ise, yazdığınız kodu her yayınladığınızda
+uygulamada bir hata oluşup oluşmayacağından asla tam olarak emin olamazsınız. Bu belki geliştirme sürecinde olan uygulama için ciddi bir sorun teşkil etmeyebilir ancak
+10 milyon kullanıcı tarafından kullanılmakta olan bir uygulama düşünün ve yayınladığınız yeni bir özelliğin veya yaptığınız bir değişikliğin 10 milyon kişiyi etkilediğini,
+kodunuzda yanlış çalışan bir bölüm olduğu veya mevcut kodla bir çakışma meydana getirdiği bir senaryoda milyonlarca müşterinin mağduriyetine yol açacaktır.
 
-There's no excuse to not write tests. There are [plenty of good JS test frameworks](http://jstherightway.org/#testing-tools) with typings support for TypeScript, so find one that your team prefers. When you find one that works for your team, then aim to always write tests for every new feature/module you introduce. If your preferred method is Test Driven Development (TDD), that is great, but the main point is to just make sure you are reaching your coverage goals before launching any feature, or refactoring an existing one.  
+[Javascript için yaazılmış test `framework`leri](http://jstherightway.org/#testing-tools) 
 
-### The three laws of TDD
+Bu `framework`ler ayrıca typescript desteği de sunmaktadır.
 
-1. You are not allowed to write any production code unless it is to make a failing unit test pass.
+### Test Öncelikli Geliştirme `(Test Driven Development (TDD))`
 
-2. You are not allowed to write any more of a unit test than is sufficient to fail; and compilation failures are failures.
+`TDD` olarak bilinen bu yöntem, henüz kod yazmaya başlamadan önce kodunuz soyut çalışma mantığında önce testleri yazmayı, sonrasında ise uygulamanızı çalıştıracak
+olan kodların yazılmasını amaçlar. `TDD` için belirlenmiş üç ana kural vardır
 
-3. You are not allowed to write any more production code than is sufficient to pass the one failing unit test.
+1. Test süresince kod yazılmaz, test yazım aşaması bittikten sonra kod yazım aşamasına geçilir.
 
-**[⬆ başa dön](#table-of-contents)**
+2. Birim `(Unit)` test kısa ve öz olmalı, beklenenin gerçekleşmemesi halinde başarısızlıkla `(fail)` sonuçlanmlıdır. Gereğinden uzun birim test yazılmamalıdır. 
 
-### F.I.R.S.T. rules
-
-Clean tests should follow the rules:
-
-- **Fast** tests should be fast because we want to run them frequently.
-
-- **Independent** tests should not depend on each other. They should provide same output whether run independently or all together in any order.
-
-- **Repeatable** tests should be repeatable in any environment and there should be no excuse for why they fail.
-
-- **Self-Validating** a test should answer with either *Passed* or *Failed*. You don't need to compare log files to answer if a test passed.
-
-- **Timely** unit tests should be written before the production code. If you write tests after the production code, you might find writing tests too hard.
+3. Test ile sınırları çizilenden daha fazla kod yazmayın, yazdığınız her kod parçası kendisi için yazılan birim testi başarı ile sonuçlandıracak kadar olmalıdır.
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Single concept per test
+### F.I.R.S.T. kuralları
 
-Tests should also follow the *Single Responsibility Principle*. Make only one assert per unit test.
+Temiz *(açık)* `(Clean)` bir test yazmak için aşağıda belirtilen kurallar takip edilmelidir:
+
+- **Fast** Testler sık sık yazılan kodları kontrol etmek için kullandığından olabildiğince hızlı bir şekilde çalışmalıdır.
+
+- **Independent** Bir test başka bir teste dayanmamalı, izole olmalıdır. Testlerin hangi sırayla çalıştırıldığı önem arz etmemelidir.
+
+- **Repeatable** Testler farklı farklı ortamlarda aynı bir şekilde çalışabilmelidir. Çalıştırıldığı ortamdan bağımsız olmalıdır.
+
+- **Self-Validating** Bir test başarılı ise *Passed* şeklinde, başarısız ise *Failed* şeklinde cevap vermelidir. Bir testing başarılı mı yoksa başarısız mı
+sonuçlandığını anlamak için log kayıtları incelenmek zorunda kalınmamalı.
+
+- **Timely** Birim `(Birim)` testleri kod yazmaya başlamadan önce yazılmalıdır. Mevcut kod için test yazmak zor gelebilir.
+
+**[⬆ başa dön](#table-of-contents)**
+
+### Her testing tek bir konsepti olmalı.
+
+Aynı nesneler gibi testlerde Tekil Sorumluluk `(Single Responsibility)` Prensibine uymalıdır. Bir test için tek bir doğrulama `(assertion)` yapılmalıdır..
 
 **Yanlış:**
 
@@ -2371,9 +2404,9 @@ describe('AwesomeDate', () => {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### The name of the test should reveal its intention
+### Testing adı yaptığı işlevi açık bir şekilde ortaya koymalıdır.
 
-When a test fail, its name is the first indication of what may have gone wrong.
+Bir test başarısız olduğunda sadece testing ismine bakılarak hangi işlemin başarısız olduğu anlaşılabilmeli, kaynak kodlar incelenmek zorunda bırakılmamalıdır.
 
 **Yanlış:**
 
@@ -2405,13 +2438,16 @@ describe('Calendar', () => {
 
 **[⬆ başa dön](#table-of-contents)**
 
-## Concurrency
+## Asenkron İşlemler
 
-### Prefer promises vs callbacks
+### `Callback` yerine `Promise` kullanın
 
-Callbacks aren't clean, and they cause excessive amounts of nesting *(the callback hell)*.  
-There are utilities that transform existing functions using the callback style to a version that returns promises
-(for Node.js see [`util.promisify`](https://nodejs.org/dist/latest-v8.x/docs/api/util.html#util_util_promisify_original), for general purpose see [pify](https://www.npmjs.com/package/pify), [es6-promisify](https://www.npmjs.com/package/es6-promisify))
+`Callback` kullanılan yapılar özellikle basamaklı işlemler birden fazla `Callback` kullanmanızı gerektirecek durumlarda hem kullanım `(usability)` hem de okunabilirlik
+ `(readibility)` açısından sıkıntılı bir hal almaktadır. Bu geliştiriciler arasında `callback cehennemi` `(callback hell)` olarak da adlandırılır.
+  
+Bunun yerine ES6 ile birlikte gelen ve kısa zamanda yaygın bir kullanım kazanan `Promise` yapısını kullanabilirsiniz. 
+
+[es6-promisify](https://www.npmjs.com/package/es6-promisify))
 
 **Yanlış:**
 
@@ -2463,22 +2499,35 @@ downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html'
   .catch(error => console.error(error));  
 ```
 
-Promises supports a few helper methods that help make code more concise:  
+`Promises` nesnesi `(class)` bir takım yardımcı metodlar içermektedir.  
 
-| Pattern                  | Description                                |  
-| ------------------------ | -----------------------------------------  |  
-| `Promise.resolve(value)` | Convert a value into a resolved promise.   |  
-| `Promise.reject(error)`  | Convert an error into a rejected promise.  |  
-| `Promise.all(promises)`  | Returns a new promise which is fulfilled with an array of fulfillment values for the passed promises or rejects with the reason of the first promise that rejects. |
-| `Promise.race(promises)`| Returns a new promise which is fulfilled/rejected with the result/error of the first settled promise from the array of passed promises. |
+|---------------------------------------------------------------------------------------|  
+| Method                   | Açıklama                                                   |   
+| ------------------------ | -----------------------------------------------------------|  
+| `Promise.resolve(value)` | Girilen değeri bir `Promise` olarak çözümler.              |  
+| ------------------------ | -----------------------------------------------------------|  
+| `Promise.reject(error)`  | Girilen değeri `Promise` hatası olarak çözümler.           |  
+| ------------------------ | -----------------------------------------------------------|  
+| `Promise.all(promises)`  | Girilen bütün `Promise`ler çözümlendikten sonra            |
+|                          | hepsini birlikte bir dizi `(array)` olarak döndürür.       |
+|                          | Eğer bir `Promise` hata olarak `(rejected)` çözümlenirse   |
+|                          | bütün `Promise`ler hatalıymış gibi muamele görür           |
+| ------------------------ | -----------------------------------------------------------|  
+| `Promise.race(promises)` | Girilen bütün `Promise`ler den herhangi biri tamamlandığı  | 
+|                          | anda `Promise` tamamlanır. Geri kalan `Promise`ler         |
+|                          | çözümlenmez                                                |
+|---------------------------------------------------------------------------------------|  
 
-`Promise.all` is especially useful when there is a need to run tasks in parallel. `Promise.race` makes it easier to implement things like timeouts for promises.
+`Promise.all` genellike eşzamanlı *(birbirine paralel)* işlemlerde kullanılır. 
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Async/Await are even cleaner than Promises
+### Async/Await kullanarak daha temiz `(clean)` yapılar oluşturun
 
-With `async`/`await` syntax you can write code that is far cleaner and more understandable than chained promises. Within a function prefixed with `async` keyword you have a way to tell the JavaScript runtime to pause the execution of code on the `await` keyword (when used on a promise).
+`async`/`await` *syntax*'ı ile birlikte daha zincirleme yapılara kıyasla daha temiz daha anlaşılır kod yazabiliriz. `async` anahtar kelimesi ile birlikte çalışma 
+zamanında `(runtime)` kodu okuyan javascript motoruna burada asenkron bir işlem gerçekleşeceğini, `await` anahtar kelimesi ile birlikte ise burada gerçekleşek olan
+işlemin anlık olarak gerçekleşmeyeceğini, bu nedenle tamamlanmasının beklememesini, bu işlemi sıraya alarak aşağıda yer alan kodların okunmaya devam etmesini kodumuzu
+okuyan javascript motora `(enginee, örn. v8)` söyleriz.
 
 **Yanlış:**
 
@@ -2513,7 +2562,7 @@ async function downloadPage(url: string, saveTo: string): Promise<string> {
   return response;
 }
 
-// somewhere in an async function
+// async diğer fonksiyonun içerisinde ise
 try {
   const content = await downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html');
   console.log(content);
@@ -2524,19 +2573,26 @@ try {
 
 **[⬆ başa dön](#table-of-contents)**
 
-## Error Handling
+## Hata Yönetimi (Error Handling)
+Hata almak, hata vermek bunlar güzel şeyler. Bir hata aldığınız yazığınızda bir şeylerin ters gittiğini, bazı şeylerin doğru çalışmadığını hemen anlarız. Ancak 
+hata almadığımız bir senaryoda, çalışması gerektiği gibi çalışmayan bu kod parçasından haberimiz olmayacak, belki yayına çıktıktan ve belli bir maddi zarara sebep
+olduktan sonra, harcayacağımız saatlerce `debugging` işleminden sonra tespit edebileceğiz. 
 
-Thrown errors are a good thing! They mean the runtime has successfully identified when something in your program has gone wrong and it's letting you know by stopping function
-execution on the current stack, killing the process (in Node), and notifying you in the console with a stack trace.
+Bu yüzden bir uygulama yazarken, eğer bir aksiyonda istenmeyen bir durum oluşma, daha doğru bir ifadeyle, hataya sebebiyet verecek bir halin varlığı söz konusu ise
+bu noktaları gerek `try..catch` gerek farklı yapılar kullanarak, bu hataları almak ve bildirmek geliştirme sürecinde büyük bir kolaylık sağlayacaktır.
 
-### Always use Error for throwing or rejecting
+### Bir hata bildirmek istediğinizde her zaman `Error` nesnesini fırlatın `(throw)` 
 
-JavaScript as well as TypeScript allow you to `throw` any object. A Promise can also be rejected with any reason object.  
-It is advisable to use the `throw` syntax with an `Error` type. This is because your error might be caught in higher level code with a `catch` syntax.
-It would be very confusing to catch a string message there and would make
-[debugging more painful](https://basarat.gitbook.io/typescript/type-system/exceptions#always-use-error).  
-For the same reason you should reject promises with `Error` types.
+Javascript'te olduğu gibi Typescript'te bir objeyi fırlatmanıza `(throw)` imkan verir. Keza Promise nesnesi de herhangi bir objeyi hata olarak 
+çözümlemenize `(reject)` imkan tanır. 
 
+Javascript'te hata yönetiminde `Error` sınıfını `throw` anahtar sözcüğü ile birlikte kullanıyoruz. `throw` anahtar kelimesi, adından da anlaşılacağı üzere
+bir objeyi fırlatmanıza olanak sağlar, bu sayede, bir üst kod segmesinde yer alan `try catch` bloğunda fırlatılan objeyi yakalayabiliriz. 
+
+İstenmeyen bir durum ile karşılaştığımızda hata sınıfını ve `throw` anahtar kelimesini kullanarak, oluşan hatalar ile ilgilenen `catch` bloğuna bu hatayı iletebilir
+ve istenmeyen durumun gerçekleştiğini kayıt altına alabilir, ve eğer mümkünse, hataya sebebiyet veren olayın oluşturduğu olumsuz sonuçları önlemeye çalışabiliriz.
+
+[Hata yönetimi hakkında](https://basarat.gitbook.io/typescript/type-system/exceptions#always-use-error).  
 **Yanlış:**
 
 ```ts
@@ -2567,10 +2623,12 @@ async function get(): Promise<Item[]> {
 }
 ```
 
-The benefit of using `Error` types is that it is supported by the syntax `try/catch/finally` and implicitly all errors have the `stack` property which
-is very powerful for debugging.  
-There are also another alternatives, not to use the `throw` syntax and instead always return custom error objects. TypeScript makes this even easier.
-Consider following example:
+Hata yönetiminde `Error` sınıfını kullanmanın en önemli avantajlarından biri de sahip olduğu `stack` adlı *property*'si sayesinde hata meydana gelmeden hangi satır
+hangi sütünda hangi işlemlerin gerçekleştiğini, hangi metodların çalıştırıldığını görebilir ve hatanın kaynağını çok daha kolay bir şekilde tespit edebiliriz.
+
+`throw` anahtar kelimesine alternatif olarak, Typescript ile ile kod yazarken daha uyumlu bir şekilde çalışabilecek şekilde türü `(type)` belirli hata sınıfları
+oluşturabilir, bu hataları oluşturduğumuz metodlarda, kullanabiliriz. Bu sayede bu fonksiyonu veya metodu kullanacak olan kişilere bu metodun kullanımı sırasında
+beklenmeyen bir durumun oluşabileceğini, bu sayede, gelen yanıtı kontrol etmesi gerektiğini bildirmiş oluruz.
 
 ```ts
 type Result<R> = { isError: false, value: R };
@@ -2587,13 +2645,18 @@ function calculateTotal(items: Item[]): Failable<number, 'empty'> {
 }
 ```
 
-For the detailed explanation of this idea refer to the [original post](https://medium.com/@dhruvrajvanshi/making-exceptions-type-safe-in-typescript-c4d200ee78e9).
+Daha detaylı bilgi için [Making exceptions type safe in Typescript](https://medium.com/@dhruvrajvanshi/making-exceptions-type-safe-in-typescript-c4d200ee78e9).
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Don't ignore caught errors
+### Yakalanan hataları ihtmal etmeyin.
 
-Doing nothing with a caught error doesn't give you the ability to ever fix or react to said error. Logging the error to the console (`console.log`) isn't much better as often times it can get lost in a sea of things printed to the console. If you wrap any bit of code in a `try/catch` it means you think an error may occur there and therefore you should have a plan, or create a code path, for when it occurs.
+Hata fırlatmak hata yönetiminin sadece bir yüzüdür, eğer fırlatılan hatayı yakalayıp değerlendirmiyorsak bu hatayı ne tespit etmenin ne fırlatmanın bir anlamı 
+kalmayacaktır. Geliştirme sırasında hatayı konsola yazdırmak ihtiyacımızı büyük bir ölçüde karşılayabilir, ancak, yayında kaynaklanan hataların konsola yazdırılması
+bize hiç bir fayda sağlamayacaktır. Bu yüzden yakalanan hataların kayıt altına alması için bir `logger` yapısına ihtiyaç duyuyoruz. 
+
+Bu `logger` yapısı ile, eğer tarayıcı tarafından çalışıyorsak api üzerinden backend'e iletebilir, eğer sunucu tarafında çalışıyorsak `(node)` doğrudan hatayı kayıt
+altına alabiliriz.
 
 **Yanlış:**
 
@@ -2627,9 +2690,9 @@ try {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Don't ignore rejected promises
+### Hata olarak `(reject)` çözümlenen `Promise`leri ihmal etmeyin
 
-For the same reason you shouldn't ignore caught errors from `try/catch`.
+Yukarıda throw ile fırlattığımız hatalarda olduğu gibi, `Promise` ile hata olarak çözümlediğimiz beklenmeyen olayları da kayıt altına almamız gerekmektedir.
 
 **Yanlış:**
 
@@ -2656,7 +2719,7 @@ getUser()
     logger.log(error);
   });
 
-// or using the async/await syntax:
+// eğer async/await kullanıyorsak:
 
 try {
   const user = await getUser();
@@ -2668,31 +2731,41 @@ try {
 
 **[⬆ başa dön](#table-of-contents)**
 
-## Formatting
+## Yazım Kuralları (Formatting)
 
-Formatting is subjective. Like many rules herein, there is no hard and fast rule that you must follow. The main point is *DO NOT ARGUE* over formatting. There are tons of tools to automate this. Use one! It's a waste of time and money for engineers to argue over formatting. The general rule to follow is *keep consistent formatting rules*.  
+Yazım kuralları kişiden kişiye değişkenlik gösterebilir. Typescript yazımında herkesin zorunlu olarak uyması gereken zorunlu bir `yazım kuralları listesi` yoktur.
+Bu kurallar daha çok bir ekip halinde çalışırken, gerek açık kaynak kütüphanelerde, gerek ekip arkadaşlarınız ile çalışırken ortak bir standart oluşturmak
+bu sayede farklı farklı kişilerin yazdığı kodlar arasında bir uyum oluşturmak amacıyla belirlenen ortak standartlardan başka bir şey değildir. 
 
-For TypeScript there is a powerful tool called [TSLint](https://palantir.github.io/tslint/). It's a static analysis tool that can help you improve dramatically the readability and maintainability of your code. There are ready to use TSLint configurations that you can reference in your projects:
+Günümüzde bu standartları otomatik olarak uygulamak için çeşitli, konfigurasyon sistemleri geliştirilmiş olup `IDE`ler bu konfigurasyonları okuyup anlayabilmekte
+ve yazdığınız kodu bu konfigurasyonlara formatlayabilmektedir. Bu konfigurasyonlarda belirlenen standartlara aykırı bir şekilde yazıyorsanız ise sizi uyarmaktadır.
+ 
+Typescript için bu konfigurasyonları oluşturmak amacıyla [TSLint](https://palantir.github.io/tslint/) geliştirilmiştir. TSLint belirlediğiniz konfigurasyonlar
+doğrultusunda kodunuzu tarayarak, standartlara aykırı olarak yazılmış noktaları tespit eder. 
 
-- [TSLint Config Standard](https://www.npmjs.com/package/tslint-config-standard) - standard style rules
+Bu yazım standartlarını manuel olarak oluşturabileceğiniz gibi, daha önceden yazılmış olan ve typscript ile geliştiren bir çok kimse tarafından kullanılan hazır
+konfigurasyonları da kullanabilirsiniz.
 
-- [TSLint Config Airbnb](https://www.npmjs.com/package/tslint-config-airbnb) - Airbnb style guide
+- [TSLint Config Standard](https://www.npmjs.com/package/tslint-config-standard)
+- [ESLint Config Google](https://www.npmjs.com/package/https://www.npmjs.com/package/eslint-config-google)
+- [TSLint Config Airbnb](https://www.npmjs.com/package/tslint-config-airbnb)
+- [TSLint Clean Code](https://www.npmjs.com/package/tslint-clean-code) 
+- [TSLint React](https://www.npmjs.com/package/tslint-react)
+- [TSLint + Prettier](https://www.npmjs.com/package/tslint-config-prettier) 
+- [ESLint rules for TSLint](https://www.npmjs.com/package/tslint-eslint-rules)
+- [Immutable](https://www.npmjs.com/package/tslint-immutable)
 
-- [TSLint Clean Code](https://www.npmjs.com/package/tslint-clean-code) - TSLint rules inspired by the [Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.ca/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
+ÇN: Şöyle bir durum var. TSLint kendi dökümanına göre kullanımı durdurulmuş `(deprecated)` görünüyor. `Eslint` altında `eslint-typescript` yardımcı kütüphanesi
+ile birlikte kullılacağı bildirilmiş. 
 
-- [TSLint react](https://www.npmjs.com/package/tslint-react) - lint rules related to React & JSX
+### Büyük harf kullanımında sabit bir teknik izleyin.
 
-- [TSLint + Prettier](https://www.npmjs.com/package/tslint-config-prettier) - lint rules for [Prettier](https://github.com/prettier/prettier) code formatter
+Değişken, sabit, method, fonksiyon, nesne, obje, dizi isimlendirirken her zaman sabit bir teknik kullanın. Örneğin sınıfları tanımlarken büyük harf ile başlayıp küçük harf ile
+devam ediyorsanız, oluşturduğunuz bütün sınıflarda bu tekniği kullanın, metodlarınızı isimlendirirken farklı kelimeleri birleştirmek için `camelCase` kullanıyorsanız
+oluşturduğunuz bütün fonksiyonlarda ve metodlarda bu adımı izleyin. 
 
-- [ESLint rules for TSLint](https://www.npmjs.com/package/tslint-eslint-rules) - ESLint rules for TypeScript
-
-- [Immutable](https://www.npmjs.com/package/tslint-immutable) - rules to disable mutation in TypeScript
-
-Refer also to this great [TypeScript StyleGuide and Coding Conventions](https://basarat.gitbook.io/typescript/styleguide) source.
-
-### Use consistent capitalization
-
-Capitalization tells you a lot about your variables, functions, etc. These rules are subjective, so your team can choose whatever they want. The point is, no matter what you all choose, just *be consistent*.
+Bu sayede yazdığınız kodları kullanırken hem siz, hem de ekip arkadaşlarınız sorun yaşamaz. Yazılmış olan bir değişkeni kullanırken her seferinde büyük harfle mi yoksa
+küçük hafle mi, yahut `camelCase` mi `snake_case` mi kullanacağı karmaşasına düşmez. Yazılmış olan kodları tekrar tekrar kontrol etme ihtiyacı duymaz.
 
 **Yanlış:**
 
@@ -2726,15 +2799,22 @@ type Animal = { /* ... */ }
 type Container = { /* ... */ }
 ```
 
-Prefer using `PascalCase` for class, interface, type and namespace names.  
-Prefer using `camelCase` for variables, functions and class members.
+Genel olarak javascript geliştiren toplulukta kabul edilen ve kullanılan bir takım yazım kuralları vardır.
+,
+1. Nesne `(class)`, arayüz `(interface)` ve namespace tanımlarken her zaman `PascalCase` kullanın.
+2. Değişkenler, fonksiyonlar, metodlar ve `property`leri isimlendirirken `camelCase` kullanın
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Function callers and callees should be close
+### Fonksiyon tanımlamaları ve bu fonksiyon kullanıldığı yerler olabildiğince birbirine yakın olmalı.
 
-If a function calls another, keep those functions vertically close in the source file. Ideally, keep the caller right above the callee.
-We tend to read code from top-to-bottom, like a newspaper. Because of this, make your code read that way.
+Burada aslında değerlendirilmesi gereken birden fazla durum var. Eğer bu durum bir sınıf `(class)` içerisinde gerçekleşiyorsa, örneğin bir metod içerisinde, 
+sınıf içerisinde tanımladığınız diğer metodları çağırıyorsanız bu metodu çağırdığınız metodların yakınına yerleştirin. Hatta daha da ideal olarak bu metodu
+çağırdığınız bu metodların en üstüne yerleştirin.
+
+
+Ancak sınıf dışında tanımladığınız yardımcı metodlarınız varsa ve uygulama genelinde bu yardımcı metodları kullanıyorsanız bu metodları `helpers.ts` veya `utils.ts`
+adı altında ayrı bir dosya içerisinde tutmanız daha sağlıklı olacaktır. 
 
 **Yanlış:**
 
@@ -2784,6 +2864,8 @@ class PerformanceReview {
   constructor(private readonly employee: Employee) {
   }
 
+  // sınıf içerisinde herhangi bir noktada değil,
+  // çağırdığımız metodların üzerinde
   review() {
     this.getPeerReviews();
     this.getManagerReview();
@@ -2820,22 +2902,24 @@ review.review();
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Organize imports
+### `Import` kullanımında dikkat edilmesi gerekenler
 
-With clean and easy to read import statements you can quickly see the dependencies of current code. Make sure you apply following good practices for `import` statements:
+Modüler programlamanın gelişmesiyle birlikte import ve export kullanımları yazdığımız kodların bir parçası olmaya başladı. Özellikle modüle veya main javascript
+dosyalarımızda onlarca import kullanmak durumunda kalabiliyoruz. İmport kullanımlarını bir düzene oturtmak, hem kullanım `(usability)` hem de okunurluk `(readibility)`
+açısından bize büyük bir kazanç sağlar. 
 
-- Import statements should be alphabetized and grouped.
-- Unused imports should be removed.
-- Named imports must be alphabetized (i.e. `import {A, B, C} from 'foo';`)
-- Import sources must be alphabetized within groups, i.e.: `import * as foo from 'a'; import * as bar from 'b';`
-- Groups of imports are delineated by blank lines.
-- Groups must respect following order:
-  - Polyfills (i.e. `import 'reflect-metadata';`)
-  - Node builtin modules (i.e. `import fs from 'fs';`)
-  - external modules (i.e. `import { query } from 'itiriri';`)
-  - internal modules (i.e `import { UserService } from 'src/services/userService';`)
-  - modules from a parent directory (i.e. `import foo from '../foo'; import qux from '../../foo/qux';`)
-  - modules from the same or a sibling's directory (i.e. `import bar from './bar'; import baz from './bar/baz';`)
+- Import ifadeleri gruplanmalı ve alfabetik olarak bir sıralanmalı.
+- Kullanılmayan import ifadeleri temizlenmeli.
+- Import ifade içerisinde birden fazla import varsa alfabetik olarak sıralanmalı (örn. `import {A, B, C} from 'foo';`)
+- Import grupları, import edilen kaynağa göre alfabetik olarak sıralanmalı, örn.: `import * as foo from 'a'; import * as bar from 'b';`
+- Import grupları arasında boş bir satır bırakılmalı.
+- Import Grupları aşağıda yer aldığı gibi sıralanmalı:
+  - Polifiller `(Polyfills)` (örn. `import 'reflect-metadata';`)
+  - Native Node modülleri `(Node builtin modules)` (örn. `import fs from 'fs';`)
+  - Harici modüller *(npm, bower)* (örn. `import { query } from 'itiriri';`)
+  - Relative modüller (örn. `import { UserService } from 'src/services/userService';`)
+  - Bir üst dizinden çağrılan modüller (örn. `import foo from '../foo'; import qux from '../../foo/qux';`)
+  - Aynı dizinden çağrılan modüller (örn. `import bar from './bar'; import baz from './bar/baz';`)
 
 **Yanlış:**
 
@@ -2866,55 +2950,54 @@ import { ConfigPlugin } from './plugins/config/configPlugin';
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Use typescript aliases
+### Uzak relative dosyalar için takma isimler `(alias)` kullanın
+`tsconfig.json` içerisinde yer alan `compilerOptions` bölümünde `paths` konfigurasyonunu kullanarak bir dizin `(directory)` için takma ad oluşturabilirsiniz.
 
-Create prettier imports by defining the paths and baseUrl properties in the compilerOptions section in the `tsconfig.json`
-
-This will avoid long relative paths when doing imports.
+Typescript `paths` içerisinde tanımladığınız dizinleri `baseUrl` ile belirttiğiniz dizinin altında tespit ederek, belirlediğiniz takma ad `(alias)` ile özleştirir.
+Yazdığınız typescript kodunu compile ederken bu `alias` ile karşılaştığında ise bu değeri relative yol ile değiştirir.
 
 **Yanlış:**
 
 ```ts
-import { UserService } from '../../../services/UserService';
+import { UserService } from '../../../../core/services/UserService';
 ```
 
 **Doğru:**
 
 ```ts
-import { UserService } from '@services/UserService';
-```
+/*
+tsconfig.json
 
-```js
-// tsconfig.json
-...
+{
   "compilerOptions": {
-    ...
     "baseUrl": "src",
     "paths": {
-      "@services": ["services/*"]
+      "@core/*": ["app/core/*"]
     }
-    ...
   }
-...
+}
+*/
+
+import { UserService } from '@core/services/UserService';
 ```
 
 **[⬆ başa dön](#table-of-contents)**
 
-## Comments
+## Yorumlar `(Comments)`
 
-The use of a comments is an indication of failure to express without them. Code should be the only source of truth.
-  
-> Don’t comment bad code—rewrite it.  
+Bir kod bloğu içerisinde gerçekleşen işlemi açıklamak yerine, önceliğiniz kodun kendisini, kodu okuyan kimse için anlaşılacak şekilde yazmakdır. 
+
+> Kötü yazılmış koda açıklık getirmek için yorum yazmayın, kötü bir şekilde yazdığınız kodu, yeniden, daha iyi bir şekilde yazın. 
 > — *Brian W. Kernighan and P. J. Plaugher*
 
-### Prefer self explanatory code instead of comments
+### Yorum yazmak yerine, okunduğunda anlaşılacak kodlar yazmaya özen gösterin.
 
-Comments are an apology, not a requirement. Good code *mostly* documents itself.
+Yorumlar bir zorunluluk değil, kötü yazılmış bir kod için mazeretten ibarettir. İyi bir şekilde yazılmış kodu anlamak için yorum gerekmez.
 
 **Yanlış:**
 
 ```ts
-// Check if subscription is active.
+// Subscription aktif mi değil mi kontrol et
 if (subscription.endDate > Date.now) {  }
 ```
 
@@ -2927,9 +3010,11 @@ if (isSubscriptionActive) { /* ... */ }
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Don't leave commented out code in your codebase
+### Kullanımdan kaldırdığınız kodu yoruma almayın. Doğrudan silin.
 
-Version control exists for a reason. Leave old code in your history.
+Versiyon kontrol sistemleri ile çalıştığımız için *(github, bitbucket)*, bir uygulama içerisinde yazılan, değiştirilen, silinen bütün kodlara ve tarihçesine
+ayrıntılı bir şekilde sahibiz. Bu nedenle, eğer kodunuzda kullanımdan kaldırılan bir bölümün olması durumunda, bu alanı yorum almak yerine doğrudan kodunuzdan kaldırın.
+Gerekli olması halinde kaldırılan kodlara `VSC` sistemi üzerinde bulunan `repository`'nizden ulaşabilirsiniz.
 
 **Yanlış:**
 
@@ -2953,9 +3038,13 @@ type User = {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Don't have journal comments
+### Yazdığınız koda işlem kaydı eklemeyin.
+Versiyon kontrol sistemleri ile çalışırken yaptığımız değişiklikleri, açıklayıcı bir cümle ile `commit` ettiğimiz için, yapılan işlemlerin kaydı
+`VCS` üzerinde kayıt altında tutulmaktadır ve `git log` diyerek bu kayıtlara kolayca ulaşılabilir.
 
-Remember, use version control! There's no need for dead code, commented code, and especially journal comments. Use `git log` to get history!
+Bu nedenle yazdığınız kod üzerinde yaptığınız her değişiklikte yapılan işleme ait bilgiler içeren bir yorum eklemenizin hiç bir faydası yoktur. Yazdığınız kod
+içerisinde var olan işlem kayıtlarını, kullanımdan kaldırılan kodları temizleyin ve çalışma ortamınızı olabildiğince gereksiz bilgilerden ve detaylardan arındırarak
+temiz bir çalışma ortamı `(codebase)` oluşturun.
 
 **Yanlış:**
 
@@ -2981,10 +3070,9 @@ function combine(a: number, b: number): number {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### Avoid positional markers
-
-They usually just add noise. Let the functions and variable names along with the proper indentation and formatting give the visual structure to your code.  
-Most IDE support code folding feature that allows you to collapse/expand blocks of code (see Visual Studio Code [folding regions](https://code.visualstudio.com/updates/v1_17#_folding-regions)).
+### Bir segmenti veya bloğu belli etmek için yorum blokları oluşturmayın.
+Bu tür yorum blokları görüntü kirliliğinden başka bir şey değildir. Günümüzde bir çok ide kod bloklarını gizleyip `(collapse)`, genişletebilir `(expand)`.
+Dolayısı artık bu tür yorum bloklarının işlevselliği kalmamıştır.
 
 **Yanlış:**
 
@@ -3043,19 +3131,20 @@ class Client {
 
 **[⬆ başa dön](#table-of-contents)**
 
-### TODO comments
+### TODO yorumlarını kullanın
+Bazen yazdığınız kodu sonradan değiştirmek, güncellemek veya düzenlemek isteyebilirsiniz. Bu gibi durumlarda bir kenara not almak yerine `// TODO` *syntax*'ını kullanarak
+sonradan yapılacak olan işlemi yazabilirsiniz.
 
-When you find yourself that you need to leave notes in the code for some later improvements,
-do that using `// TODO` comments. Most IDE have special support for those kind of comments so that
-you can quickly go over the entire list of todos.  
+Günümüzde bir çok IDE bu syntaxı anlamakta ve çalışma ortamı `(codebase)` içerisinde yer alan bütün `TODO` yorumlarını bir araya getirerek listelemektedir.
 
-Keep in mind however that a *TODO* comment is not an excuse for bad code. 
+Eğer yazdığınız kodun yeniden geliştirilmeye ve düzenlemeye ihtiyaç duyduğunu düşürüyorsanız. Ayrıca bir sistem üzerinde not tutmak yerine kod bloğunun hemen üst satırına
+`// TODO ...` yorumu yazabilirsiniz. 
 
 **Yanlış:**
 
 ```ts
 function getActiveSubscriptions(): Promise<Subscription[]> {
-  // ensure `dueDate` is indexed.
+  // 'dueDate''nin indexlendiğini kontrol et
   return db.subscriptions.find({ dueDate: { $lte: new Date() } });
 }
 ```
@@ -3064,28 +3153,9 @@ function getActiveSubscriptions(): Promise<Subscription[]> {
 
 ```ts
 function getActiveSubscriptions(): Promise<Subscription[]> {
-  // TODO: ensure `dueDate` is indexed.
+  // TODO 'dueDate''nin indexlendiğini kontrol et
   return db.subscriptions.find({ dueDate: { $lte: new Date() } });
 }
 ```
 
 **[⬆ başa dön](#table-of-contents)**
-
-## Translations
-
-This is also available in other languages:
-- ![br](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Brazil.png) **Brazilian Portuguese**: [vitorfreitas/clean-code-typescript](https://github.com/vitorfreitas/clean-code-typescript)
-- ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese**: 
-  - [beginor/clean-code-typescript](https://github.com/beginor/clean-code-typescript)
-  - [pipiliang/clean-code-typescript](https://github.com/pipiliang/clean-code-typescript)
-- ![fr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/France.png) **French**: [ralflorent/clean-code-typescript](https://github.com/ralflorent/clean-code-typescript)
-- ![ja](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Japan.png) **Japanese**: [MSakamaki/clean-code-typescript](https://github.com/MSakamaki/clean-code-typescript)
-- ![ko](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) **Korean**: [738/clean-code-typescript](https://github.com/738/clean-code-typescript)
-- ![ru](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Russia.png) **Russian**: [Real001/clean-code-typescript](https://github.com/Real001/clean-code-typescript)
-- ![es](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Spain.png) **Spanish**: [JoseDeFreitas/clean-code-typescript](https://github.com/JoseDeFreitas/clean-code-typescript)
-- ![tr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Turkey.png) **Turkish**: [ozanhonamlioglu/clean-code-typescript](https://github.com/ozanhonamlioglu/clean-code-typescript)
-- ![vi](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Vietnam.png) **Vietnamese**: [hoangsetup/clean-code-typescript](https://github.com/hoangsetup/clean-code-typescript)
-
-References will be added once translations are completed.  
-Check this [discussion](https://github.com/labs42io/clean-code-typescript/issues/15) for more details and progress.
-You can make an indispensable contribution to *Clean Code* community by translating this to your language.

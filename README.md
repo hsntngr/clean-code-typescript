@@ -6,7 +6,7 @@ Typescript İçin Temiz Kod Yazım Konsepti.
 ## Table of Contents
 
   1. [Giriş](#giri)
-  2. [Değişkenler](#degiskenler)
+  2. [Değişkenler](#deikener)
   3. [Fonksiyonlar](#functions)
   4. [Objeler ve Veri Tipleri](#objects-and-data-structures)
   5. [Sınıflar](#classes)
