@@ -1,4 +1,4 @@
-## Table of Contents
+## İçindekiler
 
   1. [Değişkenler](#deikenler)
   2. [Fonksiyonlar](#functions)
@@ -34,7 +34,7 @@ function between<T>(value: T, left: T, right: T): boolean {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Teleffauz edilebilir değişken isimleri kullanım
 
@@ -65,7 +65,7 @@ type Customer = {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Belirlediğinize tipe `type` uygun olacak şekilde isimlendirme yapın.
 
@@ -88,7 +88,7 @@ function getUserData(): User;
 function getUser(): User;
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Aramaya uygun ifadeler kullanın.
 
@@ -112,7 +112,7 @@ const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
 setTimeout(restart, MILLISECONDS_IN_A_DAY);
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Açıklayıcı ifadeler kullanın
 
@@ -138,7 +138,7 @@ for (const [id, user] of users) {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Sadece sizin değil, yazdıklarınızı okuyan herkesin anlayacağı ifadeler kullanın
 
@@ -162,7 +162,7 @@ const subscription = getSubscription();
 const transaction = charge(user, subscription);
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Gereksiz ifadelerden kaçının
 
@@ -197,7 +197,7 @@ function print(car: Car): void {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Varsayılan değerleri kullanmaya özen gösterin.
 
@@ -221,7 +221,7 @@ function loadPages(count: number = 10) {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### İlişkisel bir gruba ait değerleri bir enum altında tanımlayın
 
@@ -269,7 +269,7 @@ class Projector {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ## Fonksiyonlar
 
@@ -371,7 +371,7 @@ createMenu({
 });
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Her fonksiyon tek bir işlemi yerine getirmelidir.
 
@@ -407,7 +407,7 @@ function isActiveClient(client: Client) {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Fonksiyonun işlevi isminde açıkça belirtilmelidir
 
@@ -437,7 +437,7 @@ const date = new Date();
 addMonthToDate(date, 1);
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Kod tekrarından uzak durun
 
@@ -535,7 +535,7 @@ birbirinden bağımsız, izole bir şekilde çalışıyor ise, yapılan bir soyu
 Bir modül diğer modüle bağımlı hale getirilebilir. Bu husus özellikle eager loading durumlarında ortaya çıkar, ufak bir kod parçası
 yüzünden bütün bir modülün yüklenmesine sebebiyet verebilir ve kod tekrarından çok daha olumsuz bir sonuç ortaya çıkabilir.
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Destruction veya Object.assign kullanarak varsayılan (default) parametreler oluşturun
 
@@ -593,7 +593,7 @@ createMenu({ body: 'Bar' });
 `"strictNullChecks": true` ekleyebilirsiniz.
 Detaylı bilgi için [`strictNullChecks`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#--strictnullchecks)
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Fonksiyon içerisinde şarta bağlı devreler oluşturmak için boolean parametreler `(flag)` göndermeyin
 
@@ -625,7 +625,7 @@ function createFile(name: string) {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### İstenmeyen durumlardan `(Side Effects)` kaçınmak (Birinci Bölüm)
 
@@ -669,7 +669,7 @@ const encodedName = toBase64(name);
 console.log(name);
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### İstenmeyen durumlardan `(Side Effects)` kaçınmak (İkinci Bölüm)
 
@@ -761,7 +761,7 @@ function addItemToCart(cart: CartItem[], item: Item): CartItem[] {
 };
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Global fonksiyonlar yazmayın.
 Javascript ile çalışırken hiçbirimiz pure javascript ile sıfırdan bir uygulama yazmaya çalışmıyoruz. Bu hem ciddi miktarda zaman hem de 
@@ -803,7 +803,7 @@ class MyArray<T> extends Array<T> {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Olabildiğince fonksiyonel bir şekilde kod yazmaya özen gösterin.
 
@@ -862,7 +862,7 @@ const totalOutput = contributions
   .reduce((totalLines, output) => totalLines + output.linesOfCode, 0);
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Koşulları fonksiyon veya metodlar içerise taşıyın
 `Encapsulation` işlemi gerçekleştirerek, yani var olan kodumuzu bir fonksiyon veya bir metod yardımıyla bütünleşik bir yapı içerisine
@@ -888,7 +888,7 @@ if (canActivateService(subscription, account)) {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Olumsuz koşullardan kaçının
 
@@ -916,7 +916,7 @@ if (!isEmailUsed(node)) {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Koşul oluşturmaktan kaçının
 
@@ -987,7 +987,7 @@ class Cessna extends Airplane {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Kodunuzu gereğinden fazla optimize etmeyin
 
@@ -1016,7 +1016,7 @@ for (let i = 0; i < list.length; i++) {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Kullanılmayan kodları (dead code) kaldırın.
 
@@ -1052,7 +1052,7 @@ const req = requestModule;
 inventoryTracker('apples', req, 'www.inventory-awesome.io');
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### `Iterables` ve `generator`leri kullanın
 
@@ -1136,7 +1136,7 @@ itiriri(fibonacci())
   .forEach(fib => console.log(fib));
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ## Objeler `(Object)` ve Veri Yapıları `(Data Structures)`
 
@@ -1232,7 +1232,7 @@ const account = new BankAccount();
 account.balance = 100;
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Private ve protected metodlar oluşturun
 
@@ -1282,7 +1282,7 @@ class Circle {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Değiştirilemez veriler ile çalışmaya özen gösterin.
 
@@ -1384,7 +1384,7 @@ const result = readonlyData(100);
 result.value = 200; // hata verir
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Tip vs arayüz `(type vs interface)`
 
@@ -1452,7 +1452,7 @@ class Square implements Shape {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ## Sınıflar/Nesneler `(class)`
 
@@ -1500,7 +1500,7 @@ class Dashboard {
 // ...
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Yüksek bütünleşme ve düşük bağlanma `(High cohesion ve low coupling)`
 Bu kavramları doğrudan türkçe aktarmak güç. Ancak dilin elverdiği ölçüde açıklamaya çalışacağım.
@@ -1631,7 +1631,7 @@ class UserNotifier {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Bir nesneden miras almak `(inheritence)` yerine `Composition` kullanın.
 
@@ -1746,7 +1746,7 @@ class EmployeeTaxDataAtUSA implements TaxData {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Zincirleme metodlar `(method chaining)` kullanın.
 
@@ -1830,7 +1830,7 @@ const query = new QueryBuilder()
   .build();
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ## SOLID
 
@@ -1892,7 +1892,7 @@ class UserSettings {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Açık/Kapalı `(Open Closed)` Prensibi
 
@@ -1991,7 +1991,7 @@ Dolayısıyla en başta bizim sonradan yaptığımız eklemelerden etkilenmeyece
 dizaynı `(Driver Pattern)` ile oluşturulmuş bir yapı söz konusu. Bu yapı sayesinde 40 farklı adapter dahi olsa, `Adapter` abstract
 nesnesinde yer alan gereken nitelikleri sağladığı sürece, mevcut kodumuzda hiçbir düzenleme yapmaksızın kullanabiliriz. 
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Yerine Geçme `(Liskov Substitution)` Prensibi
 
@@ -2115,7 +2115,7 @@ const shapes = [new Rectangle(4, 5), new Rectangle(4, 5), new Square(5)];
 renderLargeShapes(shapes);
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Arayüz Ayrımı `(Interface Segregation)` Prensibi
 
@@ -2203,7 +2203,7 @@ class EconomicPrinter implements Printer {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Bağımlılığın Ters Çevrilmesi `(Dependency Inversion)` Prensibi (DIP)
 
@@ -2311,7 +2311,7 @@ await report = await reader.read('report.json');
 Burada yaptığımız soyutlama işlemi sayesinde ReportReader nesnemiz artık spesifik bir Formatter nesnesine bağımlı olmadan çalışabilecek,
 `Formatter` arayüzünde istenen implementasyonları yerine getiren herhangi bir nesne ile çalışabilecektir. 
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ## Testing
 
@@ -2335,7 +2335,7 @@ olan kodların yazılmasını amaçlar. `TDD` için belirlenmiş üç ana kural 
 
 3. Test ile sınırları çizilenden daha fazla kod yazmayın, yazdığınız her kod parçası kendisi için yazılan birim testi başarı ile sonuçlandıracak kadar olmalıdır.
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### F.I.R.S.T. kuralları
 
@@ -2352,7 +2352,7 @@ sonuçlandığını anlamak için log kayıtları incelenmek zorunda kalınmamal
 
 - **Timely** Birim `(Birim)` testleri kod yazmaya başlamadan önce yazılmalıdır. Mevcut kod için test yazmak zor gelebilir.
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Her testing tek bir konsepti olmalı.
 
@@ -2402,7 +2402,7 @@ describe('AwesomeDate', () => {
 });
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Testing adı yaptığı işlevi açık bir şekilde ortaya koymalıdır.
 
@@ -2436,7 +2436,7 @@ describe('Calendar', () => {
 });
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ## Asenkron İşlemler
 
@@ -2520,7 +2520,7 @@ downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html'
 
 `Promise.all` genellike eşzamanlı *(birbirine paralel)* işlemlerde kullanılır. 
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Async/Await kullanarak daha temiz `(clean)` yapılar oluşturun
 
@@ -2571,7 +2571,7 @@ try {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ## Hata Yönetimi (Error Handling)
 Hata almak, hata vermek bunlar güzel şeyler. Bir hata aldığınız yazığınızda bir şeylerin ters gittiğini, bazı şeylerin doğru çalışmadığını hemen anlarız. Ancak 
@@ -2647,7 +2647,7 @@ function calculateTotal(items: Item[]): Failable<number, 'empty'> {
 
 Daha detaylı bilgi için [Making exceptions type safe in Typescript](https://medium.com/@dhruvrajvanshi/making-exceptions-type-safe-in-typescript-c4d200ee78e9).
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Yakalanan hataları ihtmal etmeyin.
 
@@ -2688,7 +2688,7 @@ try {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Hata olarak `(reject)` çözümlenen `Promise`leri ihmal etmeyin
 
@@ -2729,7 +2729,7 @@ try {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ## Yazım Kuralları (Formatting)
 
@@ -2804,7 +2804,7 @@ Genel olarak javascript geliştiren toplulukta kabul edilen ve kullanılan bir t
 1. Nesne `(class)`, arayüz `(interface)` ve namespace tanımlarken her zaman `PascalCase` kullanın.
 2. Değişkenler, fonksiyonlar, metodlar ve `property`leri isimlendirirken `camelCase` kullanın
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Fonksiyon tanımlamaları ve bu fonksiyon kullanıldığı yerler olabildiğince birbirine yakın olmalı.
 
@@ -2900,7 +2900,7 @@ const review = new PerformanceReview(employee);
 review.review();
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### `Import` kullanımında dikkat edilmesi gerekenler
 
@@ -2948,7 +2948,7 @@ import { ApiCredentials, Adapters } from './common/api/authorization';
 import { ConfigPlugin } from './plugins/config/configPlugin';
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Uzak relative dosyalar için takma isimler `(alias)` kullanın
 `tsconfig.json` içerisinde yer alan `compilerOptions` bölümünde `paths` konfigurasyonunu kullanarak bir dizin `(directory)` için takma ad oluşturabilirsiniz.
@@ -2981,7 +2981,7 @@ tsconfig.json
 import { UserService } from '@core/services/UserService';
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ## Yorumlar `(Comments)`
 
@@ -3008,7 +3008,7 @@ const isSubscriptionActive = subscription.endDate > Date.now;
 if (isSubscriptionActive) { /* ... */ }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Kullanımdan kaldırdığınız kodu yoruma almayın. Doğrudan silin.
 
@@ -3036,7 +3036,7 @@ type User = {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Yazdığınız koda işlem kaydı eklemeyin.
 Versiyon kontrol sistemleri ile çalışırken yaptığımız değişiklikleri, açıklayıcı bir cümle ile `commit` ettiğimiz için, yapılan işlemlerin kaydı
@@ -3068,7 +3068,7 @@ function combine(a: number, b: number): number {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### Bir segmenti veya bloğu belli etmek için yorum blokları oluşturmayın.
 Bu tür yorum blokları görüntü kirliliğinden başka bir şey değildir. Günümüzde bir çok ide kod bloklarını gizleyip `(collapse)`, genişletebilir `(expand)`.
@@ -3129,7 +3129,7 @@ class Client {
 };
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
 
 ### TODO yorumlarını kullanın
 Bazen yazdığınız kodu sonradan değiştirmek, güncellemek veya düzenlemek isteyebilirsiniz. Bu gibi durumlarda bir kenara not almak yerine `// TODO` *syntax*'ını kullanarak
@@ -3158,4 +3158,4 @@ function getActiveSubscriptions(): Promise<Subscription[]> {
 }
 ```
 
-**[⬆ başa dön](#table-of-contents)**
+**[⬆ başa dön](#iindekiler)**
