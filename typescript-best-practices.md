@@ -2513,14 +2513,11 @@ downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html'
 | Method                   | Açıklama                                                   |   
 | ------------------------ | -----------------------------------------------------------|  
 | `Promise.resolve(value)` | Girilen değeri bir `Promise` olarak çözümler.              |  
-| ------------------------ | -----------------------------------------------------------|  
 | `Promise.reject(error)`  | Girilen değeri `Promise` hatası olarak çözümler.           |  
-| ------------------------ | -----------------------------------------------------------|  
 | `Promise.all(promises)`  | Girilen bütün `Promise`ler çözümlendikten sonra            |
 |                          | hepsini birlikte bir dizi `(array)` olarak döndürür.       |
 |                          | Eğer bir `Promise` hata olarak `(rejected)` çözümlenirse   |
 |                          | bütün `Promise`ler hatalıymış gibi muamele görür           |
-| ------------------------ | -----------------------------------------------------------|  
 | `Promise.race(promises)` | Girilen bütün `Promise`ler den herhangi biri tamamlandığı  | 
 |                          | anda `Promise` tamamlanır. Geri kalan `Promise`ler         |
 |                          | çözümlenmez                                                |
